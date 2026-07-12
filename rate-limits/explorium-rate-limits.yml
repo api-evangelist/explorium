@@ -1,0 +1,61 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Explorium
+providerId: explorium
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Data Enrichment
+- B2B Data
+- Web Intelligence
+- Rate Limiting
+- Quotas
+description: >-
+  Explorium does not publish fixed numeric per-minute request limits for the
+  AgentSource API. Usage is governed primarily by the shared credit pool rather
+  than a request-rate cap - each match, fetch, enrichment, and event action
+  draws credits, and calls stop when the balance is exhausted or expired.
+  Batch-oriented endpoints impose an explicit structural limit: match and bulk
+  enrichment requests accept at most 50 records per call. Numeric throttling
+  thresholds are not documented as of the review date.
+notes: >-
+  Verify any account-level throughput limits and the 50-record batch cap in the
+  Explorium developer documentation, and monitor the remaining balance via
+  GET /v1/credits. Contact support@explorium.ai for higher-volume arrangements.
+sources:
+- https://developers.explorium.ai/reference/introduction
+- https://developers.explorium.ai/reference/match_businesses
+- https://developers.explorium.ai/reference/credits/credit_plans
+responseCodes:
+  throttled: 429
+limits:
+- name: API Request Rate
+  scope: account
+  metric: requests
+  limit: not published
+  notes: No fixed numeric per-minute request-rate limit is documented for the AgentSource API.
+- name: Credit Pool
+  scope: account
+  metric: credits
+  limit: per package
+  notes: Usage is metered against a shared prepaid credit balance; calls fail when credits are exhausted or expired.
+- name: Match Batch Size
+  scope: request
+  metric: records
+  limit: 50
+  notes: Match endpoints accept up to 50 businesses or prospects per call, returned in input order.
+- name: Bulk Enrichment Batch Size
+  scope: request
+  metric: records
+  limit: 50
+  notes: Bulk enrichment endpoints process up to 50 records per request.
+policies:
+- name: Credit Metering
+  description: All match, fetch, stats, enrichment, and event calls draw from a single shared credit pool that meters usage in place of a hard request cap.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

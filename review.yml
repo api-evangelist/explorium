@@ -1,0 +1,120 @@
+aid: explorium
+name: Explorium
+review:
+  question: Does Explorium expose a documented public WebSocket API?
+  answer: false
+  date: '2026-07-11'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    No AsyncAPI document was authored. Explorium's AgentSource API is
+    request/response REST over HTTPS at https://api.explorium.ai. Its only
+    real-time surfaces are (1) event endpoints that are polled with POST
+    requests (businesses/events, prospects/events) and (2) webhooks, where
+    Explorium POSTs event notifications to a customer HTTPS endpoint. Both are
+    plain HTTP, not a server-push WebSocket. The AgentSource MCP server offers a
+    streamable-HTTP transport and an SSE transport, but these are MCP client
+    transports (server-sent events over HTTP), not a documented public
+    bidirectional WebSocket API to model in AsyncAPI.
+findings:
+  summary: |
+    Explorium does not publish a documented public WebSocket API. Explorium is a
+    B2B external-data and enrichment provider. Its AgentSource API is a
+    request/response REST API hosted at https://api.explorium.ai, authenticated
+    with an API key in the API_KEY header, and gated behind an Explorium account
+    with a shared credit balance (a free 100-credit developer tier exists). The
+    API covers match, fetch, stats, autocomplete, 30+ single and bulk enrichment
+    endpoints, and event/enrollment tracking over 150M+ companies and 800M+
+    people. Real-time behavior is delivered by polling event endpoints or by
+    webhooks (Explorium POSTs to a customer URL), not by a WebSocket. Explorium
+    also ships a native AgentSource MCP server (remote streamable-HTTP and SSE
+    transports, plus Docker self-hosting under MIT) exposing 11 agent tools -
+    but MCP SSE is not a public bidirectional WebSocket API.
+  accessModel: |
+    Gated but self-serve. Anyone can create an Explorium account and obtain an
+    API key at https://admin.explorium.ai/api-key, and a free 100-credit / 90-day
+    developer tier lets developers test Generate, Enrich, and Event APIs.
+    Production use requires prepaid credit packages or an enterprise agreement.
+    The developer documentation (developers.explorium.ai), an OpenAPI index
+    (/openapi.json), and the MCP server (github.com/explorium-ai/mcp-explorium,
+    MIT) are publicly readable without authentication.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.explorium.ai
+      documented: true
+      note: AgentSource API - match, fetch, stats, autocomplete, enrich, bulk_enrich, events, webhooks, credits. API_KEY header auth.
+    - protocol: Webhook
+      scheme: https
+      documented: true
+      note: Explorium POSTs business/prospect event notifications to a customer-registered HTTPS endpoint. Server-to-endpoint HTTP, not WebSocket.
+    - protocol: MCP (Streamable HTTP)
+      scheme: https
+      documented: true
+      note: AgentSource MCP server at https://mcp.explorium.ai/mcp. MCP client transport, not a public REST or WebSocket API.
+    - protocol: MCP (SSE)
+      scheme: https
+      documented: true
+      note: AgentSource MCP server at https://mcp.explorium.ai/sse. Server-sent events over HTTP for MCP clients, not a bidirectional WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket (ws:// or wss://) endpoint is documented anywhere in Explorium's AgentSource API or MCP documentation as of the review date.
+  endpointsConfirmedRest:
+    - POST   https://api.explorium.ai/v1/businesses/match
+    - POST   https://api.explorium.ai/v1/businesses
+    - POST   https://api.explorium.ai/v1/businesses/stats
+    - GET    https://api.explorium.ai/v1/businesses/autocomplete
+    - POST   https://api.explorium.ai/v1/businesses/events
+    - POST   https://api.explorium.ai/v1/businesses/firmographics/enrich
+    - POST   https://api.explorium.ai/v1/businesses/technographics/enrich
+    - POST   https://api.explorium.ai/v1/businesses/firmographics/bulk_enrich
+    - POST   https://api.explorium.ai/v1/prospects/match
+    - POST   https://api.explorium.ai/v1/prospects
+    - POST   https://api.explorium.ai/v1/prospects/stats
+    - GET    https://api.explorium.ai/v1/prospects/autocomplete
+    - POST   https://api.explorium.ai/v1/prospects/contacts_information/enrich
+    - POST   https://api.explorium.ai/v1/prospects/profiles/enrich
+    - POST   https://api.explorium.ai/v1/prospects/events
+    - POST   https://api.explorium.ai/v1/webhooks
+    - GET    https://api.explorium.ai/v1/credits
+  endpointsModeled: |
+    Endpoint paths and HTTP methods above are confirmed from Explorium's public
+    OpenAPI index (developers.explorium.ai/openapi.json) and reference pages. The
+    request and response body schemas in openapi/explorium-openapi.yml are
+    honestly modeled at a representative level, since full field-level schemas
+    are not reproduced in the public reference. The published OpenAPI enumerates
+    30+ enrichment endpoints (17 business enrichments plus their bulk variants,
+    3 prospect enrichments plus bulk, custom enrichments, and credits/webhooks
+    management); a representative subset is captured here.
+  sources:
+    - url: https://developers.explorium.ai/reference/introduction
+      type: Documentation
+      note: AgentSource API overview - business/prospect enrichment, matching, autocomplete, events.
+    - url: https://developers.explorium.ai/openapi.json
+      type: OpenAPI
+      note: Public OpenAPI index. Base URL https://api.explorium.ai, APIKeyHeader auth, full path list.
+    - url: https://developers.explorium.ai/reference/fetch_businesses
+      type: APIReference
+      note: POST /v1/businesses; curl uses API_KEY header.
+    - url: https://developers.explorium.ai/reference/match_businesses
+      type: APIReference
+      note: POST /v1/businesses/match; up to 50 businesses per request.
+    - url: https://developers.explorium.ai/reference/credits/credit_plans
+      type: Documentation
+      note: Credit-pool billing; packages purchased in the admin portal.
+    - url: https://developers.explorium.ai/mcp-docs/agentsource-mcp
+      type: Documentation
+      note: AgentSource MCP server - streamable HTTP and SSE transports, 11 tools.
+    - url: https://github.com/explorium-ai/mcp-explorium
+      type: SourceCode
+      note: MCP server, MIT, remote URL https://mcp.explorium.ai/mcp plus Docker self-hosting.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket protocol surface exists. Explorium's public API is
+    request/response REST (AgentSource API), its real-time delivery is
+    poll-based event endpoints plus outbound webhooks, and its agent surface is
+    an MCP server over streamable HTTP / SSE. None of these is a documented
+    public bidirectional WebSocket API, so no AsyncAPI document was created.

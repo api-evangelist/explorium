@@ -1,0 +1,92 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Explorium
+providerId: explorium
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Data Enrichment
+- B2B Data
+- Web Intelligence
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Explorium AgentSource spend. Explorium bills through a single
+  prepaid credit pool consumed by every action - business and prospect match,
+  fetch, stats, autocomplete, single and bulk enrichment, and event tracking -
+  across both the REST API and the AgentSource MCP server. A free 100-credit
+  developer tier seeds evaluation; production spend is prepaid credit packages
+  or a custom enterprise agreement. Because one pool spans all surfaces, cost
+  control is about which actions are invoked and how many records each call
+  touches rather than per-endpoint invoices.
+notes: >-
+  Per-credit rates and package sizes are set in the Explorium admin portal and
+  not reconciled here. The dominant cost drivers are enrichment volume (each
+  enriched record consumes credits) and event/monitoring usage; matching and
+  stats calls are typically cheaper reconnaissance steps.
+sources:
+- https://www.explorium.ai/
+- https://developers.explorium.ai/reference/credits/credit_plans
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Explorium
+serviceCategory: Data and Analytics
+billingModel:
+  pricingCategory: Usage-Based
+  billingFrequency: Prepaid
+  billingCurrency: USD
+  chargeCategories:
+  - Purchase
+  - Usage
+focusColumns:
+  ServiceName: Explorium AgentSource
+  ServiceCategory: Data and Analytics
+  ProviderName: Explorium
+  PublisherName: Explorium
+  InvoiceIssuerName: Explorium
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Usage-Based
+meters:
+- name: credits
+  description: Shared credit units consumed by every API action; the primary billing meter.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - account
+  - action
+  - dataset
+- name: enrichment_records
+  description: Records enriched via single or bulk enrichment endpoints; each consumes credits.
+  unit: records
+  aggregation: sum
+  dimensions:
+  - account
+  - enrichment_type
+- name: event_lookups
+  description: Business and prospect event fetches and monitored enrollments drawing credits.
+  unit: lookups
+  aggregation: sum
+  dimensions:
+  - account
+  - event_type
+principles:
+- name: Visibility
+  description: Track credit burn via GET /v1/credits and attribute it to the actions and datasets that consume it.
+- name: Allocation
+  description: Tag workflows (prospecting, enrichment, monitoring) so credit consumption maps to internal cost centers.
+- name: Optimization
+  description: Use stats before large fetches, match once and cache business_id / prospect_id, batch up to 50 records per call, and enrich only needed fields to reduce credit spend.
+- name: Accountability
+  description: Review prepaid credit balance and expiry against forecasted volume before topping up or moving to enterprise terms.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,103 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Explorium
+providerId: explorium
+created: '2026-07-11'
+modified: '2026-07-11'
+reconciled: false
+tags:
+- Data Enrichment
+- B2B Data
+- Web Intelligence
+- Credits
+- Plans
+description: >-
+  Explorium AgentSource is metered with a single credit pool shared across every
+  API surface - match, fetch, stats, autocomplete, 30+ enrichment endpoints, and
+  event tracking - plus the AgentSource MCP server. Access is gated behind an
+  Explorium account: developers get a free 100-credit tier valid for 90 days to
+  test the Generate, Enrich, and Event APIs, then move to one-time credit
+  packages (reported to start around 200 USD for 5,000 credits) or a custom
+  enterprise agreement. Credits are consumed per action (a generate/fetch
+  request, an enrichment, an event lookup), aligning spend to workflow volume.
+  Exact package tiers and per-credit rates are set in the Explorium admin portal
+  and are not reconciled here.
+notes: >-
+  Pricing figures (free 100 credits / 90 days, and roughly 200 USD for 5,000
+  credits) are drawn from Explorium marketing and product-update pages and may
+  change. Verify current bundles in the admin portal at admin.explorium.ai under
+  Pricing, or contact support@explorium.ai. Enterprise pricing is contact-sales.
+sources:
+- https://www.explorium.ai/
+- https://developers.explorium.ai/reference/credits/credit_plans
+- https://www.explorium.ai/product-updates/explorium-agensource/
+plans:
+- id: explorium-free-developer
+  name: Free Developer Tier
+  type: free
+  description: >-
+    Free onboarding tier for developers to evaluate data quality and integrate
+    the AgentSource API and MCP server before committing to a paid package.
+  entries:
+  - label: Included Credits
+    name: free_credits
+    type: usage
+    metric: credits
+    limit: 100
+    timeFrame: day
+    geo: global
+    unit: 1
+    price: free (100 credits, valid 90 days)
+    userMultiplied: false
+  elements:
+  - name: Generate, Enrich, and Event APIs
+  - name: AgentSource MCP Server
+  - name: Business and Prospect Datasets
+- id: explorium-credit-package
+  name: Credit Package (Pay As You Go)
+  type: usage
+  description: >-
+    One-time prepaid credit bundles purchased in the admin portal. Credits draw
+    down from a single shared pool across all match, fetch, enrichment, and
+    event calls.
+  entries:
+  - label: Prepaid Credits
+    name: prepaid_credits
+    type: usage
+    metric: credits
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 5000
+    price: from ~200 USD per 5,000 credits (see admin portal)
+    userMultiplied: false
+  elements:
+  - name: Shared Credit Pool
+  - name: 30+ Enrichment Endpoints
+  - name: Bulk Enrichment (up to 50 records)
+  - name: Event Tracking and Webhooks
+- id: explorium-enterprise
+  name: Enterprise / Custom
+  type: enterprise
+  description: >-
+    Custom credit volume, custom enrichments, dedicated support, security review,
+    and negotiated terms for production go-to-market and agent workloads.
+  entries:
+  - label: Enterprise Agreement
+    name: enterprise
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Custom Credit Volume
+  - name: Custom Enrichments
+  - name: Dedicated Support and SLAs
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

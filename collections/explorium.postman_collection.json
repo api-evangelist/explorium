@@ -1,0 +1,194 @@
+{
+  "info": {
+    "name": "Explorium AgentSource API",
+    "description": "Explorium AgentSource is a single external-data and enrichment API for AI agents and go-to-market teams, covering 150M+ companies and 800M+ people from 100+ sources. Base URL: https://api.explorium.ai. All requests are authenticated with an API key sent in the API_KEY header (issued at https://admin.explorium.ai/api-key). Usage is metered against a shared credit pool; a free 100-credit developer tier is available.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      { "key": "key", "value": "API_KEY", "type": "string" },
+      { "key": "value", "value": "{{apiKey}}", "type": "string" },
+      { "key": "in", "value": "header", "type": "string" }
+    ]
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "https://api.explorium.ai", "type": "string" },
+    { "key": "apiKey", "value": "", "type": "string" }
+  ],
+  "item": [
+    {
+      "name": "Businesses",
+      "item": [
+        {
+          "name": "Match Businesses",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"businesses_to_match\": [\n    { \"name\": \"Apple\", \"domain\": \"apple.com\" }\n  ]\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/businesses/match", "host": ["{{baseUrl}}"], "path": ["v1", "businesses", "match"] },
+            "description": "Resolve up to 50 companies to Explorium business_id values from name, domain, URL, or LinkedIn URL."
+          }
+        },
+        {
+          "name": "Fetch Businesses",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"mode\": \"preview\",\n  \"filters\": {}\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/businesses", "host": ["{{baseUrl}}"], "path": ["v1", "businesses"] },
+            "description": "Retrieve company records matching a set of filters."
+          }
+        },
+        {
+          "name": "Fetch Business Stats",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"filters\": {}\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/businesses/stats", "host": ["{{baseUrl}}"], "path": ["v1", "businesses", "stats"] },
+            "description": "Gauge audience size for a set of filters before large-scale fetches."
+          }
+        },
+        {
+          "name": "Autocomplete Businesses",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v1/businesses/autocomplete?field=country&query=unit", "host": ["{{baseUrl}}"], "path": ["v1", "businesses", "autocomplete"], "query": [{ "key": "field", "value": "country" }, { "key": "query", "value": "unit" }] },
+            "description": "Fuzzy search over business filter values."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Business Enrichments",
+      "item": [
+        {
+          "name": "Enrich Firmographics",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"business_id\": \"\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/businesses/firmographics/enrich", "host": ["{{baseUrl}}"], "path": ["v1", "businesses", "firmographics", "enrich"] },
+            "description": "Return firmographic attributes for a matched business_id."
+          }
+        },
+        {
+          "name": "Enrich Technographics",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"business_id\": \"\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/businesses/technographics/enrich", "host": ["{{baseUrl}}"], "path": ["v1", "businesses", "technographics", "enrich"] },
+            "description": "Return the detected technology stack for a matched business_id."
+          }
+        },
+        {
+          "name": "Bulk Enrich Firmographics",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"business_ids\": []\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/businesses/firmographics/bulk_enrich", "host": ["{{baseUrl}}"], "path": ["v1", "businesses", "firmographics", "bulk_enrich"] },
+            "description": "Enrich firmographics for up to 50 business_id values in one request."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Prospects",
+      "item": [
+        {
+          "name": "Match Prospects",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"prospects_to_match\": [\n    { \"full_name\": \"Jane Doe\", \"company_name\": \"Explorium\" }\n  ]\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/prospects/match", "host": ["{{baseUrl}}"], "path": ["v1", "prospects", "match"] },
+            "description": "Resolve people to Explorium prospect_id values."
+          }
+        },
+        {
+          "name": "Fetch Prospects",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"mode\": \"preview\",\n  \"filters\": {}\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/prospects", "host": ["{{baseUrl}}"], "path": ["v1", "prospects"] },
+            "description": "Retrieve prospect records filtered by job level, department, title, or employer."
+          }
+        },
+        {
+          "name": "Enrich Contact Information",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"prospect_id\": \"\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/prospects/contacts_information/enrich", "host": ["{{baseUrl}}"], "path": ["v1", "prospects", "contacts_information", "enrich"] },
+            "description": "Return verified emails and phone numbers for a matched prospect_id."
+          }
+        },
+        {
+          "name": "Enrich Prospect Profiles",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"prospect_id\": \"\"\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/prospects/profiles/enrich", "host": ["{{baseUrl}}"], "path": ["v1", "prospects", "profiles", "enrich"] },
+            "description": "Return professional profile data for a matched prospect_id."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Events and Webhooks",
+      "item": [
+        {
+          "name": "Fetch Business Events",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"business_ids\": [],\n  \"event_types\": []\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/businesses/events", "host": ["{{baseUrl}}"], "path": ["v1", "businesses", "events"] },
+            "description": "Retrieve real-time business signals such as funding rounds and hiring surges."
+          }
+        },
+        {
+          "name": "Fetch Prospect Events",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"prospect_ids\": [],\n  \"event_types\": []\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/prospects/events", "host": ["{{baseUrl}}"], "path": ["v1", "prospects", "events"] },
+            "description": "Retrieve real-time prospect signals such as job changes."
+          }
+        },
+        {
+          "name": "Add Webhook",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"url\": \"https://example.com/hook\",\n  \"event_types\": []\n}" },
+            "url": { "raw": "{{baseUrl}}/v1/webhooks", "host": ["{{baseUrl}}"], "path": ["v1", "webhooks"] },
+            "description": "Register an HTTPS endpoint to receive event notifications."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Credits",
+      "item": [
+        {
+          "name": "Get Active Credits Summary",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{baseUrl}}/v1/credits", "host": ["{{baseUrl}}"], "path": ["v1", "credits"] },
+            "description": "Return the active credit balance and expiry. All calls draw down the same credit pool."
+          }
+        }
+      ]
+    }
+  ]
+}

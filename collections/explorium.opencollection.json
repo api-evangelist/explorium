@@ -1,0 +1,181 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Explorium AgentSource API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "apikey": {
+        "key": "API_KEY",
+        "value": "{{apiKey}}",
+        "in": "header"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": { "name": "Businesses", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Match Businesses", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses/match",
+            "body": { "type": "json", "data": "{\n  \"businesses_to_match\": [\n    { \"name\": \"Apple\", \"domain\": \"apple.com\" }\n  ]\n}" }
+          },
+          "docs": "Resolve up to 50 companies to Explorium business_id values from name, domain, URL, or LinkedIn URL."
+        },
+        {
+          "info": { "name": "Fetch Businesses", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses",
+            "body": { "type": "json", "data": "{\n  \"mode\": \"preview\",\n  \"filters\": {}\n}" }
+          },
+          "docs": "Retrieve company records matching a set of filters."
+        },
+        {
+          "info": { "name": "Fetch Business Stats", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses/stats",
+            "body": { "type": "json", "data": "{\n  \"filters\": {}\n}" }
+          },
+          "docs": "Gauge audience size for a set of filters before large-scale fetches."
+        },
+        {
+          "info": { "name": "Autocomplete Businesses", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.explorium.ai/v1/businesses/autocomplete",
+            "params": [
+              { "name": "field", "value": "country", "type": "query", "description": "Filter field to autocomplete." },
+              { "name": "query", "value": "unit", "type": "query", "description": "Partial text to match." }
+            ]
+          },
+          "docs": "Fuzzy search over business filter values."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Business Enrichments", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Enrich Firmographics", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses/firmographics/enrich",
+            "body": { "type": "json", "data": "{\n  \"business_id\": \"\"\n}" }
+          },
+          "docs": "Return firmographic attributes for a matched business_id."
+        },
+        {
+          "info": { "name": "Enrich Technographics", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses/technographics/enrich",
+            "body": { "type": "json", "data": "{\n  \"business_id\": \"\"\n}" }
+          },
+          "docs": "Return the detected technology stack for a matched business_id."
+        },
+        {
+          "info": { "name": "Bulk Enrich Firmographics", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses/firmographics/bulk_enrich",
+            "body": { "type": "json", "data": "{\n  \"business_ids\": []\n}" }
+          },
+          "docs": "Enrich firmographics for up to 50 business_id values in one request."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Prospects", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Match Prospects", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects/match",
+            "body": { "type": "json", "data": "{\n  \"prospects_to_match\": [\n    { \"full_name\": \"Jane Doe\", \"company_name\": \"Explorium\" }\n  ]\n}" }
+          },
+          "docs": "Resolve people to Explorium prospect_id values."
+        },
+        {
+          "info": { "name": "Fetch Prospects", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects",
+            "body": { "type": "json", "data": "{\n  \"mode\": \"preview\",\n  \"filters\": {}\n}" }
+          },
+          "docs": "Retrieve prospect records filtered by job level, department, title, or employer."
+        },
+        {
+          "info": { "name": "Enrich Contact Information", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects/contacts_information/enrich",
+            "body": { "type": "json", "data": "{\n  \"prospect_id\": \"\"\n}" }
+          },
+          "docs": "Return verified emails and phone numbers for a matched prospect_id."
+        },
+        {
+          "info": { "name": "Enrich Prospect Profiles", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects/profiles/enrich",
+            "body": { "type": "json", "data": "{\n  \"prospect_id\": \"\"\n}" }
+          },
+          "docs": "Return professional profile data for a matched prospect_id."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Events and Webhooks", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Fetch Business Events", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses/events",
+            "body": { "type": "json", "data": "{\n  \"business_ids\": [],\n  \"event_types\": []\n}" }
+          },
+          "docs": "Retrieve real-time business signals such as funding rounds and hiring surges."
+        },
+        {
+          "info": { "name": "Fetch Prospect Events", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects/events",
+            "body": { "type": "json", "data": "{\n  \"prospect_ids\": [],\n  \"event_types\": []\n}" }
+          },
+          "docs": "Retrieve real-time prospect signals such as job changes."
+        },
+        {
+          "info": { "name": "Add Webhook", "type": "http" },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/webhooks",
+            "body": { "type": "json", "data": "{\n  \"url\": \"https://example.com/hook\",\n  \"event_types\": []\n}" }
+          },
+          "docs": "Register an HTTPS endpoint to receive event notifications."
+        }
+      ]
+    },
+    {
+      "info": { "name": "Credits", "type": "folder" },
+      "items": [
+        {
+          "info": { "name": "Get Active Credits Summary", "type": "http" },
+          "http": {
+            "method": "GET",
+            "url": "https://api.explorium.ai/v1/credits"
+          },
+          "docs": "Return the active credit balance and expiry. All calls draw down the same credit pool."
+        }
+      ]
+    }
+  ]
+}
