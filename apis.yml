@@ -168,6 +168,8 @@ apis:
     self-hostable via Docker (MIT). Works with Claude Desktop, Cursor, VS Code,
     n8n, and other MCP clients.
 common:
+- type: AgenticAccess
+  url: agentic-access/explorium-agentic-access.yml
 - type: Authentication
   url: authentication/explorium-authentication.yml
 - type: GitHubOrganization
