@@ -1,0 +1,221 @@
+openapi: 3.0.3
+info:
+  title: Explorium AgentSource Business Enrichments Businesses API
+  description: The Explorium AgentSource API is a single external-data and enrichment API for AI agents and go-to-market teams. It exposes match, fetch, statistics, autocomplete, enrichment, bulk enrichment, and event/enrollment endpoints over a business dataset (150M+ companies) and a prospect dataset (800M+ people) aggregated from 100+ external sources. All endpoints are hosted at https://api.explorium.ai and authenticated with an API key sent in the API_KEY request header. Access is gated behind an Explorium account and a credit balance (a free developer tier of 100 credits is available), so this document is honestly modeled from Explorium's published OpenAPI index and reference pages - the endpoint paths and HTTP methods are confirmed from Explorium's own documentation, while request and response schemas are represented at a representative level. Not every one of the 30+ enrichment endpoints is enumerated here; a representative subset is included. endpointsModeled - request/response bodies are modeled; paths are confirmed.
+  version: '1.0'
+  contact:
+    name: Explorium
+    url: https://developers.explorium.ai
+servers:
+- url: https://api.explorium.ai
+  description: Explorium AgentSource API production
+security:
+- apiKeyHeader: []
+tags:
+- name: Businesses
+  description: Match, fetch, stat, and autocomplete over the 150M+ company dataset.
+paths:
+  /v1/businesses/match:
+    post:
+      operationId: matchBusinesses
+      tags:
+      - Businesses
+      summary: Match businesses
+      description: Resolve up to 50 companies to Explorium business_id values from name, domain, URL, or LinkedIn URL. Returns a list the same length and order as the input.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessMatchRequest'
+      responses:
+        '200':
+          description: Matched business identifiers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/businesses:
+    post:
+      operationId: fetchBusinesses
+      tags:
+      - Businesses
+      summary: Fetch businesses
+      description: Retrieve company records that match a set of filters such as industry, company size, location, or technology in use.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FetchRequest'
+      responses:
+        '200':
+          description: A page of business records.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/businesses/stats:
+    post:
+      operationId: fetchBusinessStats
+      tags:
+      - Businesses
+      summary: Fetch business statistics
+      description: Gauge the size and scope of a target audience for a set of filters before running large-scale fetches.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FetchRequest'
+      responses:
+        '200':
+          description: Aggregate counts for the supplied filters.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/businesses/autocomplete:
+    get:
+      operationId: autocompleteBusinesses
+      tags:
+      - Businesses
+      summary: Autocomplete businesses
+      description: Fuzzy search over business filter values (industries, technologies, locations) to build valid filter payloads.
+      parameters:
+      - name: field
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The filter field to autocomplete, for example country or naics_category.
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+        description: The partial text to match.
+      responses:
+        '200':
+          description: Autocomplete suggestions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutocompleteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    AutocompleteResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              display:
+                type: string
+    BusinessMatchRequest:
+      type: object
+      required:
+      - businesses_to_match
+      properties:
+        request_context:
+          $ref: '#/components/schemas/RequestContext'
+        businesses_to_match:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/BusinessToMatch'
+    FetchResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        total_results:
+          type: integer
+        page:
+          type: integer
+    MatchResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              matched_id:
+                type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    StatsResponse:
+      type: object
+      properties:
+        total_results:
+          type: integer
+        breakdown:
+          type: object
+          additionalProperties: true
+    FetchRequest:
+      type: object
+      properties:
+        mode:
+          type: string
+          description: preview or full.
+        size:
+          type: integer
+        page_size:
+          type: integer
+        page:
+          type: integer
+        filters:
+          type: object
+          additionalProperties: true
+          description: Field-to-value filter map, for example country_code or company_size.
+    BusinessToMatch:
+      type: object
+      properties:
+        name:
+          type: string
+        domain:
+          type: string
+        url:
+          type: string
+        linkedin_url:
+          type: string
+    RequestContext:
+      type: object
+      description: Optional context passed with a request.
+      properties:
+        seller_id:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: API_KEY
+      description: API key issued in the Explorium admin portal at https://admin.explorium.ai/api-key and sent in the API_KEY request header.

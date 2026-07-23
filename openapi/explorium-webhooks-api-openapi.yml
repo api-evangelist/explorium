@@ -1,0 +1,83 @@
+openapi: 3.0.3
+info:
+  title: Explorium AgentSource Business Enrichments Webhooks API
+  description: The Explorium AgentSource API is a single external-data and enrichment API for AI agents and go-to-market teams. It exposes match, fetch, statistics, autocomplete, enrichment, bulk enrichment, and event/enrollment endpoints over a business dataset (150M+ companies) and a prospect dataset (800M+ people) aggregated from 100+ external sources. All endpoints are hosted at https://api.explorium.ai and authenticated with an API key sent in the API_KEY request header. Access is gated behind an Explorium account and a credit balance (a free developer tier of 100 credits is available), so this document is honestly modeled from Explorium's published OpenAPI index and reference pages - the endpoint paths and HTTP methods are confirmed from Explorium's own documentation, while request and response schemas are represented at a representative level. Not every one of the 30+ enrichment endpoints is enumerated here; a representative subset is included. endpointsModeled - request/response bodies are modeled; paths are confirmed.
+  version: '1.0'
+  contact:
+    name: Explorium
+    url: https://developers.explorium.ai
+servers:
+- url: https://api.explorium.ai
+  description: Explorium AgentSource API production
+security:
+- apiKeyHeader: []
+tags:
+- name: Webhooks
+  description: Register endpoints that receive event notifications.
+paths:
+  /v1/webhooks:
+    post:
+      operationId: addWebhook
+      tags:
+      - Webhooks
+      summary: Add a webhook
+      description: Register an HTTPS endpoint to receive event notifications for enrolled businesses or prospects.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookInput'
+      responses:
+        '200':
+          description: The registered webhook.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Webhook'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    WebhookInput:
+      type: object
+      required:
+      - url
+      properties:
+        url:
+          type: string
+        event_types:
+          type: array
+          items:
+            type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    Webhook:
+      type: object
+      properties:
+        partner_id:
+          type: string
+        url:
+          type: string
+        event_types:
+          type: array
+          items:
+            type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: API_KEY
+      description: API key issued in the Explorium admin portal at https://admin.explorium.ai/api-key and sent in the API_KEY request header.

@@ -1,0 +1,63 @@
+openapi: 3.0.3
+info:
+  title: Explorium AgentSource Business Enrichments Credits API
+  description: The Explorium AgentSource API is a single external-data and enrichment API for AI agents and go-to-market teams. It exposes match, fetch, statistics, autocomplete, enrichment, bulk enrichment, and event/enrollment endpoints over a business dataset (150M+ companies) and a prospect dataset (800M+ people) aggregated from 100+ external sources. All endpoints are hosted at https://api.explorium.ai and authenticated with an API key sent in the API_KEY request header. Access is gated behind an Explorium account and a credit balance (a free developer tier of 100 credits is available), so this document is honestly modeled from Explorium's published OpenAPI index and reference pages - the endpoint paths and HTTP methods are confirmed from Explorium's own documentation, while request and response schemas are represented at a representative level. Not every one of the 30+ enrichment endpoints is enumerated here; a representative subset is included. endpointsModeled - request/response bodies are modeled; paths are confirmed.
+  version: '1.0'
+  contact:
+    name: Explorium
+    url: https://developers.explorium.ai
+servers:
+- url: https://api.explorium.ai
+  description: Explorium AgentSource API production
+security:
+- apiKeyHeader: []
+tags:
+- name: Credits
+  description: Inspect the shared credit pool that meters all API usage.
+paths:
+  /v1/credits:
+    get:
+      operationId: getActiveCredits
+      tags:
+      - Credits
+      summary: Get active credits summary
+      description: Return the active credit balance and expiry for the account. All match, fetch, enrich, and event calls draw down the same credit pool.
+      responses:
+        '200':
+          description: Active credit summary.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditsSummary'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    CreditsSummary:
+      type: object
+      properties:
+        active_credits:
+          type: integer
+        expires_at:
+          type: string
+          format: date-time
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: API_KEY
+      description: API key issued in the Explorium admin portal at https://admin.explorium.ai/api-key and sent in the API_KEY request header.

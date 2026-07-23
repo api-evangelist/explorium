@@ -1,0 +1,219 @@
+openapi: 3.0.3
+info:
+  title: Explorium AgentSource Business Enrichments Prospects API
+  description: The Explorium AgentSource API is a single external-data and enrichment API for AI agents and go-to-market teams. It exposes match, fetch, statistics, autocomplete, enrichment, bulk enrichment, and event/enrollment endpoints over a business dataset (150M+ companies) and a prospect dataset (800M+ people) aggregated from 100+ external sources. All endpoints are hosted at https://api.explorium.ai and authenticated with an API key sent in the API_KEY request header. Access is gated behind an Explorium account and a credit balance (a free developer tier of 100 credits is available), so this document is honestly modeled from Explorium's published OpenAPI index and reference pages - the endpoint paths and HTTP methods are confirmed from Explorium's own documentation, while request and response schemas are represented at a representative level. Not every one of the 30+ enrichment endpoints is enumerated here; a representative subset is included. endpointsModeled - request/response bodies are modeled; paths are confirmed.
+  version: '1.0'
+  contact:
+    name: Explorium
+    url: https://developers.explorium.ai
+servers:
+- url: https://api.explorium.ai
+  description: Explorium AgentSource API production
+security:
+- apiKeyHeader: []
+tags:
+- name: Prospects
+  description: Match, fetch, stat, and autocomplete over the 800M+ people dataset.
+paths:
+  /v1/prospects/match:
+    post:
+      operationId: matchProspects
+      tags:
+      - Prospects
+      summary: Match prospects
+      description: Resolve people to Explorium prospect_id values from full name plus company, email, or LinkedIn URL.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProspectMatchRequest'
+      responses:
+        '200':
+          description: Matched prospect identifiers.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MatchResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/prospects:
+    post:
+      operationId: fetchProspects
+      tags:
+      - Prospects
+      summary: Fetch prospects
+      description: Retrieve prospect records filtered by job level, department, title, seniority, or the business they work at.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FetchRequest'
+      responses:
+        '200':
+          description: A page of prospect records.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FetchResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/prospects/stats:
+    post:
+      operationId: fetchProspectStats
+      tags:
+      - Prospects
+      summary: Fetch prospect statistics
+      description: Estimate the number of prospects matching a set of filters.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FetchRequest'
+      responses:
+        '200':
+          description: Aggregate prospect counts.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StatsResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /v1/prospects/autocomplete:
+    get:
+      operationId: autocompleteProspects
+      tags:
+      - Prospects
+      summary: Autocomplete prospects
+      description: Fuzzy search over prospect filter values such as job title or department.
+      parameters:
+      - name: field
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: query
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Autocomplete suggestions.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AutocompleteResponse'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  schemas:
+    AutocompleteResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              display:
+                type: string
+    FetchResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+        total_results:
+          type: integer
+        page:
+          type: integer
+    MatchResponse:
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            type: object
+            properties:
+              matched_id:
+                type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+    ProspectMatchRequest:
+      type: object
+      required:
+      - prospects_to_match
+      properties:
+        request_context:
+          $ref: '#/components/schemas/RequestContext'
+        prospects_to_match:
+          type: array
+          maxItems: 50
+          items:
+            $ref: '#/components/schemas/ProspectToMatch'
+    StatsResponse:
+      type: object
+      properties:
+        total_results:
+          type: integer
+        breakdown:
+          type: object
+          additionalProperties: true
+    FetchRequest:
+      type: object
+      properties:
+        mode:
+          type: string
+          description: preview or full.
+        size:
+          type: integer
+        page_size:
+          type: integer
+        page:
+          type: integer
+        filters:
+          type: object
+          additionalProperties: true
+          description: Field-to-value filter map, for example country_code or company_size.
+    ProspectToMatch:
+      type: object
+      properties:
+        full_name:
+          type: string
+        company_name:
+          type: string
+        email:
+          type: string
+        linkedin_url:
+          type: string
+    RequestContext:
+      type: object
+      description: Optional context passed with a request.
+      properties:
+        seller_id:
+          type: string
+  responses:
+    Unauthorized:
+      description: Missing or invalid API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: API_KEY
+      description: API key issued in the Explorium admin portal at https://admin.explorium.ai/api-key and sent in the API_KEY request header.
