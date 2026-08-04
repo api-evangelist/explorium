@@ -1,0 +1,26 @@
+{
+  "provider": "explorium",
+  "sources": [
+    "explorium-business-enrichments-api-openapi.yml",
+    "explorium-businesses-api-openapi.yml",
+    "explorium-credits-api-openapi.yml",
+    "explorium-events-api-openapi.yml",
+    "explorium-prospect-enrichments-api-openapi.yml",
+    "explorium-prospects-api-openapi.yml",
+    "explorium-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "explorium-business-enrichments-api-openapi.yml",
+    "explorium-businesses-api-openapi.yml",
+    "explorium-credits-api-openapi.yml",
+    "explorium-events-api-openapi.yml",
+    "explorium-prospect-enrichments-api-openapi.yml",
+    "explorium-prospects-api-openapi.yml",
+    "explorium-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
