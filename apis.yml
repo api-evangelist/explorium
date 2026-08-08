@@ -57,7 +57,7 @@ apis:
   - url: https://developers.explorium.ai/mcp-docs/agentsource-mcp
     type: Documentation
   - url: https://mcp.explorium.ai/mcp
-    type: MCP
+    type: MCPServer
   - url: https://github.com/explorium-ai/mcp-explorium
     type: SourceCode
   description: >-
@@ -234,7 +234,7 @@ common:
   url: https://www.explorium.ai
 - type: Documentation
   url: https://developers.explorium.ai
-- type: MCP
+- type: Documentation
   url: https://developers.explorium.ai/mcp-docs/agentsource-mcp
 - type: Plans
   url: plans/explorium-plans-pricing.yml
