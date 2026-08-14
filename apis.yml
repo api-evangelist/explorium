@@ -2,18 +2,18 @@ aid: explorium
 url: https://raw.githubusercontent.com/api-evangelist/explorium/refs/heads/main/apis.yml
 name: Explorium
 kind: company
-description: >-
-  Explorium is a B2B data foundation for AI agents and go-to-market teams. Its
-  AgentSource API is a single external-data and enrichment platform - one API
-  plus a native MCP server - that resolves, fetches, enriches, and monitors a
-  business dataset of 150M+ companies and a prospect dataset of 800M+ people
-  aggregated from 100+ external sources. Capabilities include entity matching,
-  filtered fetch and market-sizing stats, autocomplete, 30+ firmographic /
-  technographic / financial / prospect-contact enrichment endpoints (single and
-  bulk up to 50 records), real-time business and prospect event tracking with
-  webhooks, and a shared credit pool that meters all usage. The API is hosted at
-  https://api.explorium.ai, authenticated with an API_KEY header, and gated
-  behind an Explorium account with a free 100-credit developer tier.
+description: Explorium is the B2B data layer for AI agents and go-to-market systems. Its AgentSource platform
+  is one external-data and enrichment API plus a hosted MCP server, resolving, fetching, enriching and
+  monitoring a company dataset and a people dataset aggregated from 100+ external sources. The REST API
+  at https://api.explorium.ai publishes an anonymous OpenAPI 3.1 description covering 127 operations across
+  two parallel surfaces - v1 (stable) and v2 (beta) - spanning entity matching, filtered fetch with cursor
+  pagination, market-sizing statistics, autocomplete, seventeen company enrichment families and three
+  people enrichment families (single, bulk to 50, and asynchronous to 10,000), AI-powered research, eighteen
+  business and prospect event types delivered over HMAC-signed webhooks, and a shared prepaid credit pool
+  that meters every call. Authentication is an api_key header on REST and OAuth 2.0 on MCP. Explorium
+  is unusually agent-forward at the discovery layer, serving an RFC 9727 api-catalog, a conformant A2A
+  agent card, an MCP server card, an ARD capability catalog, an agent-skills index and llms.txt from its
+  own domain.
 accessModel:
   pricing: freemium
   onboarding: self-serve
@@ -30,16 +30,22 @@ accessModel:
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/explorium.png
 tags:
 - Data Enrichment
-- Web Intelligence
-- Reference Data
 - B2B Data
 - Company Data
-- AI Agents
 - Prospect Enrichment
 - Firmographics
+- Technographics
+- Web Intelligence
+- Reference Data
+- AI Agents
 - MCP
+- Agent Readiness
+- Sales Intelligence
+- Business Events
+- Webhooks
+- Market Intelligence
 created: '2026-07-11'
-modified: '2026-07-11'
+modified: '2026-08-14'
 specificationVersion: '0.19'
 apis:
 - aid: explorium:explorium-agentsource-mcp-server
@@ -60,39 +66,17 @@ apis:
     type: MCPServer
   - url: https://github.com/explorium-ai/mcp-explorium
     type: SourceCode
-  description: >-
-    Native remote Model Context Protocol server exposing the AgentSource data as 11 agent tools - match-business,
-    fetch-businesses, fetch-businesses- statistics, fetch-businesses-events, enrich-business, match-prospects,
-    fetch-prospects, fetch-prospects-statistics, fetch-prospects-events, enrich-prospects, and autocomplete.
-    Available over streamable HTTP (https://mcp.explorium.ai/mcp) and SSE (https://mcp.explorium.ai/sse),
+  description: Native remote Model Context Protocol server exposing the AgentSource data as 11 agent tools
+    - match-business, fetch-businesses, fetch-businesses- statistics, fetch-businesses-events, enrich-business,
+    match-prospects, fetch-prospects, fetch-prospects-statistics, fetch-prospects-events, enrich-prospects,
+    and autocomplete. Available over streamable HTTP (https://mcp.explorium.ai/mcp) and SSE (https://mcp.explorium.ai/sse),
     and self-hostable via Docker (MIT). Works with Claude Desktop, Cursor, VS Code, n8n, and other MCP
     clients.
-- aid: explorium:explorium-business-enrichments-api
-  name: Explorium Business Enrichments API
-  description: Firmographic, technographic, financial, and operational company enrichments.
-  humanURL: https://developers.explorium.ai/reference/businesses_api
-  baseURL: https://api.explorium.ai
-  tags:
-  - Business Enrichments
-  properties:
-  - type: OpenAPI
-    url: openapi/explorium-business-enrichments-api-openapi.yml
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_api
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/prospects_api
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_prospects
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/match_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_events
 - aid: explorium:explorium-businesses-api
   name: Explorium Businesses API
-  description: Match, fetch, stat, and autocomplete over the 150M+ company dataset.
-  humanURL: https://developers.explorium.ai/reference/businesses_api
+  description: Match, fetch, stat, autocomplete, and event/enrollment operations over the Explorium business
+    dataset (v1).
+  humanURL: https://developers.explorium.ai/reference/businesses/businesses_api
   baseURL: https://api.explorium.ai
   tags:
   - Businesses
@@ -100,21 +84,14 @@ apis:
   - type: OpenAPI
     url: openapi/explorium-businesses-api-openapi.yml
   - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_api
+    url: https://developers.explorium.ai/
   - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/prospects_api
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_prospects
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/match_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_events
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
 - aid: explorium:explorium-credits-api
   name: Explorium Credits API
-  description: Inspect the shared credit pool that meters all API usage.
-  humanURL: https://developers.explorium.ai/reference/businesses_api
+  description: Inspect the shared credit pool that meters all Explorium API usage, including the credit
+    menu and consumption aggregation (v1).
+  humanURL: https://developers.explorium.ai/reference/credits/get_active_credits_summary
   baseURL: https://api.explorium.ai
   tags:
   - Credits
@@ -122,65 +99,14 @@ apis:
   - type: OpenAPI
     url: openapi/explorium-credits-api-openapi.yml
   - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_api
+    url: https://developers.explorium.ai/
   - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/prospects_api
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_prospects
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/match_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_events
-- aid: explorium:explorium-events-api
-  name: Explorium Events API
-  description: Business and prospect event tracking plus enrollment management.
-  humanURL: https://developers.explorium.ai/reference/businesses_api
-  baseURL: https://api.explorium.ai
-  tags:
-  - Events
-  properties:
-  - type: OpenAPI
-    url: openapi/explorium-events-api-openapi.yml
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_api
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/prospects_api
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_prospects
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/match_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_events
-- aid: explorium:explorium-prospect-enrichments-api
-  name: Explorium Prospect Enrichments API
-  description: Contact information, profile, and social enrichments for people.
-  humanURL: https://developers.explorium.ai/reference/businesses_api
-  baseURL: https://api.explorium.ai
-  tags:
-  - Prospect Enrichments
-  properties:
-  - type: OpenAPI
-    url: openapi/explorium-prospect-enrichments-api-openapi.yml
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_api
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/prospects_api
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_prospects
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/match_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_events
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
 - aid: explorium:explorium-prospects-api
   name: Explorium Prospects API
-  description: Match, fetch, stat, and autocomplete over the 800M+ people dataset.
-  humanURL: https://developers.explorium.ai/reference/businesses_api
+  description: Match, fetch, stat, autocomplete, and event/enrollment operations over the Explorium prospect
+    dataset (v1).
+  humanURL: https://developers.explorium.ai/reference/prospects/prospects_api
   baseURL: https://api.explorium.ai
   tags:
   - Prospects
@@ -188,21 +114,14 @@ apis:
   - type: OpenAPI
     url: openapi/explorium-prospects-api-openapi.yml
   - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_api
+    url: https://developers.explorium.ai/
   - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/prospects_api
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_prospects
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/match_businesses
-  - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_events
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
 - aid: explorium:explorium-webhooks-api
   name: Explorium Webhooks API
-  description: Register endpoints that receive event notifications.
-  humanURL: https://developers.explorium.ai/reference/businesses_api
+  description: Register, retrieve, delete, and connectivity-test the webhook endpoints that receive Explorium
+    business and prospect event notifications (v1).
+  humanURL: https://developers.explorium.ai/reference/webhooks/webhooks
   baseURL: https://api.explorium.ai
   tags:
   - Webhooks
@@ -210,18 +129,262 @@ apis:
   - type: OpenAPI
     url: openapi/explorium-webhooks-api-openapi.yml
   - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_api
+    url: https://developers.explorium.ai/
   - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_businesses
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-asyncenrichmentjobs-api
+  name: Explorium Async Enrichment Jobs API
+  description: Submit any v2 company or people enrichment — plus AI research — as an asynchronous job
+    over an uploaded entity-ID dataset.
+  humanURL: https://developers.explorium.ai/v2/async-jobs
+  baseURL: https://api.explorium.ai
+  tags:
+  - AsyncEnrichmentJobs
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-asyncenrichmentjobs-api-openapi.yml
   - type: Documentation
-    url: https://developers.explorium.ai/reference/prospects_api
+    url: https://developers.explorium.ai/
   - type: APIReference
-    url: https://developers.explorium.ai/reference/fetch_prospects
-  - type: APIReference
-    url: https://developers.explorium.ai/reference/match_businesses
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-asyncjobs-api
+  name: Explorium Async Jobs API
+  description: List, poll, and cancel the asynchronous enrichment jobs that back batch runs of up to 10,000
+    records (v2).
+  humanURL: https://developers.explorium.ai/v2/async-jobs
+  baseURL: https://api.explorium.ai
+  tags:
+  - AsyncJobs
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-asyncjobs-api-openapi.yml
   - type: Documentation
-    url: https://developers.explorium.ai/reference/businesses_events
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-bulkbusinessenrichments-api
+  name: Explorium Bulk Business Enrichments API
+  description: Bulk (multi-record) versions of every v1 company enrichment, processing up to 50 business
+    IDs per request.
+  humanURL: https://developers.explorium.ai/reference/businesses/enrichments/bulk/bulk_businesses_enrichments
+  baseURL: https://api.explorium.ai
+  tags:
+  - BulkBusinessEnrichments
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-bulkbusinessenrichments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-businessenrichments-api
+  name: Explorium Business Enrichments API
+  description: 'Single-record company enrichments (v1): firmographics, technographics, webstack, website
+    traffic and changes, financial indicators, funding and acquisition, workforce trends, company hierarchies,
+    ratings, lookalikes, Bombora intent, and 10-K derived strategy/competitive/challenge analysis.'
+  humanURL: https://developers.explorium.ai/reference/businesses/enrichments/businesses_enrichments
+  baseURL: https://api.explorium.ai
+  tags:
+  - BusinessEnrichments
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-businessenrichments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-customenrichments-api
+  name: Explorium Custom Enrichments API
+  description: Run a customer-specific custom enrichment, single-record or in bulk, by custom enrichment
+    ID.
+  humanURL: https://developers.explorium.ai/reference/businesses/enrichments/businesses_enrichments
+  baseURL: https://api.explorium.ai
+  tags:
+  - CustomEnrichments
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-customenrichments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-entityiddatasets-api
+  name: Explorium Entity ID Datasets API
+  description: Upload an entity-ID dataset that asynchronous v2 enrichment jobs run against.
+  humanURL: https://developers.explorium.ai/v2/async-jobs
+  baseURL: https://api.explorium.ai
+  tags:
+  - EntityIdDatasets
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-entityiddatasets-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-healthcheck-api
+  name: Explorium Healthcheck API
+  description: Liveness and payload-size health probes for the Explorium AgentSource service.
+  humanURL: https://developers.explorium.ai/reference/quick-starts/introduction
+  baseURL: https://api.explorium.ai
+  tags:
+  - Healthcheck
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-healthcheck-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-prospectsbulkenrichments-api
+  name: Explorium Prospects Bulk Enrichments API
+  description: Bulk (multi-record) versions of the v1 people enrichments, processing up to 50 prospect
+    IDs per request.
+  humanURL: https://developers.explorium.ai/reference/prospects/enrichments/bulk/bulk_prospects_enrichments
+  baseURL: https://api.explorium.ai
+  tags:
+  - ProspectsBulkEnrichments
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-prospectsbulkenrichments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-prospectsenrichments-api
+  name: Explorium Prospects Enrichments API
+  description: 'Single-record people enrichments (v1): contact information, professional profiles, and
+    LinkedIn posts for a matched prospect.'
+  humanURL: https://developers.explorium.ai/reference/prospects/enrichments/prospects_enrichments
+  baseURL: https://api.explorium.ai
+  tags:
+  - ProspectsEnrichments
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-prospectsenrichments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-v2autocomplete-api
+  name: Explorium V2 Autocomplete API
+  description: Resolve free-text input to the standardized filter values the v2 search API accepts.
+  humanURL: https://developers.explorium.ai/v2/businesses/match_businesses
+  baseURL: https://api.explorium.ai
+  tags:
+  - V2Autocomplete
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-v2autocomplete-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-v2businessenrichments-api
+  name: Explorium V2 Business Enrichments API
+  description: Synchronous v2 company enrichments — the same seventeen attribute families as v1, on the
+    unified v2 request shape.
+  humanURL: https://developers.explorium.ai/v2/businesses/match_businesses
+  baseURL: https://api.explorium.ai
+  tags:
+  - V2BusinessEnrichments
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-v2businessenrichments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-v2businesses-api
+  name: Explorium V2 Businesses API
+  description: Match, fetch, and stat over the company dataset on the v2 (beta) surface, where bulk and
+    single input share one endpoint.
+  humanURL: https://developers.explorium.ai/v2/businesses/match_businesses
+  baseURL: https://api.explorium.ai
+  tags:
+  - V2Businesses
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-v2businesses-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-v2credits-api
+  name: Explorium V2 Credits API
+  description: Credit balance and consumption aggregation on the v2 (beta) surface.
+  humanURL: https://developers.explorium.ai/reference/credits/get_active_credits_summary
+  baseURL: https://api.explorium.ai
+  tags:
+  - V2Credits
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-v2credits-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-v2prospectenrichments-api
+  name: Explorium V2 Prospect Enrichments API
+  description: 'Synchronous v2 people enrichments: contact information, professional profiles, and LinkedIn
+    posts.'
+  humanURL: https://developers.explorium.ai/v2/prospects/match_prospects
+  baseURL: https://api.explorium.ai
+  tags:
+  - V2ProspectEnrichments
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-v2prospectenrichments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-v2prospects-api
+  name: Explorium V2 Prospects API
+  description: Match, fetch, and stat over the people dataset on the v2 (beta) surface.
+  humanURL: https://developers.explorium.ai/v2/prospects/match_prospects
+  baseURL: https://api.explorium.ai
+  tags:
+  - V2Prospects
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-v2prospects-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-v2research-api
+  name: Explorium V2 Research API
+  description: Run a custom, AI-powered research task over a list of businesses or prospects using a natural-language
+    query or prompt template, grounded in real-time web data (beta).
+  humanURL: https://developers.explorium.ai/reference/research
+  baseURL: https://api.explorium.ai
+  tags:
+  - V2Research
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-v2research-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-version-api
+  name: Explorium Version API
+  description: Report the deployed version of the Explorium AgentSource service.
+  humanURL: https://developers.explorium.ai/reference/quick-starts/introduction
+  baseURL: https://api.explorium.ai
+  tags:
+  - Version
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-version-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
 common:
+- type: DomainSecurity
+  url: security/explorium-domain-security.yml
 - type: AgenticAccess
   url: agentic-access/explorium-agentic-access.yml
 - type: Authentication
@@ -244,6 +407,76 @@ common:
   url: finops/explorium-finops.yml
 - url: https://www.explorium.ai/blog/
   type: Blog
+- type: OpenAPI
+  url: openapi/_original/explorium-agentsource-openapi.json
+  name: Explorium AgentSource API (harvested, canonical)
+- type: Overlay
+  url: overlays/explorium-agentsource-overlay.yaml
+- type: Packages
+  url: packages/explorium-packages.yml
+- type: WellKnown
+  url: well-known/explorium-well-known.yml
+- type: APICatalog
+  url: well-known/explorium-api-catalog.json
+- type: MCPServer
+  url: mcp/explorium-mcp.yml
+- type: ToolCrosswalk
+  url: mcp/explorium-tool-crosswalk.yml
+- type: AgentCard
+  url: a2a/explorium-a2a.yml
+- type: LLMsTxt
+  url: llms/explorium-llms.txt
+- type: Conformance
+  url: conformance/explorium-conformance.yml
+- type: Compliance
+  url: https://www.explorium.ai/data-security/
+- type: TrustCenter
+  url: security/explorium-trust-center.yml
+- type: ErrorCatalog
+  url: errors/explorium-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/explorium-lifecycle.yml
+- type: Conventions
+  url: conventions/explorium-conventions.yml
+- type: ChangeLog
+  url: changelog/explorium-changelog.yml
+- type: DataModel
+  url: data-model/explorium-data-model.yml
+- type: Sandbox
+  url: sandbox/explorium-sandbox.yml
+- type: Webhooks
+  url: asyncapi/explorium-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+  name: Explorium Agent Skills
+- type: AgentSkill
+  url: skills/explorium-agentsource.md
+  name: Explorium AgentSource Skill (provider-published)
+- type: DeveloperPortal
+  url: https://developers.explorium.ai/
+- type: APIReference
+  url: https://developers.explorium.ai/reference/quick-starts/introduction
+- type: GettingStarted
+  url: https://developers.explorium.ai/reference/quick-starts/quick-starts
+- type: Authentication
+  url: https://www.explorium.ai/auth.md
+- type: Support
+  url: https://developers.explorium.ai/reference/support-help-center
+- type: Pricing
+  url: https://www.explorium.ai/pricing/
+- type: SignUp
+  url: https://www.explorium.ai/sign-up/
+- type: TermsOfService
+  url: https://www.explorium.ai/explorium-website-terms-of-use/
+- type: PrivacyPolicy
+  url: https://www.explorium.ai/privacy-policy/
+- type: Console
+  url: https://www.explorium.ai/mcp-playground/
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
+x-enrichment:
+  date: '2026-08-14'
+  status: enriched
+  artifacts_added: 30
+  pass: local-v1
