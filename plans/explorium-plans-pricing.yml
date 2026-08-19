@@ -3,9 +3,13 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
 provider: Explorium
 providerId: explorium
+generated: '2026-08-14'
+method: searched
+source: https://www.explorium.ai/pricing.md
 created: '2026-07-11'
-modified: '2026-07-11'
-reconciled: false
+modified: '2026-08-14'
+reconciled: true
+plan_count: 5
 tags:
 - Data Enrichment
 - B2B Data
@@ -13,91 +17,176 @@ tags:
 - Credits
 - Plans
 description: >-
-  Explorium AgentSource is metered with a single credit pool shared across every
-  API surface - match, fetch, stats, autocomplete, 30+ enrichment endpoints, and
-  event tracking - plus the AgentSource MCP server. Access is gated behind an
-  Explorium account: developers get a free 100-credit tier valid for 90 days to
-  test the Generate, Enrich, and Event APIs, then move to one-time credit
-  packages (reported to start around 200 USD for 5,000 credits) or a custom
-  enterprise agreement. Credits are consumed per action (a generate/fetch
-  request, an enrichment, an event lookup), aligning spend to workflow volume.
-  Exact package tiers and per-credit rates are set in the Explorium admin portal
-  and are not reconciled here.
+  Explorium publishes a complete, priced plan table in machine-readable form at
+  https://www.explorium.ai/pricing.md (last-updated 2026-08-12 in the document's
+  own front matter), alongside the human page at
+  https://www.explorium.ai/pricing/. Four named tiers carry a list price, a
+  credit allocation, a derived cost per credit and a validity window; the fifth
+  is a custom enterprise agreement. Everything below is quoted from that
+  document - no figure here is inferred.
 notes: >-
-  Pricing figures (free 100 credits / 90 days, and roughly 200 USD for 5,000
-  credits) are drawn from Explorium marketing and product-update pages and may
-  change. Verify current bundles in the admin portal at admin.explorium.ai under
-  Pricing, or contact support@explorium.ai. Enterprise pricing is contact-sales.
+  This supersedes the earlier round's estimate of "roughly 200 USD for 5,000
+  credits", which came from a marketing page and does not match the published
+  table. Plans are one-time credit purchases, not subscriptions: paid credits
+  expire twelve months after purchase, do not carry forward, are non-refundable
+  and do not auto-renew. Service stops when the balance is exhausted. Consumption
+  is tracked in the admin console at https://admin.explorium.ai.
 sources:
-- https://www.explorium.ai/
+- https://www.explorium.ai/pricing.md
+- https://www.explorium.ai/pricing/
 - https://developers.explorium.ai/reference/credits/credit_plans
-- https://www.explorium.ai/product-updates/explorium-agensource/
+- https://developers.explorium.ai/reference/credits/auto-refill-credits
+metering:
+  unit: credits
+  pool: single shared pool across REST and MCP
+  consumed_by:
+  - Search - returning companies or prospects matching a set of filters
+  - Enrichment - adding attributes to a company or person already matched
+  - Events - retrieving business or prospect event signals
+  counting_note: >-
+    Credits are consumed per entity, not per HTTP request. A single request
+    carrying 50 businesses consumes 50 credits and 50 rate-limit queries.
+  pre_purchase_estimation: >-
+    The MCP server exposes estimate-cost to price an operation before it runs,
+    and show-sample to preview a result table before paying for a full export.
+    Neither has a REST equivalent.
+  auto_refill: https://developers.explorium.ai/reference/credits/auto-refill-credits
 plans:
-- id: explorium-free-developer
-  name: Free Developer Tier
+- id: explorium-free-trial
+  name: Free Trial
   type: free
-  description: >-
-    Free onboarding tier for developers to evaluate data quality and integrate
-    the AgentSource API and MCP server before committing to a paid package.
+  price: 0.00
+  currency: USD
+  billingPeriod: one-time
+  credits: 100
+  cost_per_credit: null
+  validity: 90 days
+  description: Free trial with 100 credits, valid for 90 days. Full API and MCP access.
   entries:
   - label: Included Credits
     name: free_credits
     type: usage
     metric: credits
     limit: 100
-    timeFrame: day
+    timeFrame: 90 days
     geo: global
     unit: 1
-    price: free (100 credits, valid 90 days)
+    price: '0.00'
     userMultiplied: false
   elements:
-  - name: Generate, Enrich, and Event APIs
-  - name: AgentSource MCP Server
-  - name: Business and Prospect Datasets
-- id: explorium-credit-package
-  name: Credit Package (Pay As You Go)
+  - name: REST API and MCP server access
+  - name: Business and prospect datasets
+  - name: Events and enrichments
+- id: explorium-starter
+  name: Starter
   type: usage
-  description: >-
-    One-time prepaid credit bundles purchased in the admin portal. Credits draw
-    down from a single shared pool across all match, fetch, enrichment, and
-    event calls.
+  price: 99.99
+  currency: USD
+  billingPeriod: one-time
+  credits: 2500
+  cost_per_credit: 0.04
+  validity: 12 months
+  description: One-time prepaid package of 2,500 credits at $0.04 per credit, valid 12 months.
   entries:
   - label: Prepaid Credits
     name: prepaid_credits
     type: usage
     metric: credits
-    limit: -1
-    timeFrame: month
+    limit: 2500
+    timeFrame: 12 months
     geo: global
-    unit: 5000
-    price: from ~200 USD per 5,000 credits (see admin portal)
+    unit: 1
+    price: '0.04'
     userMultiplied: false
   elements:
-  - name: Shared Credit Pool
-  - name: 30+ Enrichment Endpoints
-  - name: Bulk Enrichment (up to 50 records)
-  - name: Event Tracking and Webhooks
+  - name: Full suite of account and prospect enrichments
+  - name: Events
+- id: explorium-growth
+  name: Growth
+  type: usage
+  price: 749.99
+  currency: USD
+  billingPeriod: one-time
+  credits: 25000
+  cost_per_credit: 0.03
+  validity: 12 months
+  description: One-time prepaid package of 25,000 credits at $0.03 per credit, valid 12 months.
+  entries:
+  - label: Prepaid Credits
+    name: prepaid_credits
+    type: usage
+    metric: credits
+    limit: 25000
+    timeFrame: 12 months
+    geo: global
+    unit: 1
+    price: '0.03'
+    userMultiplied: false
+  elements:
+  - name: Full suite of account and prospect enrichments
+  - name: Events
+- id: explorium-scale
+  name: Scale
+  type: usage
+  price: 7499.99
+  currency: USD
+  billingPeriod: one-time
+  credits: 500000
+  cost_per_credit: 0.015
+  validity: 12 months
+  description: One-time prepaid package of 500,000 credits at $0.015 per credit, valid 12 months.
+  entries:
+  - label: Prepaid Credits
+    name: prepaid_credits
+    type: usage
+    metric: credits
+    limit: 500000
+    timeFrame: 12 months
+    geo: global
+    unit: 1
+    price: '0.015'
+    userMultiplied: false
+  elements:
+  - name: Full suite of account and prospect enrichments
+  - name: Events
 - id: explorium-enterprise
-  name: Enterprise / Custom
+  name: Enterprise
   type: enterprise
+  price: null
+  currency: USD
+  billingPeriod: custom
+  credits: custom
+  cost_per_credit: null
+  validity: custom
   description: >-
-    Custom credit volume, custom enrichments, dedicated support, security review,
-    and negotiated terms for production go-to-market and agent workloads.
+    Custom credit volume and terms, quoted per account. Adds volume discounts,
+    ADDITIONAL QUERIES PER MINUTE above the standard 200/min limit, search
+    preview, resell rights, custom CRM integrations and a dedicated customer
+    success manager.
+  contact: https://www.explorium.ai/demo/
   entries:
   - label: Enterprise Agreement
     name: enterprise
     type: flat
     metric: contract
     limit: -1
-    timeFrame: year
+    timeFrame: custom
     geo: global
     unit: 1
     price: contact sales
     userMultiplied: false
   elements:
-  - name: Custom Credit Volume
-  - name: Custom Enrichments
-  - name: Dedicated Support and SLAs
+  - name: Custom credit volume
+  - name: Additional queries per minute
+  - name: Search preview
+  - name: Resell rights
+  - name: Custom CRM integrations
+  - name: Dedicated customer success manager
+terms:
+- Plans are one-time credit purchases, not subscriptions.
+- Paid credits expire 12 months after purchase and do not carry forward.
+- Packages are non-refundable and do not renew automatically.
+- Service stops when credits are exhausted before renewal.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

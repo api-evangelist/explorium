@@ -1,22 +1,40 @@
-generated: '2026-07-11'
+generated: '2026-08-14'
 method: derived
-source: openapi/explorium-openapi.yml
+source: openapi/explorium-asyncenrichmentjobs-api-openapi.yml, openapi/explorium-asyncjobs-api-openapi.yml,
+  openapi/explorium-bulkbusinessenrichments-api-openapi.yml, openapi/explorium-businessenrichments-api-openapi.yml,
+  openapi/explorium-businesses-api-openapi.yml, openapi/explorium-credits-api-openapi.yml, openapi/explorium-customenrichments-api-openapi.yml,
+  openapi/explorium-entityiddatasets-api-openapi.yml, openapi/explorium-healthcheck-api-openapi.yml,
+  openapi/explorium-prospects-api-openapi.yml, openapi/explorium-prospectsbulkenrichments-api-openapi.yml,
+  openapi/explorium-prospectsenrichments-api-openapi.yml ...
 summary:
   types:
   - apiKey
+  api_key_in:
+  - header
 schemes:
-- name: apiKeyHeader
+- name: APIKeyHeader
   type: apiKey
   in: header
-  keyName: API_KEY
-  description: >-
-    API key issued in the Explorium admin portal at
-    https://admin.explorium.ai/api-key and sent in the API_KEY request header on
-    every call to https://api.explorium.ai. The same key authorizes the
-    AgentSource REST API and, for Docker self-hosting, the AgentSource MCP
-    server (passed as API_ACCESS_TOKEN). Remote MCP connections authorize
-    through the connected client rather than a raw header.
+  parameter: api_key
   sources:
-  - openapi/explorium-openapi.yml
-  - https://developers.explorium.ai/reference/fetch_businesses
-  - https://github.com/explorium-ai/mcp-explorium
+  - openapi/explorium-asyncenrichmentjobs-api-openapi.yml
+  - openapi/explorium-asyncjobs-api-openapi.yml
+  - openapi/explorium-bulkbusinessenrichments-api-openapi.yml
+  - openapi/explorium-businessenrichments-api-openapi.yml
+  - openapi/explorium-businesses-api-openapi.yml
+  - openapi/explorium-credits-api-openapi.yml
+  - openapi/explorium-customenrichments-api-openapi.yml
+  - openapi/explorium-entityiddatasets-api-openapi.yml
+  - openapi/explorium-healthcheck-api-openapi.yml
+  - openapi/explorium-prospects-api-openapi.yml
+  - openapi/explorium-prospectsbulkenrichments-api-openapi.yml
+  - openapi/explorium-prospectsenrichments-api-openapi.yml
+  - openapi/explorium-v2autocomplete-api-openapi.yml
+  - openapi/explorium-v2businessenrichments-api-openapi.yml
+  - openapi/explorium-v2businesses-api-openapi.yml
+  - openapi/explorium-v2credits-api-openapi.yml
+  - openapi/explorium-v2prospectenrichments-api-openapi.yml
+  - openapi/explorium-v2prospects-api-openapi.yml
+  - openapi/explorium-v2research-api-openapi.yml
+  - openapi/explorium-version-api-openapi.yml
+  - openapi/explorium-webhooks-api-openapi.yml

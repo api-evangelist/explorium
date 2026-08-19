@@ -1,0 +1,526 @@
+{
+  "item": [
+    {
+      "id": "fce66627-7206-4f57-8ba3-470c9a9adf34",
+      "name": "Business Enrichments",
+      "description": {
+        "content": "Firmographic, technographic, financial, and operational company enrichments.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a9d16e45-8b31-4f63-bd93-492b9f3ccf45",
+          "name": "Enrich firmographics",
+          "request": {
+            "name": "Enrich firmographics",
+            "description": {
+              "content": "Return firmographic attributes (industry, size, revenue band, location, founding year) for a single matched business_id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "businesses",
+                "firmographics",
+                "enrich"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8e648a54-ba63-46de-a7e6-648daee0916f",
+              "name": "Firmographic enrichment record.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "firmographics",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": false\n    },\n    {\n      \"key_0\": \"string\",\n      \"key_1\": 497.0942200178197,\n      \"key_2\": 4342\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e815e74e-b337-41ab-8b6e-62c2bca81207",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "firmographics",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6a7f0c85-1922-4a71-a451-64952049105e",
+          "name": "Enrich technographics",
+          "request": {
+            "name": "Enrich technographics",
+            "description": {
+              "content": "Return the detected technology stack for a matched business_id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "businesses",
+                "technographics",
+                "enrich"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1cd57b44-58f3-48d4-aad4-609d1e6d0726",
+              "name": "Technographic enrichment record.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "technographics",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": 3836.2643876307643\n    },\n    {\n      \"key_0\": 3650\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "16dc10bc-f791-42e4-ad52-95d9e0d0a396",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "technographics",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ed9c2a5d-b620-4c26-931f-576828ff2504",
+          "name": "Bulk enrich firmographics",
+          "request": {
+            "name": "Bulk enrich firmographics",
+            "description": {
+              "content": "Enrich firmographics for up to 50 business_id values in a single request against the shared credit pool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "businesses",
+                "firmographics",
+                "bulk_enrich"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"prospect_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "df7125be-684c-4f08-8f34-0756bc4f0318",
+              "name": "Firmographic enrichment records.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "firmographics",
+                    "bulk_enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"prospect_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": 3836.2643876307643\n    },\n    {\n      \"key_0\": 3650\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0903aced-92b8-4373-89ae-113a33a0b0ed",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "firmographics",
+                    "bulk_enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"prospect_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.explorium.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "API_KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "a3909e77-cb1d-4e7d-9fa7-e8f178c1e12a",
+    "name": "Explorium AgentSource Business Enrichments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Explorium AgentSource API is a single external-data and enrichment API for AI agents and go-to-market teams. It exposes match, fetch, statistics, autocomplete, enrichment, bulk enrichment, and event/enrollment endpoints over a business dataset (150M+ companies) and a prospect dataset (800M+ people) aggregated from 100+ external sources. All endpoints are hosted at https://api.explorium.ai and authenticated with an API key sent in the API_KEY request header. Access is gated behind an Explorium account and a credit balance (a free developer tier of 100 credits is available), so this document is honestly modeled from Explorium's published OpenAPI index and reference pages - the endpoint paths and HTTP methods are confirmed from Explorium's own documentation, while request and response schemas are represented at a representative level. Not every one of the 30+ enrichment endpoints is enumerated here; a representative subset is included. endpointsModeled - request/response bodies are modeled; paths are confirmed.\n\nContact Support:\n Name: Explorium",
+      "type": "text/plain"
+    }
+  }
+}

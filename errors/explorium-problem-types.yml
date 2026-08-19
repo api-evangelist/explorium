@@ -1,0 +1,153 @@
+generated: '2026-08-14'
+method: searched
+source:
+- https://developers.explorium.ai/reference/error-handling
+- https://www.explorium.ai/auth.md
+- openapi/_original/explorium-agentsource-openapi.json
+format: custom
+rfc9457: false
+description: >-
+  Explorium's error catalogue, taken from the published error reference and
+  cross-checked against the harvested OpenAPI. The contract itself is thin here:
+  of 127 operations, 125 declare exactly one error response - 422 Validation
+  Error - and none declares 400, 401, 403, 429 or 5xx, even though the docs
+  document all of them. Everything below beyond 422 is documented behaviour that
+  the machine-readable contract does not describe, which is precisely the gap an
+  agent falls into.
+spec_coverage:
+  operations_total: 127
+  operations_declaring_4xx_5xx: 125
+  distinct_error_statuses_in_spec:
+  - 422
+  documented_but_undeclared:
+  - 400
+  - 401
+  - 403
+  - 429
+  - 500
+  - 503
+  note: >-
+    A generated client from this spec will handle validation errors and treat
+    every authentication, entitlement, rate-limit and server failure as an
+    unmodelled response.
+envelopes:
+- name: general
+  applies_to: [400, 401, 403, 500, 503]
+  shape: '{"details": "<human-readable description>", "correlation_id": "<id>"}'
+- name: validation
+  applies_to: [422]
+  shape: '{"detail": [{"loc": ["body", "<field>"], "msg": "<message>", "type": "<error_type>", "ctx": {...}}]}'
+  note: FastAPI-native validation envelope; this is the only one in the OpenAPI.
+- name: rate-limit
+  applies_to: [429]
+  shape: '{"code": 429, "message": "Rate limit exceeded. Please retry after the specified time.", "retry_after": <seconds>}'
+  note: >-
+    The rate-limit reference documents a fourth variant of the same error -
+    {"error": "rate_limit_exceeded", "message": ..., "retry_after": 60} - so
+    even within one status code the published shape is not consistent.
+problems:
+- status: 400
+  title: Bad request
+  detail: Invalid request format or parameters.
+  remediation: Fix the request; do not retry unchanged.
+- status: 400
+  title: Client webhook failed
+  detail: 'Message: "Client webhook failed on: [details]" - the receiver failed to process a delivered event.'
+  remediation: Check webhook endpoint availability and its response, then re-test with check_webhook_connectivity.
+  source_operation: check_webhook_connectivity
+- status: 401
+  title: Partner ID is missing
+  detail: >-
+    "Partner ID is missing. Please set it in one of these headers:
+    X-Context-Partner-ID, partner-id, partner_id."
+  remediation: Add the partner ID to the request headers.
+- status: 401
+  title: Partner ID is invalid
+  detail: >-
+    "Partner ID is invalid. Please set the Partner ID in one of these headers:
+    X-Context-Partner-ID, partner-id, partner_id."
+  remediation: Verify the partner ID is correct for the account.
+- status: 401
+  title: Missing or invalid credential
+  detail: >-
+    On the REST API, a missing/malformed/expired api_key. On the MCP endpoint,
+    the response carries WWW-Authenticate: Bearer realm="OAuth",
+    error="invalid_token" and body
+    {"error":"invalid_token","error_description":"Missing or invalid access token"}.
+  remediation: >-
+    Re-issue the key in the admin console, or re-run the OAuth flow. Explorium
+    states explicitly: do not retry with the same token.
+  source: https://www.explorium.ai/auth.md
+- status: 403
+  title: Insufficient credits
+  detail: >-
+    "You have insufficient credits to perform this operation. Please purchase
+    additional credits."
+  remediation: Purchase credits or contact the account manager. Check the balance with get_active_credits_summary before large batches.
+  note: >-
+    Credit exhaustion is modelled as an authorization failure, not as a 402 or a
+    quota error. An agent that retries 403 will never recover.
+- status: 403
+  title: Not entitled
+  detail: Authenticated but not entitled to the requested data or operation.
+  remediation: Contact the account owner; entitlement is per account.
+- status: 422
+  title: Validation Error
+  detail: Request body failed schema validation.
+  remediation: Read detail[].loc and detail[].msg and correct the named field.
+  in_spec: true
+  declared_on_operations: 125
+  common_cases:
+  - field: size
+    type: value_error.number.not_le
+    message: ensure this value is less than or equal to 100
+  - field: page
+    type: value_error.number.not_ge
+    message: ensure this value is greater than or equal to 1
+  - field: filters
+    type: value_error.missing
+    message: field required
+- status: 429
+  title: Rate limit exceeded
+  detail: More than 200 queries in the 60-second sliding window for this API key.
+  remediation: Honour Retry-After; back off exponentially. Read X-RateLimit-Remaining and throttle preemptively.
+  headers:
+  - Retry-After
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+- status: 500
+  title: Internal server error
+  detail: '"An internal server error occurred".'
+  remediation: Retry with exponential backoff; contact support with the correlation_id if it persists.
+- status: 503
+  title: Service unavailable
+  detail: Temporary server issue.
+  remediation: Retry with exponential backoff.
+soft_failures:
+- name: request_status = miss
+  http_status: 200
+  detail: >-
+    A successful HTTP response whose response_context.request_status is "miss"
+    means the entity was not resolved. Match operations also return a null
+    business_id or prospect_id in the ordered result list.
+  remediation: >-
+    Branch on response_context.request_status, not on the HTTP status. For
+    matches, retry with more identifiers - name and domain together is the most
+    reliable combination per Explorium's own guidance.
+  note: >-
+    This is the most important error in the catalogue and it never appears as an
+    error. An agent reading only status codes records a miss as a success.
+- name: request_status = failure
+  http_status: 200
+  detail: Per-record failure inside an otherwise successful batch response.
+troubleshooting:
+  correlation_id: response_context.correlation_id
+  support: https://developers.explorium.ai/reference/support-help-center
+  note: >-
+    Explorium asks for the correlation ID, endpoint, method, headers, body,
+    timestamp and error message on every support contact, and routes enterprise
+    support through a shared Slack channel rather than a ticket queue.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

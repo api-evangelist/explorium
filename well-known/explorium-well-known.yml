@@ -1,0 +1,196 @@
+generated: '2026-08-14'
+method: searched
+source: live GET of /.well-known/* on every apis.yml and OpenAPI servers[] host
+description: >-
+  Explorium serves a genuinely populated discovery surface from the marketing
+  apex (www.explorium.ai / explorium.ai), not from the API host. The apex
+  publishes an RFC 9727 api-catalog linkset that points at the live OpenAPI
+  description, an A2A agent card, an MCP server card, an agent-skills index and
+  an ARD-style ai-catalog manifest. The API host api.explorium.ai answers 401 on
+  every /.well-known/* path because the whole host is behind the api_key gate.
+  The MCP host mcp.explorium.ai serves RFC 8414 OAuth authorization-server
+  metadata (with dynamic client registration) but nothing else. No security.txt
+  is served anywhere on the domain.
+hosts:
+- host: https://www.explorium.ai
+  note: >-
+    Apex and www resolve to the same WordPress origin and return byte-identical
+    documents on every path below; www is recorded as canonical.
+  documents:
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: application/json
+    spec: RFC 9727
+    file: explorium-api-catalog.json
+    note: >-
+      Linkset naming https://api.explorium.ai as the API, with service-desc
+      pointing at https://api.explorium.ai/openapi.json, service-doc at
+      developers.explorium.ai and service-meta at the rate-limit reference.
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    spec: A2A 1.0.0
+    file: ../a2a/explorium-agent-card.json
+    note: Graded in a2a/explorium-a2a.yml. protocolVersion 0.3.0, conformant.
+  - path: /.well-known/mcp/server-card.json
+    status: 200
+    content_type: application/json
+    file: explorium-mcp-server-card.json
+    note: >-
+      Anonymous, pre-connection description of the hosted MCP server - 14 named
+      tools with descriptions, transport, OAuth requirement. This is the only
+      readable tool list, because live tools/list is OAuth-gated.
+  - path: /.well-known/agent-skills/index.json
+    status: 200
+    content_type: application/json
+    file: explorium-agent-skills-index.json
+    note: Seven capability-level skills, each bound to a real REST or MCP endpoint.
+  - path: /.well-known/ai-catalog.json
+    status: 200
+    content_type: application/json
+    spec: ARD / AIR capability catalog 1.0
+    file: explorium-ai-catalog.json
+    note: >-
+      Four entries with urn:air: identifiers and per-entry trustManifest -
+      MCP server card, A2A agent card, the OpenAPI, and the skills index.
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    file: ../llms/explorium-llms.txt
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+    note: Legacy pre-0.3 agent-card path; not served. The canonical path is.
+- host: https://api.explorium.ai
+  note: >-
+    Every path on the API host returns 401 - the api_key gate is applied at the
+    edge, before routing, so no /.well-known/ document is reachable anonymously.
+    The one anonymous document on this host is the OpenAPI itself at
+    /openapi.json (200), which is harvested to openapi/.
+  documents:
+  - path: /.well-known/security.txt
+    status: 401
+  - path: /.well-known/openid-configuration
+    status: 401
+  - path: /.well-known/oauth-authorization-server
+    status: 401
+  - path: /.well-known/oauth-protected-resource
+    status: 401
+  - path: /.well-known/api-catalog
+    status: 401
+  - path: /.well-known/ai-plugin.json
+    status: 401
+  - path: /.well-known/agent-card.json
+    status: 401
+  - path: /.well-known/agent.json
+    status: 401
+  - path: /llms.txt
+    status: 401
+  - path: /openapi.json
+    status: 200
+    content_type: application/json
+    note: OpenAPI 3.1.0, "Partner Service" 0.3.19, 120 paths. Saved to openapi/.
+- host: https://mcp.explorium.ai
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    content_type: application/json
+    spec: RFC 8414
+    file: explorium-oauth-authorization-server.json
+    note: >-
+      issuer https://mcp.explorium.ai, authorization_code + refresh_token,
+      PKCE S256, and a registration_endpoint (RFC 7591 dynamic client
+      registration). No scopes_supported is advertised.
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    note: >-
+      RFC 9728 protected-resource metadata is absent, so an MCP client cannot
+      discover the authorization server from the resource itself; it must be
+      told, or fall back to the WWW-Authenticate challenge on initialize.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: https://developers.explorium.ai
+  note: Mintlify-hosted docs site.
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: application/json
+    file: ../a2a/explorium-docs-agent-card.json
+    note: >-
+      A second, Mintlify-emitted card describing the DOCS site rather than the
+      product. Graded flavored in a2a/explorium-a2a.yml and not the card the
+      AgentCard pointer references.
+  - path: /.well-known/agent-skills/explorium/skill.md
+    status: 200
+    content_type: text/markdown
+    file: ../skills/explorium-agentsource.md
+    note: >-
+      A provider-published Agent Skill, saved verbatim. Referenced by the docs
+      agent card's skills[0].url.
+  - path: /llms.txt
+    status: 200
+    content_type: text/plain
+    file: ../llms/explorium-docs-llms.txt
+  - path: /openapi.json
+    status: 200
+    note: >-
+      A mirror of the API-host OpenAPI, one patch behind (0.3.18 vs 0.3.19 at
+      probe time). api.explorium.ai/openapi.json is treated as canonical.
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://admin.explorium.ai
+  note: >-
+    REJECTED AS EVIDENCE. This host is a single-page app whose catch-all returns
+    HTTP 200 with the same HTML shell for every path, including all nine probed
+    /.well-known/* paths and /llms.txt. No document was served; treated as a
+    miss, not a hit.
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    content_type: text/html
+    served: spa-shell
+  - path: /.well-known/agent-card.json
+    status: 200
+    content_type: text/html
+    served: spa-shell
+  - path: /llms.txt
+    status: 200
+    content_type: text/html
+    served: spa-shell
+security_txt:
+  served: false
+  note: >-
+    No /.well-known/security.txt on any Explorium host. The only published
+    security contact found anywhere is privacy@explorium.ai on the privacy
+    policy, which is a privacy contact rather than a vulnerability-reporting
+    channel.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

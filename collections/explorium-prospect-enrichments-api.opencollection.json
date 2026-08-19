@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Explorium AgentSource Business Enrichments Prospect Enrichments API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Prospect Enrichments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Enrich contact information",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects/contacts_information/enrich",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return verified emails and phone numbers for a matched prospect_id."
+        },
+        {
+          "info": {
+            "name": "Enrich prospect profiles",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects/profiles/enrich",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Return professional profile data - current role, seniority, work history - for a matched prospect_id."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

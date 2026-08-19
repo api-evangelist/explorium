@@ -1,0 +1,672 @@
+{
+  "item": [
+    {
+      "id": "3b7ccd3f-1e47-442f-adbc-9ec60d65f530",
+      "name": "Businesses",
+      "description": {
+        "content": "Match, fetch, stat, and autocomplete over the 150M+ company dataset.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "192f362d-075d-46d6-aeb3-406373a27261",
+          "name": "Match businesses",
+          "request": {
+            "name": "Match businesses",
+            "description": {
+              "content": "Resolve up to 50 companies to Explorium business_id values from name, domain, URL, or LinkedIn URL. Returns a list the same length and order as the input.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "businesses",
+                "match"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"businesses_to_match\": [\n    {\n      \"name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"url\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"url\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    }\n  ],\n  \"request_context\": {\n    \"seller_id\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "335c9c08-a723-4c78-8cf4-c044e7a6e4af",
+              "name": "Matched business identifiers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businesses_to_match\": [\n    {\n      \"name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"url\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"url\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    }\n  ],\n  \"request_context\": {\n    \"seller_id\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"matched_id\": \"string\"\n    },\n    {\n      \"matched_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "376fb4f4-4534-44fd-a46a-ce4e8ba239e6",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"businesses_to_match\": [\n    {\n      \"name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"url\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"domain\": \"<string>\",\n      \"url\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    }\n  ],\n  \"request_context\": {\n    \"seller_id\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b5f4136-9ddc-4a26-b07b-4055f9ffbfa1",
+          "name": "Fetch businesses",
+          "request": {
+            "name": "Fetch businesses",
+            "description": {
+              "content": "Retrieve company records that match a set of filters such as industry, company size, location, or technology in use.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "businesses"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": 9287.729170311088\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "0bc98377-b26a-4df7-9423-c16ade802298",
+              "name": "A page of business records.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": 7787.324204818357\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": 18,\n      \"key_1\": \"string\"\n    },\n    {\n      \"key_0\": \"string\"\n    }\n  ],\n  \"total_results\": 7695,\n  \"page\": 8530\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8c0fa27-9677-481b-898d-13b0706d7125",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": 7787.324204818357\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "474f0a2c-91b0-4e36-89b1-084a6e9d0959",
+          "name": "Fetch business statistics",
+          "request": {
+            "name": "Fetch business statistics",
+            "description": {
+              "content": "Gauge the size and scope of a target audience for a set of filters before running large-scale fetches.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "businesses",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": 9287.729170311088\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "016f2ee6-0cca-4f3f-9963-65a94eed02f8",
+              "name": "Aggregate counts for the supplied filters.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": 7787.324204818357\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total_results\": 6360,\n  \"breakdown\": {\n    \"key_0\": 4396.32110734445\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e279791-f746-4fa8-bd96-490f3214ebec",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": 7787.324204818357\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e7a653df-44f8-424a-b00d-03aa588145ec",
+          "name": "Autocomplete businesses",
+          "request": {
+            "name": "Autocomplete businesses",
+            "description": {
+              "content": "Fuzzy search over business filter values (industries, technologies, locations) to build valid filter payloads.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "businesses",
+                "autocomplete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "field",
+                  "value": "<string>",
+                  "description": "(Required) The filter field to autocomplete, for example country or naics_category."
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) The partial text to match."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a6d4ad30-2006-445a-8db7-990351fa2aef",
+              "name": "Autocomplete suggestions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "autocomplete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"value\": \"string\",\n      \"display\": \"string\"\n    },\n    {\n      \"value\": \"string\",\n      \"display\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d384e1e0-01f5-4721-8ca0-64de0e02a4d0",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "autocomplete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.explorium.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "API_KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "31353a49-6954-4723-9436-31e5ec761210",
+    "name": "Explorium AgentSource Business Enrichments Businesses API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Explorium AgentSource API is a single external-data and enrichment API for AI agents and go-to-market teams. It exposes match, fetch, statistics, autocomplete, enrichment, bulk enrichment, and event/enrollment endpoints over a business dataset (150M+ companies) and a prospect dataset (800M+ people) aggregated from 100+ external sources. All endpoints are hosted at https://api.explorium.ai and authenticated with an API key sent in the API_KEY request header. Access is gated behind an Explorium account and a credit balance (a free developer tier of 100 credits is available), so this document is honestly modeled from Explorium's published OpenAPI index and reference pages - the endpoint paths and HTTP methods are confirmed from Explorium's own documentation, while request and response schemas are represented at a representative level. Not every one of the 30+ enrichment endpoints is enumerated here; a representative subset is included. endpointsModeled - request/response bodies are modeled; paths are confirmed.\n\nContact Support:\n Name: Explorium",
+      "type": "text/plain"
+    }
+  }
+}

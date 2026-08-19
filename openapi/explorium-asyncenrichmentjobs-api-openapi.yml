@@ -1,0 +1,1062 @@
+openapi: 3.2.0
+info:
+  title: Partner Service Async Enrichment Jobs API
+  version: 0.3.19
+servers:
+- url: https://api.explorium.ai
+  description: AgentSource Server
+tags:
+- name: AsyncEnrichmentJobs
+paths:
+  /v2/businesses/bombora_intent/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Bombora Intent Job
+      operationId: v2_businesses_bombora_intent_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesBomboraIntentJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/company_hierarchies/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Company Hierarchies Job
+      operationId: v2_businesses_company_hierarchies_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesCompanyHierarchiesJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/company_ratings_by_employees/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Company Ratings By Employees Job
+      operationId: v2_businesses_company_ratings_by_employees_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesCompanyRatingsByEmployeesJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/company_website_keywords/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Company Website Keywords Job
+      operationId: v2_businesses_company_website_keywords_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesCompanyWebsiteKeywordsJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/financial_indicators/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Financial Indicators Job
+      operationId: v2_businesses_financial_indicators_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesFinancialIndicatorsJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/firmographics/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Firmographics Job
+      operationId: v2_businesses_firmographics_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesFirmographicsJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/funding_and_acquisition/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Funding And Acquisition Job
+      operationId: v2_businesses_funding_and_acquisition_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesFundingAndAcquisitionJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/linkedin_posts/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Linkedin Posts Job
+      operationId: v2_businesses_linkedin_posts_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesLinkedinPostsJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/lookalikes/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Lookalikes Job
+      operationId: v2_businesses_lookalikes_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesLookalikesJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/pc_business_challenges_10k/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Pc Business Challenges 10K Job
+      operationId: v2_businesses_pc_business_challenges_10k_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesPcBusinessChallenges10KJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/pc_competitive_landscape_10k/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Pc Competitive Landscape 10K Job
+      operationId: v2_businesses_pc_competitive_landscape_10k_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesPcCompetitiveLandscape10KJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/pc_strategy_10k/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Pc Strategy 10K Job
+      operationId: v2_businesses_pc_strategy_10k_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesPcStrategy10KJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/research/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Research Job
+      operationId: v2_businesses_research_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2AsyncResearchJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/technographics/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Technographics Job
+      operationId: v2_businesses_technographics_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesTechnographicsJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/website_changes/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Website Changes Job
+      operationId: v2_businesses_website_changes_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesWebsiteChangesJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/website_traffic/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Website Traffic Job
+      operationId: v2_businesses_website_traffic_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesWebsiteTrafficJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/webstack/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Webstack Job
+      operationId: v2_businesses_webstack_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesWebstackJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/workforce_trends/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Businesses Workforce Trends Job
+      operationId: v2_businesses_workforce_trends_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncBusinessesWorkforceTrendsJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/prospects/contact_information/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Prospects Contact Information Job
+      operationId: v2_prospects_contact_information_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncProspectsContactInformationJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/prospects/linkedin_posts/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Prospects Linkedin Posts Job
+      operationId: v2_prospects_linkedin_posts_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncProspectsLinkedinPostsJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/prospects/profiles/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Prospects Profiles Job
+      operationId: v2_prospects_profiles_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AsyncProspectsProfilesJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/prospects/research/job:
+    post:
+      tags:
+      - AsyncEnrichmentJobs
+      summary: Prospects Research Job
+      operationId: v2_prospects_research_job
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2AsyncResearchJobSubmitRequest'
+        required: true
+      responses:
+        '202':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2AsyncEnrichmentJobSubmitResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    AsyncBusinessesFirmographicsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesFirmographicsJobSubmitRequest
+    V2AsyncJobNotifications:
+      properties:
+        email:
+          $ref: '#/components/schemas/V2AsyncJobEmailNotifications'
+      type: object
+      title: V2AsyncJobNotifications
+    AsyncBusinessesPcCompetitiveLandscape10KJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesPcCompetitiveLandscape10KJobSubmitRequest
+    AsyncBusinessesFinancialIndicatorsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/FinancialIndicatorsEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesFinancialIndicatorsJobSubmitRequest
+    AsyncBusinessesWorkforceTrendsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesWorkforceTrendsJobSubmitRequest
+    AsyncBusinessesTechnographicsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesTechnographicsJobSubmitRequest
+    AsyncProspectsLinkedinPostsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/LinkedInPostsEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      title: AsyncProspectsLinkedinPostsJobSubmitRequest
+    ContactWaterfall:
+      type: string
+      enum:
+      - explorium_only
+      - full
+      title: ContactWaterfall
+      description: An enumeration.
+    AsyncBusinessesCompanyWebsiteKeywordsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/CompanyWebsiteKeywordsEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      - parameters
+      title: AsyncBusinessesCompanyWebsiteKeywordsJobSubmitRequest
+    GenAIResearchParams:
+      properties:
+        output_schema:
+          type: object
+          title: Output Schema
+        query:
+          type: string
+          title: Query
+        prompt_template:
+          type: string
+          title: Prompt Template
+      additionalProperties: false
+      type: object
+      title: GenAIResearchParams
+    BomboraIntentEnrichmentParams:
+      properties:
+        topics:
+          items:
+            type: string
+          type: array
+          title: Topics
+        min_score:
+          type: integer
+          title: Min Score
+      additionalProperties: false
+      type: object
+      title: BomboraIntentEnrichmentParams
+    AsyncProspectsContactInformationJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/AsyncContactsEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      title: AsyncProspectsContactInformationJobSubmitRequest
+    AsyncBusinessesCompanyRatingsByEmployeesJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesCompanyRatingsByEmployeesJobSubmitRequest
+    AsyncBusinessesWebstackJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesWebstackJobSubmitRequest
+    V2AsyncEnrichmentJobSubmitResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        status:
+          type: string
+          title: Status
+        status_url:
+          type: string
+          title: Status Url
+      type: object
+      required:
+      - job_id
+      - status
+      - status_url
+      title: V2AsyncEnrichmentJobSubmitResponse
+    AsyncBusinessesBomboraIntentJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/BomboraIntentEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesBomboraIntentJobSubmitRequest
+    V2AsyncJobEmailNotifications:
+      properties:
+        enabled:
+          type: boolean
+          title: Enabled
+          default: false
+        'on':
+          items:
+            type: string
+            enum:
+            - success
+            - failure
+          type: array
+          title: 'On'
+      type: object
+      title: V2AsyncJobEmailNotifications
+    V2AsyncResearchJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/GenAIResearchParams'
+      type: object
+      required:
+      - list_id
+      - parameters
+      title: V2AsyncResearchJobSubmitRequest
+    FinancialIndicatorsEnrichmentParams:
+      properties:
+        date:
+          type: string
+          format: date-time
+          title: Date
+      additionalProperties: false
+      type: object
+      required:
+      - date
+      title: FinancialIndicatorsEnrichmentParams
+    LinkedInPostsEnrichmentParams:
+      properties: {}
+      additionalProperties: false
+      type: object
+      title: LinkedInPostsEnrichmentParams
+    WebsiteTrafficEnrichmentParams:
+      properties:
+        month_period:
+          type: string
+          title: Month Period
+          description: The month period of the website. YYYY-MM
+      additionalProperties: false
+      type: object
+      required:
+      - month_period
+      title: WebsiteTrafficEnrichmentParams
+    AsyncBusinessesFundingAndAcquisitionJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesFundingAndAcquisitionJobSubmitRequest
+    AsyncBusinessesCompanyHierarchiesJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesCompanyHierarchiesJobSubmitRequest
+    CompanyWebsiteKeywordsEnrichmentParams:
+      properties:
+        keywords:
+          items:
+            type: string
+          type: array
+          title: Keywords
+      additionalProperties: false
+      type: object
+      required:
+      - keywords
+      title: CompanyWebsiteKeywordsEnrichmentParams
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AsyncBusinessesWebsiteTrafficJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/WebsiteTrafficEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesWebsiteTrafficJobSubmitRequest
+    AsyncBusinessesLinkedinPostsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/LinkedInPostsEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesLinkedinPostsJobSubmitRequest
+    AsyncContactsEnrichmentParams:
+      properties:
+        contact_types:
+          items:
+            type: string
+            enum:
+            - email
+            - phone
+          type: array
+          title: Contact Types
+        waterfall:
+          allOf:
+          - $ref: '#/components/schemas/ContactWaterfall'
+          default: explorium_only
+      additionalProperties: false
+      type: object
+      title: AsyncContactsEnrichmentParams
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AsyncBusinessesLookalikesJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesLookalikesJobSubmitRequest
+    AsyncBusinessesPcBusinessChallenges10KJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesPcBusinessChallenges10KJobSubmitRequest
+    AsyncProspectsProfilesJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncProspectsProfilesJobSubmitRequest
+    AsyncBusinessesWebsiteChangesJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesWebsiteChangesJobSubmitRequest
+    AsyncBusinessesPcStrategy10KJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesPcStrategy10KJobSubmitRequest
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: api_key

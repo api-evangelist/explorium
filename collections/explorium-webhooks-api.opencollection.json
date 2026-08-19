@@ -1,0 +1,41 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Explorium AgentSource Business Enrichments Webhooks API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Webhooks",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Add a webhook",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/webhooks",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Register an HTTPS endpoint to receive event notifications for enrolled businesses or prospects."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

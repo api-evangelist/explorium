@@ -1,0 +1,37 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Explorium AgentSource Business Enrichments Credits API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Credits",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get active credits summary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.explorium.ai/v1/credits"
+          },
+          "docs": "Return the active credit balance and expiry for the account. All match, fetch, enrich, and event calls draw down the same credit pool."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

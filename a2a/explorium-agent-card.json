@@ -1,0 +1,90 @@
+{
+    "protocolVersion": "0.3.0",
+    "name": "Explorium Business Data Hub",
+    "description": "Explorium provides real-time, structured B2B data infrastructure for AI agents, copilots and GTM automations: company and prospect search, enrichment, and business event signals over a unified REST API and a hosted MCP server.",
+    "version": "1.0.0",
+    "url": "https://mcp.explorium.ai/mcp",
+    "preferredTransport": "streamable-http",
+    "documentationUrl": "https://developers.explorium.ai/",
+    "iconUrl": "https://www.explorium.ai/wp-content/themes/moveo-theme/assets/icon/v2-logo.svg",
+    "provider": {
+        "organization": "Explorium Ltd",
+        "url": "https://www.explorium.ai"
+    },
+    "capabilities": {
+        "streaming": true,
+        "pushNotifications": false,
+        "stateTransitionHistory": false
+    },
+    "defaultInputModes": [
+        "application/json",
+        "text/plain"
+    ],
+    "defaultOutputModes": [
+        "application/json",
+        "text/plain"
+    ],
+    "securitySchemes": {
+        "oauth": {
+            "type": "oauth2",
+            "description": "OAuth authorization is required. The MCP endpoint issues a challenge on initialize."
+        },
+        "apiKey": {
+            "type": "apiKey",
+            "in": "header",
+            "name": "api_key",
+            "description": "REST API requests authenticate with an api_key header. Keys are issued from the Explorium console."
+        }
+    },
+    "skills": [
+        {
+            "id": "company-search",
+            "name": "Company search",
+            "description": "Find companies matching firmographic, technographic, location, size, revenue and intent filters.",
+            "tags": [
+                "b2b",
+                "search",
+                "firmographics"
+            ]
+        },
+        {
+            "id": "company-enrichment",
+            "name": "Company enrichment",
+            "description": "Enrich a known company with firmographics, technographics, funding, financials and workforce trends.",
+            "tags": [
+                "b2b",
+                "enrichment"
+            ]
+        },
+        {
+            "id": "prospect-search",
+            "name": "Prospect search",
+            "description": "Find people by role, seniority, department, skills and employer attributes.",
+            "tags": [
+                "b2b",
+                "people",
+                "search"
+            ]
+        },
+        {
+            "id": "prospect-enrichment",
+            "name": "Prospect enrichment",
+            "description": "Enrich a matched person with professional profile and contact details.",
+            "tags": [
+                "b2b",
+                "people",
+                "enrichment"
+            ]
+        },
+        {
+            "id": "business-events",
+            "name": "Business event signals",
+            "description": "Read events such as funding rounds, hiring changes, new products and acquisitions.",
+            "tags": [
+                "signals",
+                "events",
+                "intent"
+            ]
+        }
+    ]
+}

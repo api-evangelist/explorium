@@ -1,0 +1,173 @@
+{
+  "item": [
+    {
+      "id": "b16fb504-e07c-4681-8d0e-f9eb46c6440f",
+      "name": "Credits",
+      "description": {
+        "content": "Inspect the shared credit pool that meters all API usage.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9933d456-f8f7-4add-b94c-113fce892d05",
+          "name": "Get active credits summary",
+          "request": {
+            "name": "Get active credits summary",
+            "description": {
+              "content": "Return the active credit balance and expiry for the account. All match, fetch, enrich, and event calls draw down the same credit pool.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "credits"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "52371b44-25ec-41ce-af7c-1cbe0cdc1a51",
+              "name": "Active credit summary.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"active_credits\": 1483,\n  \"expires_at\": \"1971-04-05T18:58:15.218Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "eee10e60-be3c-41a8-9ef7-cf40c598ba0c",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "credits"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.explorium.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "API_KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "4fa40f85-b8b3-4532-ae2f-4666dc5ca7a8",
+    "name": "Explorium AgentSource Business Enrichments Credits API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Explorium AgentSource API is a single external-data and enrichment API for AI agents and go-to-market teams. It exposes match, fetch, statistics, autocomplete, enrichment, bulk enrichment, and event/enrollment endpoints over a business dataset (150M+ companies) and a prospect dataset (800M+ people) aggregated from 100+ external sources. All endpoints are hosted at https://api.explorium.ai and authenticated with an API key sent in the API_KEY request header. Access is gated behind an Explorium account and a credit balance (a free developer tier of 100 credits is available), so this document is honestly modeled from Explorium's published OpenAPI index and reference pages - the endpoint paths and HTTP methods are confirmed from Explorium's own documentation, while request and response schemas are represented at a representative level. Not every one of the 30+ enrichment endpoints is enumerated here; a representative subset is included. endpointsModeled - request/response bodies are modeled; paths are confirmed.\n\nContact Support:\n Name: Explorium",
+      "type": "text/plain"
+    }
+  }
+}

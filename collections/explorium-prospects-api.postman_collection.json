@@ -1,0 +1,672 @@
+{
+  "item": [
+    {
+      "id": "dc55e374-020b-4a3f-9060-52671f32db1e",
+      "name": "Prospects",
+      "description": {
+        "content": "Match, fetch, stat, and autocomplete over the 800M+ people dataset.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "893c8fa1-7225-4e18-86eb-6bf773aad223",
+          "name": "Match prospects",
+          "request": {
+            "name": "Match prospects",
+            "description": {
+              "content": "Resolve people to Explorium prospect_id values from full name plus company, email, or LinkedIn URL.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "prospects",
+                "match"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"prospects_to_match\": [\n    {\n      \"full_name\": \"<string>\",\n      \"company_name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    },\n    {\n      \"full_name\": \"<string>\",\n      \"company_name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    }\n  ],\n  \"request_context\": {\n    \"seller_id\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "cf43022c-7fae-4049-b94c-29a84307729a",
+              "name": "Matched prospect identifiers.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prospects_to_match\": [\n    {\n      \"full_name\": \"<string>\",\n      \"company_name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    },\n    {\n      \"full_name\": \"<string>\",\n      \"company_name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    }\n  ],\n  \"request_context\": {\n    \"seller_id\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"matched_id\": \"string\"\n    },\n    {\n      \"matched_id\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "63c0a549-77d7-477e-9d65-48f9b8b3be24",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "match"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"prospects_to_match\": [\n    {\n      \"full_name\": \"<string>\",\n      \"company_name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    },\n    {\n      \"full_name\": \"<string>\",\n      \"company_name\": \"<string>\",\n      \"email\": \"<string>\",\n      \"linkedin_url\": \"<string>\"\n    }\n  ],\n  \"request_context\": {\n    \"seller_id\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0a5dc5f6-569e-46b2-9be7-5b49adee8f88",
+          "name": "Fetch prospects",
+          "request": {
+            "name": "Fetch prospects",
+            "description": {
+              "content": "Retrieve prospect records filtered by job level, department, title, seniority, or the business they work at.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "prospects"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": \"string\",\n    \"key_1\": 1428\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ed0e8e19-6204-4e2f-90cc-c23485e4354c",
+              "name": "A page of prospect records.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": 4992.938881081829\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": false\n    }\n  ],\n  \"total_results\": 4542,\n  \"page\": 6862\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "875e47b1-4c0e-4e18-95eb-700c86e6df3b",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": 4992.938881081829\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2a346dc-7c67-470b-aa80-673ea8560688",
+          "name": "Fetch prospect statistics",
+          "request": {
+            "name": "Fetch prospect statistics",
+            "description": {
+              "content": "Estimate the number of prospects matching a set of filters.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "prospects",
+                "stats"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": \"string\",\n    \"key_1\": 1428\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "88c6f0e0-250f-4624-b459-297623095a1f",
+              "name": "Aggregate prospect counts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": 4992.938881081829\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"total_results\": 7799,\n  \"breakdown\": {\n    \"key_0\": 6215,\n    \"key_1\": 5516,\n    \"key_2\": 6768.959979954636\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4da28b06-a1ce-4289-9f52-2718b33c111b",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "stats"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"mode\": \"<string>\",\n  \"size\": \"<integer>\",\n  \"page_size\": \"<integer>\",\n  \"page\": \"<integer>\",\n  \"filters\": {\n    \"key_0\": 4992.938881081829\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d9c4d48e-85b1-42b4-a90a-88e64bc22cf5",
+          "name": "Autocomplete prospects",
+          "request": {
+            "name": "Autocomplete prospects",
+            "description": {
+              "content": "Fuzzy search over prospect filter values such as job title or department.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "prospects",
+                "autocomplete"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "field",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "query",
+                  "value": "<string>",
+                  "description": "(Required) "
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "886c8774-59b0-4607-bada-32b060fed465",
+              "name": "Autocomplete suggestions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "autocomplete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"value\": \"string\",\n      \"display\": \"string\"\n    },\n    {\n      \"value\": \"string\",\n      \"display\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "92dac5fc-d163-4984-a7d3-3bd1d57a0543",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "autocomplete"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "field",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "query",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.explorium.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "API_KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "e0be53c0-365e-4906-aa95-9b6d339c08bf",
+    "name": "Explorium AgentSource Business Enrichments Prospects API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Explorium AgentSource API is a single external-data and enrichment API for AI agents and go-to-market teams. It exposes match, fetch, statistics, autocomplete, enrichment, bulk enrichment, and event/enrollment endpoints over a business dataset (150M+ companies) and a prospect dataset (800M+ people) aggregated from 100+ external sources. All endpoints are hosted at https://api.explorium.ai and authenticated with an API key sent in the API_KEY request header. Access is gated behind an Explorium account and a credit balance (a free developer tier of 100 credits is available), so this document is honestly modeled from Explorium's published OpenAPI index and reference pages - the endpoint paths and HTTP methods are confirmed from Explorium's own documentation, while request and response schemas are represented at a representative level. Not every one of the 30+ enrichment endpoints is enumerated here; a representative subset is included. endpointsModeled - request/response bodies are modeled; paths are confirmed.\n\nContact Support:\n Name: Explorium",
+      "type": "text/plain"
+    }
+  }
+}

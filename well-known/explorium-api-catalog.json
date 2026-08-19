@@ -1,0 +1,37 @@
+{
+    "linkset": [
+        {
+            "anchor": "https://www.explorium.ai/.well-known/api-catalog",
+            "item": [
+                {
+                    "href": "https://api.explorium.ai",
+                    "title": "Explorium REST API"
+                }
+            ]
+        },
+        {
+            "anchor": "https://api.explorium.ai",
+            "service-desc": [
+                {
+                    "href": "https://api.explorium.ai/openapi.json",
+                    "type": "application/vnd.oai.openapi+json",
+                    "title": "Explorium REST API — OpenAPI description"
+                }
+            ],
+            "service-doc": [
+                {
+                    "href": "https://developers.explorium.ai/",
+                    "type": "text/html",
+                    "title": "Explorium developer documentation"
+                }
+            ],
+            "service-meta": [
+                {
+                    "href": "https://developers.explorium.ai/reference/rate-limit",
+                    "type": "text/html",
+                    "title": "Rate limits"
+                }
+            ]
+        }
+    ]
+}

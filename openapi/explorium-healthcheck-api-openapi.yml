@@ -1,0 +1,92 @@
+openapi: 3.2.0
+info:
+  title: Partner Service Healthcheck API
+  version: 0.3.19
+servers:
+- url: https://api.explorium.ai
+  description: AgentSource Server
+tags:
+- name: Healthcheck
+paths:
+  /healthcheck/http:
+    get:
+      tags:
+      - Healthcheck
+      summary: Healthcheck
+      operationId: healthcheck
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                title: Response Healthcheck
+  /healthcheck/http_payload/{response_bytes}:
+    get:
+      tags:
+      - Healthcheck
+      summary: Healthcheck Bytes
+      operationId: healthcheck_bytes
+      parameters:
+      - required: true
+        schema:
+          type: integer
+          maximum: 1000000.0
+          title: Response Bytes
+        name: response_bytes
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                title: Response Healthcheck Bytes
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: api_key

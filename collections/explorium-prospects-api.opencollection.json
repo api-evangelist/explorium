@@ -1,0 +1,94 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Explorium AgentSource Business Enrichments Prospects API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Prospects",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Match prospects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects/match",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resolve people to Explorium prospect_id values from full name plus company, email, or LinkedIn URL."
+        },
+        {
+          "info": {
+            "name": "Fetch prospects",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve prospect records filtered by job level, department, title, seniority, or the business they work at."
+        },
+        {
+          "info": {
+            "name": "Fetch prospect statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects/stats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Estimate the number of prospects matching a set of filters."
+        },
+        {
+          "info": {
+            "name": "Autocomplete prospects",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.explorium.ai/v1/prospects/autocomplete",
+            "params": [
+              {
+                "name": "field",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Fuzzy search over prospect filter values such as job title or department."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

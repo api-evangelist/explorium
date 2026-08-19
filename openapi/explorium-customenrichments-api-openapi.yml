@@ -1,0 +1,225 @@
+openapi: 3.2.0
+info:
+  title: Partner Service Custom Enrichments API
+  version: 0.3.19
+servers:
+- url: https://api.explorium.ai
+  description: AgentSource Server
+tags:
+- name: CustomEnrichments
+paths:
+  /v1/custom_enrichments/{custom_enrichment_id}/enrich:
+    post:
+      tags:
+      - CustomEnrichments
+      summary: Enrich With Custom Enrichment
+      description: 'Enrich a business using a custom enrichment.
+
+        Returns enriched data with the results from the custom enrichment.'
+      operationId: enrich_with_custom_enrichment
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Custom Enrichment Id
+        name: custom_enrichment_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessesEnrichRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEnrichmentEnrichResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v1/custom_enrichments/{enrichment_id}/bulk_enrich:
+    post:
+      tags:
+      - CustomEnrichments
+      summary: Bulk Enrich With Custom Enrichment
+      description: 'Enrich businesses using a custom enrichment.
+
+        Returns enriched data with the results from the custom enrichment.'
+      operationId: bulk_enrich_with_custom_enrichment
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Enrichment Id
+        name: enrichment_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessesBulkEnrichRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomEnrichmentEnrichResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
+    BusinessesBulkEnrichRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        parameters:
+          type: object
+          title: Parameters
+          nullable: true
+        business_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{32}$
+          type: array
+          maxItems: 50
+          minItems: 1
+          title: Business Ids
+      additionalProperties: false
+      type: object
+      required:
+      - business_ids
+      title: BusinessesBulkEnrichRequest
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    CustomEnrichmentEnrichResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        data:
+          items:
+            $ref: '#/components/schemas/CustomEnrichmentResponseRow'
+          type: array
+          title: Data
+        total_results:
+          type: integer
+          title: Total Results
+      type: object
+      required:
+      - response_context
+      - data
+      - total_results
+      title: CustomEnrichmentEnrichResponse
+      description: Response model for enriched data from a custom enrichment.
+    BusinessesEnrichRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        parameters:
+          type: object
+          title: Parameters
+          nullable: true
+        business_id:
+          type: string
+          pattern: ^[a-f0-9]{32}$
+          title: Business Id
+      additionalProperties: false
+      type: object
+      required:
+      - business_id
+      title: BusinessesEnrichRequest
+    CustomEnrichmentResponseRow:
+      properties:
+        business_id:
+          type: string
+          pattern: ^[a-f0-9]{32}$
+          title: Business Id
+        data:
+          type: object
+          title: Data
+          description: The enriched data from the custom enrichment
+      type: object
+      required:
+      - business_id
+      - data
+      title: CustomEnrichmentResponseRow
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: api_key

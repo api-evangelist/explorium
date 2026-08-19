@@ -3,9 +3,13 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Explorium
 providerId: explorium
+generated: '2026-08-14'
+method: searched
+source: https://developers.explorium.ai/reference/rate-limit
 created: '2026-07-11'
-modified: '2026-07-11'
-reconciled: false
+modified: '2026-08-14'
+reconciled: true
+limit_count: 5
 tags:
 - Data Enrichment
 - B2B Data
@@ -13,49 +17,125 @@ tags:
 - Rate Limiting
 - Quotas
 description: >-
-  Explorium does not publish fixed numeric per-minute request limits for the
-  AgentSource API. Usage is governed primarily by the shared credit pool rather
-  than a request-rate cap - each match, fetch, enrichment, and event action
-  draws credits, and calls stop when the balance is exhausted or expired.
-  Batch-oriented endpoints impose an explicit structural limit: match and bulk
-  enrichment requests accept at most 50 records per call. Numeric throttling
-  thresholds are not documented as of the review date.
+  Explorium DOES publish a numeric rate limit, contrary to the previous round's
+  finding: 200 queries per minute per API key over a 60-second sliding window,
+  with a full set of response headers and a documented 429 body. It is
+  advertised as a first-class discovery target - the api-catalog linkset names
+  the rate-limit page as the API's service-meta relation, which is a genuinely
+  rare thing to do. The subtlety that matters is the counting rule: a query is
+  an ENTITY, not an HTTP request, so one batch call carrying 50 businesses
+  consumes 50 of the 200.
 notes: >-
-  Verify any account-level throughput limits and the 50-record batch cap in the
-  Explorium developer documentation, and monitor the remaining balance via
-  GET /v1/credits. Contact support@explorium.ai for higher-volume arrangements.
+  Supersedes the earlier record of "no fixed numeric per-minute request-rate
+  limit is documented". The limit sits alongside, and is independent of, the
+  credit pool - a caller can be inside the rate limit and still fail with 403
+  for insufficient credits, or have credits and still be throttled at 429.
+  Enterprise plans are documented as buying "additional queries per minute".
 sources:
-- https://developers.explorium.ai/reference/introduction
-- https://developers.explorium.ai/reference/match_businesses
-- https://developers.explorium.ai/reference/credits/credit_plans
+- https://developers.explorium.ai/reference/rate-limit
+- https://developers.explorium.ai/reference/error-handling
+- https://www.explorium.ai/.well-known/api-catalog
+- https://developers.explorium.ai/.well-known/agent-skills/explorium/skill.md
+- https://www.explorium.ai/pricing.md
+discovery:
+  api_catalog_relation: service-meta
+  url: https://developers.explorium.ai/reference/rate-limit
+  note: >-
+    The RFC 9727 linkset at https://www.explorium.ai/.well-known/api-catalog
+    points a service-meta link straight at the rate-limit page, so an agent can
+    find the throttling contract by discovery rather than by crawling docs.
 responseCodes:
   throttled: 429
+responseHeaders:
+- name: X-RateLimit-Limit
+  description: Maximum number of queries allowed in the current window.
+  on: all responses
+- name: X-RateLimit-Remaining
+  description: Number of queries remaining in the current window.
+  on: all responses
+- name: X-RateLimit-Remaining-note
+  description: >-
+    Explorium's own Agent Skill recommends preemptive throttling once
+    X-RateLimit-Remaining drops below 10.
+  on: guidance
+- name: X-RateLimit-Reset
+  description: Unix timestamp when the rate limit window resets.
+  on: all responses
+- name: Retry-After
+  description: Seconds to wait before retrying.
+  on: 429 only
+errorBody:
+  documented_variants:
+  - '{"error": "rate_limit_exceeded", "message": "API rate limit exceeded. Please retry after 60 seconds.", "retry_after": 60}'
+  - '{"code": 429, "message": "Rate limit exceeded. Please retry after the specified time.", "retry_after": 60}'
+  note: >-
+    Two different 429 bodies are published for the same condition - the first on
+    the rate-limit reference, the second on the error-handling reference. A
+    client must key off retry_after and the status code, not the envelope shape.
 limits:
-- name: API Request Rate
-  scope: account
-  metric: requests
-  limit: not published
-  notes: No fixed numeric per-minute request-rate limit is documented for the AgentSource API.
+- name: Query Rate
+  scope: per-api-key
+  metric: queries
+  limit: 200
+  window: 60 seconds
+  window_type: sliding
+  burst: none documented
+  notes: >-
+    The headline limit. Counters are independent per API key, so multiple keys
+    on one account multiply available throughput.
+- name: Query Counting
+  scope: request
+  metric: entities
+  limit: null
+  notes: >-
+    Single-entity endpoints count one query per request. Bulk and batch
+    endpoints count EACH ROW in the payload as a separate query - a 50-entity
+    request consumes 50 queries. Batching saves round trips, not quota.
+- name: Sync Batch Size
+  scope: request
+  metric: records
+  limit: 50
+  notes: Match and bulk enrichment requests accept at most 50 records per call, returned in input order.
+- name: Async Job Size
+  scope: job
+  metric: records
+  limit: 10000
+  notes: >-
+    Asynchronous enrichment jobs process up to 10,000 records, with a 24-hour
+    runtime cap and 7-day result retention; result URLs expire after about an
+    hour.
+- name: Pagination Depth
+  scope: request
+  metric: records
+  limit: 60000
+  notes: >-
+    Offset-based pagination is capped at 60,000 records with a maximum page_size
+    of 500. Cursor-based (search_after) pagination has no cap.
 - name: Credit Pool
   scope: account
   metric: credits
   limit: per package
-  notes: Usage is metered against a shared prepaid credit balance; calls fail when credits are exhausted or expired.
-- name: Match Batch Size
-  scope: request
-  metric: records
-  limit: 50
-  notes: Match endpoints accept up to 50 businesses or prospects per call, returned in input order.
-- name: Bulk Enrichment Batch Size
-  scope: request
-  metric: records
-  limit: 50
-  notes: Bulk enrichment endpoints process up to 50 records per request.
+  notes: >-
+    Orthogonal to the rate limit. Exhaustion returns 403 with "You have
+    insufficient credits", not 429. See plans/explorium-plans-pricing.yml.
 policies:
-- name: Credit Metering
-  description: All match, fetch, stats, enrichment, and event calls draw from a single shared credit pool that meters usage in place of a hard request cap.
-- name: Backoff Strategy
-  description: Clients should implement exponential backoff with jitter and honor Retry-After on 429 responses.
+- name: Entity-based counting
+  description: >-
+    A query is an entity, not a request. This is the single most misread part of
+    Explorium's throttling contract and the provider calls it out as a gotcha in
+    its own published Agent Skill.
+- name: Backoff strategy
+  description: >-
+    Implement exponential backoff and honour Retry-After on 429. Explorium's
+    published guidance is to avoid parallel requests that might exceed the limit
+    and to never retry a 4xx without fixing the cause.
+- name: Preemptive throttling
+  description: Throttle client-side once X-RateLimit-Remaining falls below 10.
+- name: Enterprise uplift
+  description: >-
+    "Additional queries per minute" is an explicitly listed Enterprise plan
+    entitlement on the published pricing page, so 200/min is the standard-tier
+    ceiling rather than a platform ceiling.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

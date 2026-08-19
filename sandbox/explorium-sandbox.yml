@@ -1,0 +1,77 @@
+generated: '2026-08-14'
+method: searched
+source:
+- https://www.explorium.ai/mcp-playground/
+- https://www.explorium.ai/pricing.md
+- https://developers.explorium.ai/reference/webhooks/webhooks
+description: >-
+  Explorium ships no test mode. There is no test-vs-live key separation, no
+  sandbox host, no magic test identifiers and no fixture data - every call goes
+  against live data and spends real credits from the one shared pool. What it
+  offers instead is a browser playground for the MCP tools, a 100-credit free
+  trial that behaves exactly like production, and three genuinely useful
+  pre-flight affordances: a webhook connectivity check, an MCP cost estimator,
+  and an MCP result sampler.
+test_mode:
+  separate_keys: false
+  key_prefixes: none
+  sandbox_host: none
+  magic_test_values: none
+  fixture_data: none
+  time_simulation: none
+  note: >-
+    A single api_key authorizes production against real data. There is no way to
+    exercise the API without consuming credits, which makes CI and integration
+    testing a paid activity.
+surfaces:
+- name: MCP Playground
+  url: https://www.explorium.ai/mcp-playground/
+  type: hosted-console
+  auth: browser session
+  note: >-
+    Try the MCP tools in a browser without wiring an MCP client. The closest
+    thing Explorium has to a console.
+- name: Free trial
+  url: https://www.explorium.ai/sign-up/
+  type: production-with-quota
+  credits: 100
+  validity_days: 90
+  note: >-
+    Not a sandbox - production access with a small budget. Once the 100 credits
+    are spent or 90 days pass, calls fail with 403 insufficient credits.
+- name: Interactive API reference
+  url: https://developers.explorium.ai/reference/quick-starts/quick-starts
+  type: docs-try-it
+  note: Mintlify "try it" panels execute against production with the caller's own key.
+pre_flight_tools:
+- name: check_webhook_connectivity
+  surface: rest
+  endpoint: POST https://api.explorium.ai/v1/webhooks/check_connectivity
+  purpose: Verify a registered webhook endpoint responds correctly before enrolling entities.
+- name: estimate-cost
+  surface: mcp
+  purpose: Estimate the credit cost of an operation before running it.
+  note: >-
+    The single most useful safety feature for an autonomous agent on this API,
+    and it exists only on MCP - a REST integrator has no equivalent.
+- name: show-sample
+  surface: mcp
+  purpose: Preview sample rows from a result table before paying for a full export.
+- name: WebhookSimulation
+  surface: rest
+  schema: WebhookSimulation / WebhookSimulationEventType
+  note: >-
+    Simulation schemas exist in the OpenAPI components, indicating some
+    event-simulation capability, but no operation in the harvested spec exposes
+    them and the docs do not describe how to trigger one.
+cost_control:
+  per_call_reporting: https://developers.explorium.ai/reference/credits/per-call-credit-usage
+  balance: GET https://api.explorium.ai/v1/credits (get_active_credits_summary)
+  consumption: POST https://api.explorium.ai/v1/credits/aggregation (get_credit_aggregation)
+  note: >-
+    Per-call credit reporting is opt-in and returns the exact credits deducted
+    inside the response - the substitute for a test mode is careful accounting
+    after the fact.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

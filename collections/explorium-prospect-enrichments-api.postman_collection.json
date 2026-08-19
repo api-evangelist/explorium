@@ -1,0 +1,367 @@
+{
+  "item": [
+    {
+      "id": "6a59f826-5c5c-42ad-84f7-490c76ba66a1",
+      "name": "Prospect Enrichments",
+      "description": {
+        "content": "Contact information, profile, and social enrichments for people.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9fda60bc-cb12-4d1b-9fad-fc0aa042e34f",
+          "name": "Enrich contact information",
+          "request": {
+            "name": "Enrich contact information",
+            "description": {
+              "content": "Return verified emails and phone numbers for a matched prospect_id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "prospects",
+                "contacts_information",
+                "enrich"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "09796745-50ed-4f21-8e5b-3cfce4bc2d80",
+              "name": "Contact information enrichment record.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "contacts_information",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": \"string\"\n    },\n    {\n      \"key_0\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbeacd53-bd20-48c2-89ca-bdcf8c2d886a",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "contacts_information",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4bd4cb15-2891-44f4-9947-43227170b5cb",
+          "name": "Enrich prospect profiles",
+          "request": {
+            "name": "Enrich prospect profiles",
+            "description": {
+              "content": "Return professional profile data - current role, seniority, work history - for a matched prospect_id.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "prospects",
+                "profiles",
+                "enrich"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4c637624-de8b-431d-bed6-0b5be4c8b622",
+              "name": "Profile enrichment record.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "profiles",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": \"string\",\n      \"key_1\": 9403\n    },\n    {\n      \"key_0\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "87a58fb9-e6f3-4e9d-893a-0791e2e24720",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "profiles",
+                    "enrich"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.explorium.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "API_KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "94992b7e-6405-4131-93c3-2be34bae3394",
+    "name": "Explorium AgentSource Business Enrichments Prospect Enrichments API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Explorium AgentSource API is a single external-data and enrichment API for AI agents and go-to-market teams. It exposes match, fetch, statistics, autocomplete, enrichment, bulk enrichment, and event/enrollment endpoints over a business dataset (150M+ companies) and a prospect dataset (800M+ people) aggregated from 100+ external sources. All endpoints are hosted at https://api.explorium.ai and authenticated with an API key sent in the API_KEY request header. Access is gated behind an Explorium account and a credit balance (a free developer tier of 100 credits is available), so this document is honestly modeled from Explorium's published OpenAPI index and reference pages - the endpoint paths and HTTP methods are confirmed from Explorium's own documentation, while request and response schemas are represented at a representative level. Not every one of the 30+ enrichment endpoints is enumerated here; a representative subset is included. endpointsModeled - request/response bodies are modeled; paths are confirmed.\n\nContact Support:\n Name: Explorium",
+      "type": "text/plain"
+    }
+  }
+}

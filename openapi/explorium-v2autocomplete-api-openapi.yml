@@ -1,0 +1,138 @@
+openapi: 3.2.0
+info:
+  title: Partner Service V2 Autocomplete API
+  version: 0.3.19
+servers:
+- url: https://api.explorium.ai
+  description: AgentSource Server
+tags:
+- name: V2Autocomplete
+paths:
+  /v2/autocomplete:
+    get:
+      tags:
+      - V2Autocomplete
+      summary: Autocomplete
+      operationId: v2_autocomplete
+      parameters:
+      - required: true
+        schema:
+          $ref: '#/components/schemas/AutocompleteType'
+        name: field
+        in: query
+      - required: false
+        schema:
+          type: string
+          title: Query
+          default: ''
+        name: query
+        in: query
+      - required: false
+        schema:
+          type: boolean
+          title: Semantic Search
+          default: false
+        name: semantic_search
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AutoCompleteItem'
+                type: array
+                title: Response V2 Autocomplete
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    AutocompleteType:
+      enum:
+      - country
+      - country_code
+      - region_country_code
+      - google_category
+      - naics_category
+      - linkedin_category
+      - company_tech_stack_tech
+      - company_tech_stack_categories
+      - job_title
+      - company_size
+      - company_revenue
+      - number_of_locations
+      - company_age
+      - job_department
+      - job_level
+      - city_region_country
+      - company_name
+      - business_intent_topics
+      - city_region
+      - skills
+      - interests
+      title: AutocompleteType
+      description: Enum for autocomplete types.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AutoCompleteItem:
+      properties:
+        query:
+          type: string
+          title: Query
+        label:
+          type: string
+          title: Label
+        value:
+          type: string
+          title: Value
+      type: object
+      required:
+      - query
+      - label
+      - value
+      title: AutoCompleteItem
+      example:
+        query: united
+        label: United States
+        value: us
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: api_key

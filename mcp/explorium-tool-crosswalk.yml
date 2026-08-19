@@ -1,0 +1,245 @@
+generated: '2026-08-14'
+method: derived
+source: >-
+  mcp/explorium-mcp.yml (tools verbatim from
+  https://www.explorium.ai/.well-known/mcp/server-card.json) bound to
+  operationIds in openapi/_original/explorium-agentsource-openapi.json
+description: >-
+  Binds each tool Explorium's MCP server card advertises to the REST
+  operation(s) that back it, so a tool inherits a real inputSchema from the
+  OpenAPI instead of a guessed one. Live tools/list is OAuth-gated (401), so the
+  mapping is by name and documented semantics, and confidence is set honestly
+  per row. Every operationId below was grepped out of the harvested spec.
+surfaces:
+  openapi:
+    file: openapi/_original/explorium-agentsource-openapi.json
+    version: OpenAPI 3.1.0
+    title: Partner Service 0.3.19
+    operations: 127
+    gated: false
+    note: The spec is anonymous at https://api.explorium.ai/openapi.json; calling it is not.
+  mcp:
+    url: https://mcp.explorium.ai/mcp
+    transport: streamable-http
+    gated: true
+    note: tools/list returns 401 invalid_token; schemas need authenticated introspection.
+  graphql:
+    present: false
+crosswalk:
+- tool: match-business
+  category: resolution
+  rest:
+  - match_businesses
+  - v2_businesses_match
+  binding: rest
+  confidence: high
+  note: >-
+    One-to-one on both API versions. Bulk in, list out, same length and order as
+    the input; up to 50 records per call.
+- tool: match-prospects
+  category: resolution
+  rest:
+  - match_prospects
+  - v2_prospects_match
+  binding: rest
+  confidence: high
+- tool: fetch-entities
+  category: search
+  rest:
+  - fetch_businesses
+  - fetch_prospects
+  - v2_businesses_fetch
+  - v2_prospects_fetch
+  binding: rest
+  confidence: medium
+  note: >-
+    Fans out. The MCP server card collapses company search and people search
+    into ONE tool; REST keeps them as separate endpoints per entity type and per
+    version. The entity type is presumably a tool argument, but that cannot be
+    confirmed without authenticated introspection. Explorium's own docs and
+    published Agent Skill still describe this as two tools
+    (fetch-businesses / fetch-prospects), which is the divergence recorded in
+    mcp/explorium-mcp.yml.
+- tool: fetch-entities-statistics
+  category: search
+  rest:
+  - fetch_stats
+  - prospect_fetch_stats
+  - v2_businesses_stats
+  - v2_prospects_stats
+  binding: rest
+  confidence: medium
+  note: Same collapse as fetch-entities, across the four statistics operations.
+- tool: enrich-business
+  category: enrichment
+  rest:
+  - businesses_firmographics_enrich
+  - businesses_technographics_enrich
+  - businesses_financial_indicators_enrich
+  - businesses_funding_and_acquisition_enrich
+  - businesses_workforce_trends_enrich
+  - businesses_webstack_enrich
+  - businesses_website_traffic_enrich
+  - businesses_website_changes_enrich
+  - businesses_company_hierarchies_enrich
+  - businesses_company_ratings_by_employees_enrich
+  - businesses_company_website_keywords_enrich
+  - businesses_lookalikes_enrich
+  - businesses_bombora_intent_enrich
+  - businesses_pc_business_challenges_10k_enrich
+  - businesses_pc_competitive_landscape_10k_enrich
+  - businesses_pc_strategy_10k_enrich
+  - businesses_linkedin_posts_enrich
+  binding: rest
+  confidence: medium
+  note: >-
+    One tool over seventeen REST enrichment operations. The enrichment family is
+    almost certainly an argument to the tool; REST models each family as its own
+    path. The v1 bulk_enrich variants and the whole v2 *_enrich set are further
+    equivalents of the same seventeen families and are not listed twice here.
+- tool: enrich-prospects
+  category: enrichment
+  rest:
+  - prospects_contacts_information_enrich
+  - prospects_profiles_enrich
+  - prospects_linkedin_posts_enrich
+  binding: rest
+  confidence: medium
+  note: One tool over the three people-enrichment families (plus their bulk and v2 twins).
+- tool: fetch-businesses-events
+  category: signals
+  rest:
+  - fetch_businesses_events
+  binding: rest
+  confidence: high
+- tool: fetch-prospects-events
+  category: signals
+  rest:
+  - fetch_prospects_events
+  binding: rest
+  confidence: high
+- tool: autocomplete
+  category: metadata
+  rest:
+  - businesses_autocomplete
+  - prospects_autocomplete
+  - v2_autocomplete
+  binding: rest
+  confidence: high
+  note: >-
+    v2 already unified the two v1 autocomplete endpoints into one, so the MCP
+    tool most likely fronts v2_autocomplete.
+- tool: show-pricing-plans
+  category: commerce
+  rest:
+  - get_credits_menu_partner_id
+  binding: rest
+  confidence: medium
+  note: >-
+    /v1/credits/menu/{partner_id} is the only REST operation that returns a
+    purchasable credit menu, so it is the plausible backing operation. Explorium
+    also publishes the same plan table anonymously at
+    https://www.explorium.ai/pricing.md, captured in plans/.
+mcp_only:
+- tool: estimate-cost
+  reason: >-
+    No REST operation prices an operation before it runs. /v1/credits and
+    /v1/credits/aggregation report balance and consumption AFTER the fact. This
+    is a genuine MCP-only capability and a real agent-safety feature - the agent
+    can price a query before spending the account's credits on it.
+- tool: show-sample
+  reason: >-
+    No REST equivalent. Previewing rows from a prepared result table before
+    paying for the full export is a server-side session concept; the REST API
+    has no result-table object to sample.
+- tool: export-to-csv
+  reason: >-
+    No REST equivalent. REST's nearest analogue is the async job pipeline
+    (v2_entity_id_lists_upload -> v2_*_job -> v2_job_status), which returns a
+    results URL, but that is a different workflow, not this tool.
+- tool: get-dataset
+  reason: >-
+    No REST operation retrieves a previously saved dataset. Datasets are a
+    server-side session artifact of the MCP surface.
+rest_only:
+- capability: Event enrollment management
+  operations:
+  - add_businesses_enrollments
+  - update_businesses_enrollments
+  - delete_businesses_enrollments
+  - get_businesses_enrollments
+  - add_prospects_enrollments
+  - update_prospects_enrollments
+  - delete_prospects_enrollments
+  - get_prospects_enrollments
+  note: >-
+    Agents can READ events over MCP but cannot subscribe to them. Enrolling an
+    entity in an event pipeline is REST-only.
+- capability: Webhooks
+  operations:
+  - add_webhook
+  - get_webhook
+  - delete_webhook
+  - check_webhook_connectivity
+  note: The whole push-delivery surface is REST-only.
+- capability: Asynchronous batch jobs
+  operations:
+  - v2_entity_id_lists_upload
+  - v2_jobs
+  - v2_job_status
+  - v2_job_cancel
+  note: >-
+    The 10,000-record batch pipeline has no MCP tool. An agent needing volume
+    beyond a sync call has to drop to REST.
+- capability: Asynchronous enrichment job submission
+  operations:
+  - v2_businesses_firmographics_job
+  - v2_businesses_technographics_job
+  - v2_businesses_research_job
+  - v2_prospects_contact_information_job
+  - v2_prospects_research_job
+  note: 22 *_job operations in total; none has a tool.
+- capability: AI research (beta)
+  operations:
+  - v2_businesses_research_enrich
+  - v2_prospects_research_enrich
+  note: >-
+    Natural-language research grounded in live web data is the newest REST
+    capability and is absent from the MCP tool list entirely.
+- capability: Custom enrichments
+  operations:
+  - enrich_with_custom_enrichment
+  - bulk_enrich_with_custom_enrichment
+- capability: Credit reporting
+  operations:
+  - get_active_credits_summary
+  - get_credit_aggregation
+  - v2_credits_get
+  - v2_credits_aggregation
+- capability: Service metadata
+  operations:
+  - healthcheck
+  - healthcheck_bytes
+  - version
+- capability: Bulk v1 enrichment endpoints
+  operations:
+  - businesses_firmographics_bulk_enrich
+  - businesses_technographics_bulk_enrich
+  - prospects_contacts_information_bulk_enrich
+  note: 20 *_bulk_enrich operations, reachable through enrich-business/enrich-prospects only if the tool accepts a list.
+coverage:
+  tools_named: 14
+  tools_bound_to_rest: 10
+  mcp_only: 4
+  rest_operations_total: 127
+  rest_operations_with_a_tool: 44
+  rest_operations_without_a_tool: 83
+  note: >-
+    The two surfaces are genuinely non-identical projections. MCP is a small,
+    curated, session-oriented surface with four capabilities REST does not have
+    (cost estimation, sampling, export, saved datasets); REST carries 83
+    operations - webhooks, enrollment, async batch, AI research, custom
+    enrichments - that no tool exposes. Neither is a superset.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

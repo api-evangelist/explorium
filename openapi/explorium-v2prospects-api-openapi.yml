@@ -1,22 +1,19 @@
 openapi: 3.2.0
 info:
-  title: Partner Service Prospects API
+  title: Partner Service V2 Prospects API
   version: 0.3.19
 servers:
 - url: https://api.explorium.ai
   description: AgentSource Server
 tags:
-- name: Prospects
+- name: V2Prospects
 paths:
-  /v1/prospects/match:
+  /v2/prospects/match:
     post:
       tags:
-      - Prospects
+      - V2Prospects
       summary: Match Prospects
-      description: 'Match a list of prospects attributes to ids.
-
-        Returns a list of the same length and order as the input list, with the matched ids.'
-      operationId: match_prospects
+      operationId: v2_prospects_match
       requestBody:
         content:
           application/json:
@@ -39,17 +36,17 @@ paths:
       security:
       - APIKeyHeader: []
       - APIKeyHeader: []
-  /v1/prospects:
+  /v2/prospects:
     post:
       tags:
-      - Prospects
+      - V2Prospects
       summary: Fetch Prospects
-      operationId: fetch_prospects
+      operationId: v2_prospects_fetch
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProspectsFetchRequest'
+              $ref: '#/components/schemas/V2ProspectsFetchRequest'
         required: true
       responses:
         '200':
@@ -57,10 +54,7 @@ paths:
           content:
             application/json:
               schema:
-                anyOf:
-                - $ref: '#/components/schemas/ProspectsFetchResponse'
-                - $ref: '#/components/schemas/ProspectsFetchResponseV2'
-                title: Response Fetch Prospects
+                $ref: '#/components/schemas/ProspectsFetchResponseV2'
         '422':
           description: Validation Error
           content:
@@ -70,18 +64,17 @@ paths:
       security:
       - APIKeyHeader: []
       - APIKeyHeader: []
-  /v1/prospects/stats:
+  /v2/prospects/stats:
     post:
       tags:
-      - Prospects
-      summary: Prospect Fetch Stats
-      description: Fetch stats for businesses.
-      operationId: prospect_fetch_stats
+      - V2Prospects
+      summary: Fetch Stats
+      operationId: v2_prospects_stats
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ProspectsStatsRequest'
+              $ref: '#/components/schemas/V2ProspectsStatsRequest'
         required: true
       responses:
         '200':
@@ -90,187 +83,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProspectsStatsResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-  /v1/prospects/events:
-    post:
-      tags:
-      - Prospects
-      summary: Fetch Prospects Events
-      description: Create events and fetch for prospects.
-      operationId: fetch_prospects_events
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProspectsEventsRequest'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-  /v1/prospects/autocomplete:
-    get:
-      tags:
-      - Prospects
-      summary: Autocomplete Prospects
-      description: Autocomplete prospects fields values by field name.
-      operationId: prospects_autocomplete
-      parameters:
-      - required: true
-        schema:
-          $ref: '#/components/schemas/AutocompleteType'
-        name: field
-        in: query
-      - required: false
-        schema:
-          type: string
-          title: Query
-          default: ''
-        name: query
-        in: query
-      - required: false
-        schema:
-          type: boolean
-          title: Semantic Search
-          default: false
-        name: semantic_search
-        in: query
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/AutoCompleteItem'
-                type: array
-                title: Response Prospects Autocomplete
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-  /v1/prospects/events/enrollments:
-    get:
-      tags:
-      - Prospects
-      summary: Get Prospects Enrollments
-      description: Show prospects events enrollments records for user.
-      operationId: get_prospects_enrollments
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProspectsEnrollmentsGetResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-    post:
-      tags:
-      - Prospects
-      summary: Add Prospects Enrollments
-      description: Add enrollments for prospects
-      operationId: add_prospects_enrollments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProspectsEnrollmentsAddRequest'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProspectsEnrollmentsAddResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-    delete:
-      tags:
-      - Prospects
-      summary: Delete Prospects Enrollments
-      description: Delete events enrollments records
-      operationId: delete_prospects_enrollments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProspectsEnrollmentsDeleteRequest'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProspectsEnrollmentsDeleteResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-    patch:
-      tags:
-      - Prospects
-      summary: Update Prospects Enrollments
-      description: Update enrollments for prospects
-      operationId: update_prospects_enrollments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/ProspectsEnrollmentsUpdateRequest'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ProspectsEnrollmentsUpdateResponse'
         '422':
           description: Validation Error
           content:
@@ -315,27 +127,6 @@ components:
       - preview
       title: BaseFetchMode
       description: "The `BaseFetchMode` class is an enumeration that defines the modes for fetching data.\n\nThis enum is used to specify whether the fetch operation should retrieve the full data\nor just a preview of the data. It ensures consistent handling of fetch modes across\nthe application.\n\nAttributes:\n    FULL: Fetch the complete data.\n    PREVIEW: Fetch a preview or partial data."
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     JobSeniorityLevel:
       type: string
       enum:
@@ -397,41 +188,6 @@ components:
       - failure
       title: RequestStatus
       description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
-    ProspectsEnrollmentsUpdateRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        enrollment_key:
-          type: string
-          minLength: 4
-          title: Enrollment Key
-        event_types:
-          items:
-            $ref: '#/components/schemas/ProspectsEventIdentifier'
-          type: array
-          minItems: 1
-        enrollment_id:
-          type: string
-          title: Enrollment Id
-        prospect_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{40}$
-          type: array
-          maxItems: 20
-          minItems: 1
-          title: Prospect Ids
-      additionalProperties: false
-      type: object
-      required:
-      - enrollment_key
-      - event_types
-      - enrollment_id
-      - prospect_ids
-      title: ProspectsEnrollmentsUpdateRequest
     ProspectMatchOutput:
       properties:
         input:
@@ -526,19 +282,6 @@ components:
       required:
       - values
       title: JobTitleFilter
-    ProspectsEnrollmentsDeleteResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        status:
-          allOf:
-          - $ref: '#/components/schemas/RequestStatus'
-          default: success
-      type: object
-      required:
-      - response_context
-      title: ProspectsEnrollmentsDeleteResponse
-      description: This is base response model for all responses in partner service.
     IncludesFilter_CompanyAgeRange_:
       properties:
         negate:
@@ -553,40 +296,6 @@ components:
       required:
       - values
       title: IncludesFilter[CompanyAgeRange]
-    ProspectsFetchResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        data:
-          items:
-            $ref: '#/components/schemas/Prospect'
-          type: array
-          title: Data
-          description: List of prospects that match the filters.
-          default: []
-        total_results:
-          type: integer
-          minimum: 0.0
-          title: Total Results
-          description: The total number of Prospects that match the filters.
-          default: 0
-        page:
-          type: integer
-          minimum: 0.0
-          title: Page
-          description: The page number of the response.
-          default: 1
-        total_pages:
-          type: integer
-          minimum: 0.0
-          title: Total Pages
-          description: The total number of pages.
-      type: object
-      required:
-      - response_context
-      - total_pages
-      title: ProspectsFetchResponse
-      description: This is base response model for all responses in partner service.
     ProspectsFetchResponseV2:
       properties:
         response_context:
@@ -710,20 +419,6 @@ components:
           nullable: true
       type: object
       title: ProspectMatchInput
-    ProspectsStatsRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        filters:
-          $ref: '#/components/schemas/ProspectsFetchFilters'
-      additionalProperties: false
-      type: object
-      required:
-      - filters
-      title: ProspectsStatsRequest
     JobDepartment:
       type: string
       enum:
@@ -774,24 +469,52 @@ components:
 
 
         These categories ensure consistent filtering and classification of job-related data across the application.'
-    ProspectsEnrollmentsUpdateResponse:
+    V2ProspectsFetchRequest:
       properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        enrollment_key:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        mode:
+          allOf:
+          - $ref: '#/components/schemas/BaseFetchMode'
+          description: The mode of fetching prospects.
+          example: full
+        page_size:
+          type: integer
+          maximum: 500.0
+          minimum: 1.0
+          title: Page Size
+          description: The maximum number of prospects in a page.
+          example: 3
+        exclude:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{40}$
+          type: array
+          maxItems: 1000
+          title: Exclude
+          marked_for_null_replacement: true
+          nullable: true
+        filters:
+          allOf:
+          - $ref: '#/components/schemas/V2ProspectsFetchFilters'
+          title: Filters
+          example: {}
+          nullable: true
+        next_cursor:
           type: string
-          minLength: 4
-          title: Enrollment Key
-        enrollment_id:
-          type: string
-          title: Enrollment Id
+          title: Next Cursor
+          description: Cursor returned by the previous page. Omit or send null to start from the beginning.
+          marked_for_null_replacement: true
+          nullable: true
+      additionalProperties: false
       type: object
       required:
-      - response_context
-      - enrollment_key
-      - enrollment_id
-      title: ProspectsEnrollmentsUpdateResponse
-      description: This is base response model for all responses in partner service.
+      - mode
+      - page_size
+      title: V2ProspectsFetchRequest
     IncludesFilter_ProspectId_:
       properties:
         negate:
@@ -824,24 +547,6 @@ components:
       required:
       - values
       title: IncludesFilter[NAICS]
-    ProspectsEnrollmentsAddResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        enrollment_key:
-          type: string
-          minLength: 4
-          title: Enrollment Key
-        enrollment_id:
-          type: string
-          title: Enrollment Id
-      type: object
-      required:
-      - response_context
-      - enrollment_key
-      - enrollment_id
-      title: ProspectsEnrollmentsAddResponse
-      description: This is base response model for all responses in partner service.
     partner_service__models__prospects__requests__PageInfo:
       properties:
         size:
@@ -856,96 +561,6 @@ components:
       required:
       - size
       title: PageInfo
-    ProspectsEventsRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        entity_type:
-          allOf:
-          - $ref: '#/components/schemas/EntityType'
-          default: prospect
-        event_types:
-          items:
-            $ref: '#/components/schemas/ProspectsEventIdentifier'
-          type: array
-          minItems: 1
-        timestamp_to:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: string
-          title: Timestamp To
-          description: ISO format datetime string or date in format YYYY-MM-DD
-          marked_for_null_replacement: true
-          nullable: true
-        timestamp_from:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: string
-          title: Timestamp From
-          description: ISO format datetime string or date in format YYYY-MM-DD
-          marked_for_null_replacement: true
-          nullable: true
-        prospect_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{40}$
-          type: array
-          maxItems: 40
-          minItems: 1
-          uniqueItems: true
-          title: Prospect Ids
-      additionalProperties: false
-      type: object
-      required:
-      - event_types
-      - prospect_ids
-      title: ProspectsEventsRequest
-    AutocompleteType:
-      enum:
-      - country
-      - country_code
-      - region_country_code
-      - google_category
-      - naics_category
-      - linkedin_category
-      - company_tech_stack_tech
-      - company_tech_stack_categories
-      - job_title
-      - company_size
-      - company_revenue
-      - number_of_locations
-      - company_age
-      - job_department
-      - job_level
-      - city_region_country
-      - company_name
-      - business_intent_topics
-      - city_region
-      - skills
-      - interests
-      title: AutocompleteType
-      description: Enum for autocomplete types.
-    ResponseContext:
-      properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
-      type: object
-      required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
     AnyMatchFilter_OrganizationName_:
       properties:
         negate:
@@ -962,195 +577,7 @@ components:
       required:
       - values
       title: AnyMatchFilter[OrganizationName]
-    ProspectsEnrollmentsDeleteRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        enrollment_id:
-          type: string
-          title: Enrollment Id
-      additionalProperties: false
-      type: object
-      required:
-      - enrollment_id
-      title: ProspectsEnrollmentsDeleteRequest
-    ProspectsStats:
-      properties:
-        job_departments_per_location:
-          type: object
-          title: Job Departments Per Location
-        total_per_location:
-          type: object
-          title: Total Per Location
-      type: object
-      title: ProspectsStats
-    ProspectsEnrollmentsAddRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        enrollment_key:
-          type: string
-          minLength: 4
-          title: Enrollment Key
-        event_types:
-          items:
-            $ref: '#/components/schemas/ProspectsEventIdentifier'
-          type: array
-          minItems: 1
-        prospect_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{40}$
-          type: array
-          maxItems: 20
-          minItems: 1
-          title: Prospect Ids
-      additionalProperties: false
-      type: object
-      required:
-      - enrollment_key
-      - event_types
-      - prospect_ids
-      title: ProspectsEnrollmentsAddRequest
-    ProspectsEventIdentifier:
-      type: string
-      enum:
-      - prospect_changed_role
-      - prospect_changed_company
-      - prospect_job_start_anniversary
-      title: ProspectsEventIdentifier
-      description: 'The `ProspectsEventIdentifier` class is an enumeration that defines event identifiers related to prospects.
-
-
-        This enum is used to categorize and track events associated with prospects, such as:
-
-        - Role changes (e.g., when a prospect changes their role within a company)
-
-        - Company changes (e.g., when a prospect moves to a new company)
-
-        - Job anniversaries (e.g., celebrating the anniversary of a prospect''s job start date)
-
-
-        These identifiers ensure consistent handling and classification of prospect-related events across the application.'
-    InternalEventIdentifier:
-      type: string
-      enum:
-      - prospect_changed_role
-      - prospect_changed_company
-      - prospect_job_start_anniversary
-      - ipo_announcement
-      - new_funding_round
-      - new_investment
-      - new_product
-      - new_office
-      - closing_office
-      - new_partnership
-      - merger_and_acquisitions
-      - hiring_in_creative_department
-      - hiring_in_education_department
-      - hiring_in_engineering_department
-      - hiring_in_finance_department
-      - hiring_in_health_department
-      - hiring_in_human_resources_department
-      - hiring_in_legal_department
-      - hiring_in_marketing_department
-      - hiring_in_operations_department
-      - hiring_in_professional_service_department
-      - hiring_in_sales_department
-      - hiring_in_support_department
-      - hiring_in_trade_department
-      - hiring_in_unknown_department
-      - increase_in_engineering_department
-      - increase_in_sales_department
-      - increase_in_marketing_department
-      - increase_in_operations_department
-      - increase_in_customer_service_department
-      - increase_in_all_departments
-      - decrease_in_engineering_department
-      - decrease_in_sales_department
-      - decrease_in_marketing_department
-      - decrease_in_operations_department
-      - decrease_in_customer_service_department
-      - decrease_in_all_departments
-      - employee_joined_company
-      - company_award
-      - outages_and_security_breaches
-      - cost_cutting
-      - lawsuits_and_legal_issues
-      title: InternalEventIdentifier
-      description: 'The `InternalEventIdentifier` class is an enumeration that defines internal event identifiers.
-
-
-        This enum is used to categorize and track internal events related to businesses and prospects.
-
-        All events are now handled internally through the event service.'
-    ProspectsStatsResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        total_results:
-          type: integer
-          title: Total Results
-        stats:
-          $ref: '#/components/schemas/ProspectsStats'
-      type: object
-      required:
-      - response_context
-      - total_results
-      - stats
-      title: ProspectsStatsResponse
-      description: This is base response model for all responses in partner service.
-    ProspectsEnrollment:
-      properties:
-        enrollment_id:
-          type: string
-          title: Enrollment Id
-        enrollment_key:
-          type: string
-          minLength: 4
-          title: Enrollment Key
-        event_types:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/EventName'
-            - $ref: '#/components/schemas/InternalEventIdentifier'
-          type: array
-          title: Event Types
-        prospect_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{40}$
-          type: array
-          title: Prospect Ids
-      type: object
-      required:
-      - enrollment_id
-      - enrollment_key
-      - event_types
-      - prospect_ids
-      title: ProspectsEnrollment
-    IncludesFilter_Text_:
-      properties:
-        negate:
-          type: boolean
-          title: Negate
-        values:
-          items:
-            type: string
-          type: array
-          title: Values
-      additionalProperties: false
-      type: object
-      required:
-      - values
-      title: IncludesFilter[Text]
-    ProspectsFetchFilters:
+    V2ProspectsFetchFilters:
       properties:
         prospect_id:
           allOf:
@@ -1162,20 +589,6 @@ components:
             - edf268ac410ff3ba9ca9cc67b065664f38201984
             - 5b486640efabe6f8bb8cf446e80169ba4a1c5ad8
           nullable: true
-        has_email:
-          allOf:
-          - $ref: '#/components/schemas/ExistsFilter'
-          title: Has Email
-          description: 'Filter prospects by whether they have an email. Categories: [True, False]'
-          example:
-            value: true
-        has_phone_number:
-          allOf:
-          - $ref: '#/components/schemas/ExistsFilter'
-          title: Has Phone Number
-          description: 'Filter prospects by whether they have a phone number. Categories: [True, False]'
-          example:
-            value: true
         has_contact_details:
           allOf:
           - $ref: '#/components/schemas/ContactDetailsFilter'
@@ -1457,8 +870,65 @@ components:
           nullable: true
       additionalProperties: false
       type: object
-      title: ProspectsFetchFilters
+      title: V2ProspectsFetchFilters
       example: {}
+    ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
+    ProspectsStats:
+      properties:
+        job_departments_per_location:
+          type: object
+          title: Job Departments Per Location
+        total_per_location:
+          type: object
+          title: Total Per Location
+      type: object
+      title: ProspectsStats
+    ProspectsStatsResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        total_results:
+          type: integer
+          title: Total Results
+        stats:
+          $ref: '#/components/schemas/ProspectsStats'
+      type: object
+      required:
+      - response_context
+      - total_results
+      - stats
+      title: ProspectsStatsResponse
+      description: This is base response model for all responses in partner service.
+    IncludesFilter_Text_:
+      properties:
+        negate:
+          type: boolean
+          title: Negate
+        values:
+          items:
+            type: string
+          type: array
+          title: Values
+      additionalProperties: false
+      type: object
+      required:
+      - values
+      title: IncludesFilter[Text]
     IncludesFilter_JobDepartment_:
       properties:
         negate:
@@ -1493,69 +963,6 @@ components:
       - error
       - error_type
       title: ProspectMatchOutputWithError
-    ProspectsFetchRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        mode:
-          allOf:
-          - $ref: '#/components/schemas/BaseFetchMode'
-          description: The mode of fetching prospects.
-          example: full
-        size:
-          type: integer
-          maximum: 60000.0
-          minimum: 1.0
-          title: Size
-          description: The maximum number of prospects to return. Max size is 60000 (which is the default value)
-          default: 60000
-          example: 3
-        page_size:
-          type: integer
-          maximum: 500.0
-          minimum: 1.0
-          title: Page Size
-          description: The maximum number of prospects in a page. Max limit is 500
-          example: 3
-        page:
-          type: integer
-          minimum: 1.0
-          title: Page
-          description: The page number to fetch.
-          default: 1
-          example: 1
-          nullable: true
-        exclude:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{40}$
-          type: array
-          maxItems: 1000
-          title: Exclude
-          description: List of prospect ids to exclude from the response.
-          marked_for_null_replacement: true
-          nullable: true
-        filters:
-          allOf:
-          - $ref: '#/components/schemas/ProspectsFetchFilters'
-          title: Filters
-          example: {}
-          nullable: true
-        next_cursor:
-          type: string
-          title: Next Cursor
-          description: The sort values from the last document returned by the previous page. If provided, cursor pagination is used instead of page-based pagination. send "null" to start with next_cursor pagination from the beginning.
-          marked_for_null_replacement: true
-          nullable: true
-      additionalProperties: false
-      type: object
-      required:
-      - mode
-      - page_size
-      title: ProspectsFetchRequest
     HTTPValidationError:
       properties:
         detail:
@@ -1565,21 +972,20 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ProspectsEnrollmentsGetResponse:
+    V2ProspectsStatsRequest:
       properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        enrollments:
-          items:
-            $ref: '#/components/schemas/ProspectsEnrollment'
-          type: array
-          title: Enrollments
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        filters:
+          $ref: '#/components/schemas/V2ProspectsFetchFilters'
+      additionalProperties: false
       type: object
       required:
-      - response_context
-      - enrollments
-      title: ProspectsEnrollmentsGetResponse
-      description: This is base response model for all responses in partner service.
+      - filters
+      title: V2ProspectsStatsRequest
     IncludesFilter_RegionCode_:
       properties:
         negate:
@@ -1624,53 +1030,6 @@ components:
       required:
       - values
       title: IncludesFilter[NumberOfEmployeesRange]
-    EventName:
-      type: string
-      enum:
-      - prospect_changed_role
-      - prospect_changed_company
-      - prospect_job_start_anniversary
-      - ipo_announcement
-      - new_funding_round
-      - new_investment
-      - new_product
-      - new_office
-      - closing_office
-      - new_partnership
-      - increase_in_engineering_department
-      - increase_in_sales_department
-      - increase_in_marketing_department
-      - increase_in_operations_department
-      - increase_in_customer_service_department
-      - increase_in_all_departments
-      - decrease_in_engineering_department
-      - decrease_in_sales_department
-      - decrease_in_marketing_department
-      - decrease_in_operations_department
-      - decrease_in_customer_service_department
-      - decrease_in_all_departments
-      - employee_joined_company
-      - hiring_in_creative_department
-      - hiring_in_education_department
-      - hiring_in_engineering_department
-      - hiring_in_finance_department
-      - hiring_in_health_department
-      - hiring_in_human_resources_department
-      - hiring_in_legal_department
-      - hiring_in_marketing_department
-      - hiring_in_operations_department
-      - hiring_in_professional_service_department
-      - hiring_in_sales_department
-      - hiring_in_support_department
-      - hiring_in_trade_department
-      - hiring_in_unknown_department
-      - company_award
-      - outages_and_security_breaches
-      - cost_cutting
-      - merger_and_acquisitions
-      - lawsuits_and_legal_issues
-      title: EventName
-      description: An enumeration.
     AnyMatchPhraseFilter_Text_:
       properties:
         negate:
@@ -1865,34 +1224,27 @@ components:
       required:
       - values
       title: IncludesFilter[CountryCodeAlpha2]
-    EntityType:
-      type: string
-      enum:
-      - business
-      - prospect
-      title: EntityType
-      description: "The `EntityType` class is an enumeration that defines the types of entities.\n\nThis enum is used to specify whether the entity is a business or a prospect.\nIt ensures consistent handling of entity types across the application.\n\nAttributes:\n    BUSINESS: Represents a business entity.\n    PROSPECT: Represents a prospect entity."
-    AutoCompleteItem:
+    ValidationError:
       properties:
-        query:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Query
-        label:
+          title: Message
+        type:
           type: string
-          title: Label
-        value:
-          type: string
-          title: Value
+          title: Error Type
       type: object
       required:
-      - query
-      - label
-      - value
-      title: AutoCompleteItem
-      example:
-        query: united
-        label: United States
-        value: us
+      - loc
+      - msg
+      - type
+      title: ValidationError
     IncludesFilter_RevenueRange_:
       properties:
         negate:

@@ -1,0 +1,290 @@
+openapi: 3.2.0
+info:
+  title: Partner Service Async Jobs API
+  version: 0.3.19
+servers:
+- url: https://api.explorium.ai
+  description: AgentSource Server
+tags:
+- name: AsyncJobs
+paths:
+  /v2/jobs:
+    get:
+      tags:
+      - AsyncJobs
+      summary: Get Jobs
+      operationId: v2_jobs
+      parameters:
+      - required: false
+        schema:
+          $ref: '#/components/schemas/PartnerJobStatus'
+        name: status
+        in: query
+      - required: false
+        schema:
+          type: integer
+          minimum: 0.0
+          title: Skip
+          default: 0
+        name: skip
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2JobsResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/jobs/status/{job_id}:
+    get:
+      tags:
+      - AsyncJobs
+      summary: Get Job Status
+      operationId: v2_job_status
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Job Id
+        name: job_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2JobStatusResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/jobs/cancel/{job_id}:
+    post:
+      tags:
+      - AsyncJobs
+      summary: Cancel Job
+      operationId: v2_job_cancel
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Job Id
+        name: job_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2JobStatusResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    V2JobListItem:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        job_type:
+          type: string
+          title: Job Type
+        endpoint:
+          type: string
+          title: Endpoint
+        status:
+          type: string
+          title: Status
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        finished_at:
+          type: string
+          format: date-time
+          title: Finished At
+      type: object
+      required:
+      - job_id
+      - job_type
+      - status
+      title: V2JobListItem
+    PartnerJobStatus:
+      type: string
+      enum:
+      - queued
+      - running
+      - succeeded
+      - failed
+      - cancelled
+      - expired
+      title: PartnerJobStatus
+      description: An enumeration.
+    V2JobsResponse:
+      properties:
+        jobs:
+          items:
+            $ref: '#/components/schemas/V2JobListItem'
+          type: array
+          title: Jobs
+        total:
+          type: integer
+          title: Total
+      type: object
+      required:
+      - jobs
+      - total
+      title: V2JobsResponse
+    V2JobCreditUsage:
+      properties:
+        total_credits:
+          type: integer
+          title: Total Credits
+        total_results:
+          type: integer
+          title: Total Results
+      type: object
+      required:
+      - total_credits
+      - total_results
+      title: V2JobCreditUsage
+    V2JobStatusResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        status:
+          type: string
+          title: Status
+        input:
+          $ref: '#/components/schemas/V2JobInput'
+        timing:
+          $ref: '#/components/schemas/V2JobTiming'
+        additional_data:
+          type: object
+          title: Additional Data
+        credit_usage:
+          $ref: '#/components/schemas/V2JobCreditUsage'
+        results:
+          $ref: '#/components/schemas/V2JobResults'
+        error:
+          type: object
+          title: Error
+      type: object
+      required:
+      - job_id
+      - status
+      - input
+      - timing
+      title: V2JobStatusResponse
+    V2JobTiming:
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        started_at:
+          type: string
+          format: date-time
+          title: Started At
+        finished_at:
+          type: string
+          format: date-time
+          title: Finished At
+      type: object
+      title: V2JobTiming
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    V2JobResults:
+      properties:
+        format:
+          type: string
+          enum:
+          - csv
+          title: Format
+        download_url:
+          type: string
+          title: Download Url
+        expires_at:
+          type: string
+          format: date-time
+          title: Expires At
+        file_expires_at:
+          type: string
+          format: date-time
+          title: File Expires At
+      type: object
+      required:
+      - format
+      - download_url
+      - expires_at
+      title: V2JobResults
+    V2JobInput:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+        row_count:
+          type: integer
+          title: Row Count
+        entity_type:
+          type: string
+          title: Entity Type
+      type: object
+      title: V2JobInput
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: api_key

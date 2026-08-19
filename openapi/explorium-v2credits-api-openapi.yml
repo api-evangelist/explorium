@@ -1,48 +1,19 @@
 openapi: 3.2.0
 info:
-  title: Partner Service Credits API
+  title: Partner Service V2 Credits API
   version: 0.3.19
 servers:
 - url: https://api.explorium.ai
   description: AgentSource Server
 tags:
-- name: Credits
+- name: V2Credits
 paths:
-  /v1/credits/menu/{partner_id}:
+  /v2/credits:
     get:
       tags:
-      - Credits
-      summary: Get Credits Menu Partner Id
-      operationId: get_credits_menu_partner_id
-      parameters:
-      - required: true
-        schema:
-          type: string
-          title: Partner Id
-        name: partner_id
-        in: path
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CustomCreditMenu'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-  /v1/credits:
-    get:
-      tags:
-      - Credits
+      - V2Credits
       summary: Get Active Credits Summary
-      operationId: get_active_credits_summary
+      operationId: v2_credits_get
       responses:
         '200':
           description: Successful Response
@@ -59,12 +30,12 @@ paths:
       security:
       - APIKeyHeader: []
       - APIKeyHeader: []
-  /v1/credits/aggregation:
+  /v2/credits/aggregation:
     post:
       tags:
-      - Credits
+      - V2Credits
       summary: Get Credit Aggregation
-      operationId: get_credit_aggregation
+      operationId: v2_credits_aggregation
       requestBody:
         content:
           application/json:
@@ -89,27 +60,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    CustomCreditMenu:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        partner_id:
-          type: string
-          title: Partner Id
-          description: Partner ID for this credit menu
-        charging_menu:
-          additionalProperties:
-            $ref: '#/components/schemas/ChargingRule'
-          type: object
-          title: Charging Menu
-          description: Dictionary of operation names to charging rules
-      type: object
-      required:
-      - response_context
-      - partner_id
-      - charging_menu
-      title: CustomCreditMenu
-      description: This is base response model for all responses in partner service.
     HTTPValidationError:
       properties:
         detail:
@@ -168,15 +118,6 @@ components:
       - aggregations
       title: CreditAggregationResponse
       description: This is base response model for all responses in partner service.
-    ChargingRule:
-      properties:
-        credit_cost:
-          type: integer
-          title: Credit Cost
-      type: object
-      required:
-      - credit_cost
-      title: ChargingRule
     RequestStatus:
       type: string
       enum:

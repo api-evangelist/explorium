@@ -1,0 +1,138 @@
+generated: '2026-08-14'
+method: searched
+source: https://developers.explorium.ai/reference/webhooks/webhooks
+spec_type: none
+description: >-
+  Explorium publishes no AsyncAPI document, but it does run a real, signed,
+  push event surface: a single webhook URL per partner receives every business
+  and prospect event the account has enrolled entities for. The catalogue of
+  event types is documented page-by-page in the developer docs and enumerated
+  below. Recorded as a Webhooks surface rather than an AsyncAPI one - nothing
+  here is fabricated into a spec.
+asyncapi:
+  published: false
+  probed:
+  - url: https://developers.explorium.ai/asyncapi.yaml
+    status: 404
+  - url: https://api.explorium.ai/asyncapi.json
+    status: 401
+  note: >-
+    No AsyncAPI in the docs, the GitHub org, the api-catalog linkset or the
+    ai-catalog manifest. Explorium's machine-readable investment went into
+    OpenAPI, the MCP server card and the agent card instead.
+webhooks:
+  model: single-endpoint-per-partner
+  registration:
+    endpoint: POST https://api.explorium.ai/v1/webhooks
+    operationId: add_webhook
+    request_fields:
+    - partner_id
+    - webhook_url
+    - headers
+    - payload_format
+    returns: webhook_secret
+    note: >-
+      One webhook URL per partner_id. Registering a new one OVERWRITES the
+      previous configuration and rotates the secret - there is no multi-endpoint
+      fan-out and no way to add a second destination without losing the first.
+  management:
+  - operationId: get_webhook
+    endpoint: GET https://api.explorium.ai/v1/webhooks/{partner_id}
+  - operationId: delete_webhook
+    endpoint: DELETE https://api.explorium.ai/v1/webhooks/{partner_id}
+  - operationId: check_webhook_connectivity
+    endpoint: POST https://api.explorium.ai/v1/webhooks/check_connectivity
+    note: A first-class connectivity test before enrolling entities.
+  delivery:
+    method: POST
+    content_type: application/json
+    payload_formats:
+    - json
+    - stringified_json
+    custom_headers: >-
+      A headers[] array of "Header-Name: value" strings is sent with every
+      delivery, so a receiver can require its own bearer token.
+    payload_fields:
+    - enrollment_key
+    - event_name
+    - entity_id
+  security:
+    signing: HMAC-SHA256
+    signature_header: X-Signature
+    timestamp_header: X-Timestamp
+    encoding: >-
+      The secret is base64url-decoded to the HMAC key; the signed message is
+      "{X-Timestamp}.{raw body}"; the digest is base64url-encoded and compared
+      to X-Signature.
+    replay_window_seconds: 300
+    note: >-
+      A timestamped, constant-time-compared HMAC with a five-minute replay
+      window - a correct signing design, and documented with working verification
+      code rather than described in prose.
+  enrollment:
+    note: >-
+      Delivery is opt-in per entity. Entities are enrolled through the events
+      enrollment operations, and an arbitrary enrollment_key is echoed back on
+      every event so a consumer can route by use case.
+    operations:
+    - add_businesses_enrollments
+    - update_businesses_enrollments
+    - delete_businesses_enrollments
+    - get_businesses_enrollments
+    - add_prospects_enrollments
+    - update_prospects_enrollments
+    - delete_prospects_enrollments
+    - get_prospects_enrollments
+  pull_equivalent:
+    note: The same events are also readable synchronously, without a webhook.
+    operations:
+    - fetch_businesses_events
+    - fetch_prospects_events
+event_types:
+  businesses:
+  - id: ipo-announcement
+    name: IPO announcement
+  - id: new-product-launch
+    name: New product launch
+  - id: new-funding-round
+    name: New funding round
+  - id: new-investment
+    name: New investment
+  - id: office-closing
+    name: Office closing
+  - id: new-office-opening
+    name: New office opening
+  - id: companys-award-event
+    name: Company award
+  - id: new-partnership
+    name: New partnership
+  - id: hiring-by-department
+    name: Hiring by department
+  - id: department-trend
+    name: Department workforce trends
+  - id: employee-joined-company
+    name: New executive level hires
+  - id: lawsuits-and-legal-issues
+    name: Lawsuits and legal proceedings
+  - id: outages-and-security-breaches
+    name: Outages and security breaches
+  - id: cost-cutting
+    name: Cost cutting
+  - id: merger-and-acquisitions
+    name: Merger and acquisitions
+  prospects:
+  - id: recently_changed_company
+    name: Employee changed workplace
+  - id: employee_workplace_anniversary
+    name: Employee's workplace anniversary
+  - id: employee_job_changes
+    name: Employee changed role
+  docs_root: https://developers.explorium.ai/reference/businesses/events/types/
+event_type_count: 18
+version_note: >-
+  Webhooks and events are a v1-only capability. Explorium's own published Agent
+  Skill states that v2 webhooks are "coming before GA", so an integrator
+  building on v2 today must still call v1 for any push delivery.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

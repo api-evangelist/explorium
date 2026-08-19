@@ -1,22 +1,19 @@
 openapi: 3.2.0
 info:
-  title: Partner Service Businesses API
+  title: Partner Service V2 Businesses API
   version: 0.3.19
 servers:
 - url: https://api.explorium.ai
   description: AgentSource Server
 tags:
-- name: Businesses
+- name: V2Businesses
 paths:
-  /v1/businesses/match:
+  /v2/businesses/match:
     post:
       tags:
-      - Businesses
+      - V2Businesses
       summary: Match Businesses
-      description: 'Match a list of businesses attributes to ids.
-
-        Returns a list of the same length and order as the input list, with the matched ids.'
-      operationId: match_businesses
+      operationId: v2_businesses_match
       requestBody:
         content:
           application/json:
@@ -39,20 +36,17 @@ paths:
       security:
       - APIKeyHeader: []
       - APIKeyHeader: []
-  /v1/businesses:
+  /v2/businesses:
     post:
       tags:
-      - Businesses
+      - V2Businesses
       summary: Fetch Businesses
-      description: 'Filters businesses by country, company size, revenue, and more.
-
-        Returns minimal data needed for further filtering, deduplication, or record previews.'
-      operationId: fetch_businesses
+      operationId: v2_businesses_fetch
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BusinessesFetchRequest'
+              $ref: '#/components/schemas/V2BusinessesFetchRequest'
         required: true
       responses:
         '200':
@@ -60,10 +54,7 @@ paths:
           content:
             application/json:
               schema:
-                anyOf:
-                - $ref: '#/components/schemas/BusinessesFetchResponse'
-                - $ref: '#/components/schemas/BusinessesFetchResponseV2'
-                title: Response Fetch Businesses
+                $ref: '#/components/schemas/BusinessesFetchResponseV2'
         '422':
           description: Validation Error
           content:
@@ -73,92 +64,17 @@ paths:
       security:
       - APIKeyHeader: []
       - APIKeyHeader: []
-  /v1/businesses/events:
+  /v2/businesses/stats:
     post:
       tags:
-      - Businesses
-      summary: Fetch Businesses Events
-      description: Create events and fetch for businesses.
-      operationId: fetch_businesses_events
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BusinessesEventsRequest'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema: {}
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-  /v1/businesses/autocomplete:
-    get:
-      tags:
-      - Businesses
-      summary: Autocomplete Businesses
-      description: Autocomplete businesses by field and query.
-      operationId: businesses_autocomplete
-      parameters:
-      - required: true
-        schema:
-          $ref: '#/components/schemas/AutocompleteType'
-        name: field
-        in: query
-      - required: false
-        schema:
-          type: string
-          title: Query
-          default: ''
-        name: query
-        in: query
-      - required: false
-        schema:
-          type: boolean
-          title: Semantic Search
-          default: false
-        name: semantic_search
-        in: query
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                items:
-                  $ref: '#/components/schemas/AutoCompleteItem'
-                type: array
-                title: Response Businesses Autocomplete
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-  /v1/businesses/stats:
-    post:
-      tags:
-      - Businesses
+      - V2Businesses
       summary: Fetch Stats
-      description: Fetch stats for businesses.
-      operationId: fetch_stats
+      operationId: v2_businesses_stats
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/BusinessesStatsRequest'
+              $ref: '#/components/schemas/V2BusinessesStatsRequest'
         required: true
       responses:
         '200':
@@ -176,144 +92,8 @@ paths:
       security:
       - APIKeyHeader: []
       - APIKeyHeader: []
-  /v1/businesses/events/enrollments:
-    get:
-      tags:
-      - Businesses
-      summary: Get Businesses Enrollments
-      description: Show businesses events enrollments records for user.
-      operationId: get_businesses_enrollments
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BusinessesEnrollmentsGetResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-    post:
-      tags:
-      - Businesses
-      summary: Add Businesses Enrollments
-      description: Add enrollments for businesses
-      operationId: add_businesses_enrollments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BusinessesEnrollmentsAddRequest'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BusinessesEnrollmentsAddResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-    delete:
-      tags:
-      - Businesses
-      summary: Delete Businesses Enrollments
-      description: Delete events enrollments records
-      operationId: delete_businesses_enrollments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BusinessesEnrollmentsDeleteRequest'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BusinessesEnrollmentsDeleteResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
-    patch:
-      tags:
-      - Businesses
-      summary: Update Businesses Enrollments
-      description: Update enrollments for businesses
-      operationId: update_businesses_enrollments
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/BusinessesEnrollmentsUpdateRequest'
-        required: true
-      responses:
-        '200':
-          description: Successful Response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/BusinessesEnrollmentsUpdateResponse'
-        '422':
-          description: Validation Error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/HTTPValidationError'
-      security:
-      - APIKeyHeader: []
-      - APIKeyHeader: []
 components:
   schemas:
-    BusinessesEnrollmentsDeleteRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        enrollment_id:
-          type: string
-          title: Enrollment Id
-      additionalProperties: false
-      type: object
-      required:
-      - enrollment_id
-      title: BusinessesEnrollmentsDeleteRequest
-    IncludesFilter_RevenueRange_:
-      properties:
-        negate:
-          type: boolean
-          title: Negate
-        values:
-          items:
-            $ref: '#/components/schemas/RevenueRange'
-          type: array
-      additionalProperties: false
-      type: object
-      required:
-      - values
-      title: IncludesFilter[RevenueRange]
     BusinessesEventIdentifier:
       type: string
       enum:
@@ -374,6 +154,27 @@ components:
 
 
         These identifiers are used to categorize and track business events within the application.'
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     BaseFetchMode:
       type: string
       enum:
@@ -497,55 +298,6 @@ components:
       required:
       - values
       title: IncludesFilter[CompanyAgeRange]
-    BusinessesEventsRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        entity_type:
-          allOf:
-          - $ref: '#/components/schemas/EntityType'
-          default: business
-        event_types:
-          items:
-            $ref: '#/components/schemas/BusinessesEventIdentifier'
-          type: array
-          minItems: 1
-        timestamp_to:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: string
-          title: Timestamp To
-          description: ISO format datetime string or date in format YYYY-MM-DD
-          marked_for_null_replacement: true
-          nullable: true
-        timestamp_from:
-          anyOf:
-          - type: string
-            format: date-time
-          - type: string
-          title: Timestamp From
-          description: ISO format datetime string or date in format YYYY-MM-DD
-          marked_for_null_replacement: true
-          nullable: true
-        business_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{32}$
-          type: array
-          maxItems: 40
-          minItems: 1
-          uniqueItems: true
-          title: Business Ids
-      additionalProperties: false
-      type: object
-      required:
-      - event_types
-      - business_ids
-      title: BusinessesEventsRequest
     NumberOfEmployeesRange:
       type: string
       enum:
@@ -582,19 +334,6 @@ components:
       - 10T+
       title: RevenueRange
       description: The `RevenueRange` class is an enumeration that represents predefined ranges for the revenue of a company.
-    BusinessesEnrollmentsDeleteResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        status:
-          allOf:
-          - $ref: '#/components/schemas/RequestStatus'
-          default: success
-      type: object
-      required:
-      - response_context
-      title: BusinessesEnrollmentsDeleteResponse
-      description: This is base response model for all responses in partner service.
     BusinessesStats:
       properties:
         business_categories_per_location:
@@ -608,21 +347,6 @@ components:
           title: Number Of Employees Per Category
       type: object
       title: BusinessesStats
-    BusinessesEnrollmentsGetResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        enrollments:
-          items:
-            $ref: '#/components/schemas/BusinessesEnrollment'
-          type: array
-          title: Enrollments
-      type: object
-      required:
-      - response_context
-      - enrollments
-      title: BusinessesEnrollmentsGetResponse
-      description: This is base response model for all responses in partner service.
     BusinessesMatchRequest:
       properties:
         request_context:
@@ -691,31 +415,6 @@ components:
       required:
       - values
       title: IncludesFilter[NAICS]
-    AutocompleteType:
-      enum:
-      - country
-      - country_code
-      - region_country_code
-      - google_category
-      - naics_category
-      - linkedin_category
-      - company_tech_stack_tech
-      - company_tech_stack_categories
-      - job_title
-      - company_size
-      - company_revenue
-      - number_of_locations
-      - company_age
-      - job_department
-      - job_level
-      - city_region_country
-      - company_name
-      - business_intent_topics
-      - city_region
-      - skills
-      - interests
-      title: AutocompleteType
-      description: Enum for autocomplete types.
     partner_service__models__services__requests__PageInfo:
       properties:
         size:
@@ -730,171 +429,23 @@ components:
       required:
       - size
       title: PageInfo
-    BusinessesEnrollmentsAddRequest:
+    ResponseContext:
       properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        enrollment_key:
+        correlation_id:
           type: string
-          minLength: 4
-          title: Enrollment Key
-        event_types:
-          items:
-            $ref: '#/components/schemas/BusinessesEventIdentifier'
-          type: array
-          minItems: 1
-        business_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{32}$
-          type: array
-          maxItems: 20
-          minItems: 1
-          title: Business Ids
-      additionalProperties: false
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
       type: object
       required:
-      - enrollment_key
-      - event_types
-      - business_ids
-      title: BusinessesEnrollmentsAddRequest
-    BusinessesFetchResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        data:
-          items:
-            $ref: '#/components/schemas/Business'
-          type: array
-          title: Data
-          description: List of businesses that match the filters.
-          default: []
-        total_results:
-          type: integer
-          minimum: 0.0
-          title: Total Results
-          description: The total number of businesses that match the filters.
-          default: 0
-        page:
-          type: integer
-          minimum: 0.0
-          title: Page
-          description: The page number of the response.
-          default: 1
-        total_pages:
-          type: integer
-          minimum: 0.0
-          title: Total Pages
-          description: The total number of pages.
-      type: object
-      required:
-      - response_context
-      - total_pages
-      title: BusinessesFetchResponse
-      description: This is base response model for all responses in partner service.
-    BusinessesEnrollmentsUpdateResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        enrollment_key:
-          type: string
-          minLength: 4
-          title: Enrollment Key
-        enrollment_id:
-          type: string
-          title: Enrollment Id
-      type: object
-      required:
-      - response_context
-      - enrollment_key
-      - enrollment_id
-      title: BusinessesEnrollmentsUpdateResponse
-      description: This is base response model for all responses in partner service.
-    InternalEventIdentifier:
-      type: string
-      enum:
-      - prospect_changed_role
-      - prospect_changed_company
-      - prospect_job_start_anniversary
-      - ipo_announcement
-      - new_funding_round
-      - new_investment
-      - new_product
-      - new_office
-      - closing_office
-      - new_partnership
-      - merger_and_acquisitions
-      - hiring_in_creative_department
-      - hiring_in_education_department
-      - hiring_in_engineering_department
-      - hiring_in_finance_department
-      - hiring_in_health_department
-      - hiring_in_human_resources_department
-      - hiring_in_legal_department
-      - hiring_in_marketing_department
-      - hiring_in_operations_department
-      - hiring_in_professional_service_department
-      - hiring_in_sales_department
-      - hiring_in_support_department
-      - hiring_in_trade_department
-      - hiring_in_unknown_department
-      - increase_in_engineering_department
-      - increase_in_sales_department
-      - increase_in_marketing_department
-      - increase_in_operations_department
-      - increase_in_customer_service_department
-      - increase_in_all_departments
-      - decrease_in_engineering_department
-      - decrease_in_sales_department
-      - decrease_in_marketing_department
-      - decrease_in_operations_department
-      - decrease_in_customer_service_department
-      - decrease_in_all_departments
-      - employee_joined_company
-      - company_award
-      - outages_and_security_breaches
-      - cost_cutting
-      - lawsuits_and_legal_issues
-      title: InternalEventIdentifier
-      description: 'The `InternalEventIdentifier` class is an enumeration that defines internal event identifiers.
-
-
-        This enum is used to categorize and track internal events related to businesses and prospects.
-
-        All events are now handled internally through the event service.'
-    IncludesFilter_Text_:
-      properties:
-        negate:
-          type: boolean
-          title: Negate
-        values:
-          items:
-            type: string
-          type: array
-          title: Values
-      additionalProperties: false
-      type: object
-      required:
-      - values
-      title: IncludesFilter[Text]
-    BusinessesStatsRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        filters:
-          $ref: '#/components/schemas/BusinessesFetchFilters'
-      additionalProperties: false
-      type: object
-      required:
-      - filters
-      title: BusinessesStatsRequest
-    BusinessesFetchFilters:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
+    V2BusinessesFetchFilters:
       properties:
         business_id:
           allOf:
@@ -1124,43 +675,29 @@ components:
           allOf:
           - $ref: '#/components/schemas/ExistsFilter'
           title: Include Operating Locations
-          description: When True, location filters also apply to operating locations. Default is True (None is treated as True).
+          description: When true, location filters also apply to operating locations. Defaults to false.
           example:
-            value: true
+            value: false
           nullable: true
       additionalProperties: false
       type: object
-      title: BusinessesFetchFilters
+      title: V2BusinessesFetchFilters
       example: {}
-    BusinessesEnrollment:
+    IncludesFilter_Text_:
       properties:
-        enrollment_id:
-          type: string
-          title: Enrollment Id
-        enrollment_key:
-          type: string
-          minLength: 4
-          title: Enrollment Key
-        event_types:
-          items:
-            anyOf:
-            - $ref: '#/components/schemas/EventName'
-            - $ref: '#/components/schemas/InternalEventIdentifier'
-          type: array
-          title: Event Types
-        business_ids:
+        negate:
+          type: boolean
+          title: Negate
+        values:
           items:
             type: string
-            pattern: ^[a-f0-9]{32}$
           type: array
-          title: Business Ids
+          title: Values
+      additionalProperties: false
       type: object
       required:
-      - enrollment_id
-      - enrollment_key
-      - event_types
-      - business_ids
-      title: BusinessesEnrollment
+      - values
+      title: IncludesFilter[Text]
     BusinessMatchOutputWithErrors:
       properties:
         input:
@@ -1305,53 +842,6 @@ components:
       required:
       - values
       title: AnyMatchPhraseFilter[Text]
-    EventName:
-      type: string
-      enum:
-      - prospect_changed_role
-      - prospect_changed_company
-      - prospect_job_start_anniversary
-      - ipo_announcement
-      - new_funding_round
-      - new_investment
-      - new_product
-      - new_office
-      - closing_office
-      - new_partnership
-      - increase_in_engineering_department
-      - increase_in_sales_department
-      - increase_in_marketing_department
-      - increase_in_operations_department
-      - increase_in_customer_service_department
-      - increase_in_all_departments
-      - decrease_in_engineering_department
-      - decrease_in_sales_department
-      - decrease_in_marketing_department
-      - decrease_in_operations_department
-      - decrease_in_customer_service_department
-      - decrease_in_all_departments
-      - employee_joined_company
-      - hiring_in_creative_department
-      - hiring_in_education_department
-      - hiring_in_engineering_department
-      - hiring_in_finance_department
-      - hiring_in_health_department
-      - hiring_in_human_resources_department
-      - hiring_in_legal_department
-      - hiring_in_marketing_department
-      - hiring_in_operations_department
-      - hiring_in_professional_service_department
-      - hiring_in_sales_department
-      - hiring_in_support_department
-      - hiring_in_trade_department
-      - hiring_in_unknown_department
-      - company_award
-      - outages_and_security_breaches
-      - cost_cutting
-      - merger_and_acquisitions
-      - lawsuits_and_legal_issues
-      title: EventName
-      description: An enumeration.
     Business:
       properties:
         business_id:
@@ -1421,7 +911,7 @@ components:
       - business_id
       - name
       title: Business
-    BusinessesFetchRequest:
+    V2BusinessesFetchRequest:
       properties:
         request_context:
           type: object
@@ -1433,29 +923,13 @@ components:
           - $ref: '#/components/schemas/BaseFetchMode'
           description: The mode of fetching businesses.
           example: full
-        size:
-          type: integer
-          maximum: 60000.0
-          minimum: 1.0
-          title: Size
-          description: The maximum number of businesses to return. Max size is 60000 (which is the default value)
-          default: 60000
-          example: 3
         page_size:
           type: integer
           maximum: 500.0
           minimum: 1.0
           title: Page Size
-          description: The maximum number of businesses in a page. Max limit is 500
+          description: The maximum number of businesses in a page.
           example: 3
-        page:
-          type: integer
-          minimum: 1.0
-          title: Page
-          description: The page number to fetch.
-          default: 1
-          example: 1
-          nullable: true
         exclude:
           items:
             type: string
@@ -1463,19 +937,18 @@ components:
           type: array
           maxItems: 1000
           title: Exclude
-          description: List of business ids to exclude from the response.
           marked_for_null_replacement: true
           nullable: true
         filters:
           allOf:
-          - $ref: '#/components/schemas/BusinessesFetchFilters'
+          - $ref: '#/components/schemas/V2BusinessesFetchFilters'
           title: Filters
           example: {}
           nullable: true
         next_cursor:
           type: string
           title: Next Cursor
-          description: The sort values from the last document returned by the previous page. If provided, cursor pagination is used instead of page-based pagination. send "null" to start with next_cursor pagination from the beginning.
+          description: Cursor returned by the previous page. Omit or send null to start from the beginning.
           marked_for_null_replacement: true
           nullable: true
       additionalProperties: false
@@ -1483,42 +956,7 @@ components:
       required:
       - mode
       - page_size
-      title: BusinessesFetchRequest
-    BusinessesEnrollmentsUpdateRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        enrollment_key:
-          type: string
-          minLength: 4
-          title: Enrollment Key
-        event_types:
-          items:
-            $ref: '#/components/schemas/BusinessesEventIdentifier'
-          type: array
-          minItems: 1
-        enrollment_id:
-          type: string
-          title: Enrollment Id
-        business_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{32}$
-          type: array
-          maxItems: 20
-          minItems: 1
-          title: Business Ids
-      additionalProperties: false
-      type: object
-      required:
-      - enrollment_key
-      - event_types
-      - enrollment_id
-      - business_ids
-      title: BusinessesEnrollmentsUpdateRequest
+      title: V2BusinessesFetchRequest
     DynamicIncludesFilter_OrganizationName_:
       properties:
         negate:
@@ -1535,24 +973,6 @@ components:
       required:
       - values
       title: DynamicIncludesFilter[OrganizationName]
-    BusinessesEnrollmentsAddResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        enrollment_key:
-          type: string
-          minLength: 4
-          title: Enrollment Key
-        enrollment_id:
-          type: string
-          title: Enrollment Id
-      type: object
-      required:
-      - response_context
-      - enrollment_key
-      - enrollment_id
-      title: BusinessesEnrollmentsAddResponse
-      description: This is base response model for all responses in partner service.
     IncludesFilter_BusinessId_:
       properties:
         negate:
@@ -1569,13 +989,6 @@ components:
       required:
       - values
       title: IncludesFilter[BusinessId]
-    EntityType:
-      type: string
-      enum:
-      - business
-      - prospect
-      title: EntityType
-      description: "The `EntityType` class is an enumeration that defines the types of entities.\n\nThis enum is used to specify whether the entity is a business or a prospect.\nIt ensures consistent handling of entity types across the application.\n\nAttributes:\n    BUSINESS: Represents a business entity.\n    PROSPECT: Represents a prospect entity."
     IncludesFilter_CountryCodeAlpha2_:
       properties:
         negate:
@@ -1592,27 +1005,20 @@ components:
       required:
       - values
       title: IncludesFilter[CountryCodeAlpha2]
-    ValidationError:
+    V2BusinessesStatsRequest:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        filters:
+          $ref: '#/components/schemas/V2BusinessesFetchFilters'
+      additionalProperties: false
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - filters
+      title: V2BusinessesStatsRequest
     BusinessesMatchResponse:
       properties:
         response_context:
@@ -1643,43 +1049,20 @@ components:
       - total_matches
       title: BusinessesMatchResponse
       description: This is base response model for all responses in partner service.
-    AutoCompleteItem:
+    IncludesFilter_RevenueRange_:
       properties:
-        query:
-          type: string
-          title: Query
-        label:
-          type: string
-          title: Label
-        value:
-          type: string
-          title: Value
+        negate:
+          type: boolean
+          title: Negate
+        values:
+          items:
+            $ref: '#/components/schemas/RevenueRange'
+          type: array
+      additionalProperties: false
       type: object
       required:
-      - query
-      - label
-      - value
-      title: AutoCompleteItem
-      example:
-        query: united
-        label: United States
-        value: us
-    ResponseContext:
-      properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
-      type: object
-      required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
+      - values
+      title: IncludesFilter[RevenueRange]
   securitySchemes:
     APIKeyHeader:
       type: apiKey

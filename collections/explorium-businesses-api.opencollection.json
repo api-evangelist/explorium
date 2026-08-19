@@ -1,0 +1,96 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Explorium AgentSource Business Enrichments Businesses API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Businesses",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Match businesses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses/match",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Resolve up to 50 companies to Explorium business_id values from name, domain, URL, or LinkedIn URL. Returns a list the same length and order as the input."
+        },
+        {
+          "info": {
+            "name": "Fetch businesses",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve company records that match a set of filters such as industry, company size, location, or technology in use."
+        },
+        {
+          "info": {
+            "name": "Fetch business statistics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses/stats",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Gauge the size and scope of a target audience for a set of filters before running large-scale fetches."
+        },
+        {
+          "info": {
+            "name": "Autocomplete businesses",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.explorium.ai/v1/businesses/autocomplete",
+            "params": [
+              {
+                "name": "field",
+                "value": "",
+                "type": "query",
+                "description": "The filter field to autocomplete, for example country or naics_category."
+              },
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "The partial text to match."
+              }
+            ]
+          },
+          "docs": "Fuzzy search over business filter values (industries, technologies, locations) to build valid filter payloads."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

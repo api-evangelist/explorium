@@ -1,0 +1,139 @@
+# Explorium docs
+
+## Docs
+
+- [Quick Starts](https://developers.explorium.ai/reference/quick-starts/quick-starts.md): For any issues, questions, or assistance, our support team is available to help.
+- [Introduction](https://developers.explorium.ai/reference/quick-starts/introduction.md): AgentSource is a tool used for powerful data enrichment, prospect matching, and business intelligence to enhance decision-making processes. By integrating Explorium's AgentSource API into your workflow, you gain access to vast datasets that enable precise business and prospect insights.
+- [Use Case : Prospecting & Lead Enrichment](https://developers.explorium.ai/reference/quick-starts/use_case_prospecting.md)
+- [Account Access](https://developers.explorium.ai/reference/setup/account_access.md)
+- [Getting Your API Key](https://developers.explorium.ai/reference/setup/getting_your_api_key.md)
+- [Tracking Your Credits](https://developers.explorium.ai/reference/credits/tracking_your_credits.md)
+- [Credit Plans & Purchases](https://developers.explorium.ai/reference/credits/credit_plans.md)
+- [Auto-Refill Credits](https://developers.explorium.ai/reference/credits/auto-refill-credits.md): Keep your AgentSource balance topped up automatically so your workflows never stop for lack of credits.
+- [User Management](https://developers.explorium.ai/reference/setup/user_management.md)
+- [Businesses](https://developers.explorium.ai/reference/businesses/businesses_api.md)
+- [Match Businesses](https://developers.explorium.ai/reference/businesses/match_businesses.md): Match a list of businesses attributes to ids. Returns a list of the same length and order as the input list, with the matched ids.
+- [Fetch Businesses](https://developers.explorium.ai/reference/businesses/fetch_businesses.md): Filters businesses by country, company size, revenue, and more. Returns minimal data needed for further filtering, deduplication, or record previews.
+- [Business Statistics](https://developers.explorium.ai/reference/businesses/fetch_businesses_statistics.md): Fetch stats for businesses.
+- [Autocomplete Businesses](https://developers.explorium.ai/reference/businesses/autocomplete/businesses_autocomplete.md): Autocomplete businesses by field and query.
+- [LinkedIn® Categories](https://developers.explorium.ai/reference/businesses/autocomplete/linkedin_categories.md): List of valid LinkedIn® categories
+- [Fetch Businesses Events](https://developers.explorium.ai/reference/businesses/events/fetch_businesses_events.md): Create events and fetch for businesses.
+- [Add Businesses Enrollments](https://developers.explorium.ai/reference/businesses/events/add_businesses_enrollments.md): Add enrollments for businesses
+- [Update Businesses Enrollments](https://developers.explorium.ai/reference/businesses/events/update_businesses_enrollments.md): Update enrollments for businesses
+- [Delete Businesses Enrollments](https://developers.explorium.ai/reference/businesses/events/delete_businesses_enrollments.md): Delete events enrollments records
+- [Get Businesses Enrollments](https://developers.explorium.ai/reference/businesses/events/get_businesses_enrollments.md): Show businesses events enrollments records for user.
+- [IPO announcement](https://developers.explorium.ai/reference/businesses/events/types/ipo-announcement.md)
+- [New product launch](https://developers.explorium.ai/reference/businesses/events/types/new-product-launch.md)
+- [New funding round](https://developers.explorium.ai/reference/businesses/events/types/new-funding-round.md)
+- [New investment](https://developers.explorium.ai/reference/businesses/events/types/new-investment.md)
+- [Office closing](https://developers.explorium.ai/reference/businesses/events/types/office-closing.md)
+- [New office opening](https://developers.explorium.ai/reference/businesses/events/types/new-office-opening.md)
+- [Company award](https://developers.explorium.ai/reference/businesses/events/types/companys-award-event.md)
+- [New partnership](https://developers.explorium.ai/reference/businesses/events/types/new-partnership.md)
+- [Hiring by department](https://developers.explorium.ai/reference/businesses/events/types/hiring-by-department.md)
+- [Department workforce trends](https://developers.explorium.ai/reference/businesses/events/types/department-trend.md)
+- [New executive level hires](https://developers.explorium.ai/reference/businesses/events/types/employee-joined-company.md)
+- [Lawsuits and legal proceedings](https://developers.explorium.ai/reference/businesses/events/types/lawsuits-and-legal-issues.md)
+- [Outages and security breaches](https://developers.explorium.ai/reference/businesses/events/types/outages-and-security-breaches.md)
+- [Cost cutting](https://developers.explorium.ai/reference/businesses/events/types/cost-cutting.md)
+- [Merger and acquisitions](https://developers.explorium.ai/reference/businesses/events/types/merger-and-acquisitions.md)
+- [Business Enrichments](https://developers.explorium.ai/reference/businesses/enrichments/businesses_enrichments.md)
+- [Firmographics](https://developers.explorium.ai/reference/businesses/enrichments/firmographics.md)
+- [Technographics](https://developers.explorium.ai/reference/businesses/enrichments/technographics.md)
+- [Company's social media presence](https://developers.explorium.ai/reference/businesses/enrichments/company_social_media.md)
+- [Company Ratings By Employees](https://developers.explorium.ai/reference/businesses/enrichments/company_ratings.md)
+- [Keyword search on websites](https://developers.explorium.ai/reference/businesses/enrichments/keyword_search_on_websites.md)
+- [Financial metrics for public companies](https://developers.explorium.ai/reference/businesses/enrichments/financial_metrics_for_public_companies.md)
+- [Funding and acquisitions for public and private companies](https://developers.explorium.ai/reference/businesses/enrichments/funding_and_acquisitions.md)
+- [Business challenges of public companies](https://developers.explorium.ai/reference/businesses/enrichments/business_challenges.md)
+- [Competitive landscape of public companies](https://developers.explorium.ai/reference/businesses/enrichments/competitive_landscape.md)
+- [Strategic insights on public companies](https://developers.explorium.ai/reference/businesses/enrichments/strategic_insights.md)
+- [Company’s website content changes](https://developers.explorium.ai/reference/businesses/enrichments/company_website_content_changes.md)
+- [Workforce trends by company department](https://developers.explorium.ai/reference/businesses/enrichments/workforce_trends.md)
+- [Lookalike Companies - by Ocean.IO](https://developers.explorium.ai/reference/businesses/enrichments/lookalike-companies.md)
+- [Company’s Webstack](https://developers.explorium.ai/reference/businesses/enrichments/webstack.md)
+- [Company Hierarchy](https://developers.explorium.ai/reference/businesses/enrichments/company-hierarchy.md)
+- [Business Website Traffic](https://developers.explorium.ai/reference/businesses/enrichments/business_website_traffic.md)
+- [Business Intent Topics (Bombora)](https://developers.explorium.ai/reference/businesses/enrichments/business_intent_topics_bombora.md)
+- [Bulk Businesses Enrichments](https://developers.explorium.ai/reference/businesses/enrichments/bulk/bulk_businesses_enrichments.md)
+- [Firmographics (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/businesses_firmographics_bulk_enrich.md)
+- [Technographics (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/businesses_technographics_bulk_enrich.md)
+- [Company's social media presence (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/company_social_media_bulk_enrich.md)
+- [Company ratings by employees (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/businesses_company_ratings_by_employees_bulk_enrich.md)
+- [Keyword search on websites (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/keyword_search_on_websites_bulk_enrich.md)
+- [Financial metrics for public companies (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/businesses_financial_metrics_bulk_enrich.md)
+- [Funding and acquisitions for public and private companies (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/businesses_funding_and_acquisition_bulk_enrich.md)
+- [Business challenges of public companies (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/business_challenges_bulk_enrich.md)
+- [Competitive landscape of public companies (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/competitive_landscape_bulk_enrich.md)
+- [Strategic insights of public companies (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/strategic_insights_bulk_enrich.md)
+- [Company's website content changes (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/company_website_content_changes_bulk_enrich.md)
+- [Workforce trends by company department (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/businesses_workforce_trends_bulk_enrich.md)
+- [Lookalike Companies - by Ocean.IO (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/lookalike_companies_bulk_enrich.md)
+- [Company’s Webstack (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/webstack_bulk_enrich.md)
+- [Company Hierarchy (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/company_hierarchy_bulk_enrich.md)
+- [Business Website Traffic (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/business_website_traffic_bulk_enrich.md)
+- [Business Intent Topics (Bulk)](https://developers.explorium.ai/reference/businesses/enrichments/bulk/business_intent_topics_bombora_bulk.md)
+- [Prospects](https://developers.explorium.ai/reference/prospects/prospects_api.md)
+- [Match prospects](https://developers.explorium.ai/reference/prospects/match_prospects.md): Match a list of prospect attributes to Prospect IDs. Returns a list of the same length and order as the input list, with the matched IDs.
+- [Fetch prospects](https://developers.explorium.ai/reference/prospects/fetch_prospects.md)
+- [Prospects Statistics](https://developers.explorium.ai/reference/prospects/prospects_stats.md): Fetch stats for businesses.
+- [Autocomplete prospects](https://developers.explorium.ai/reference/prospects/prospects_autocomplete.md): Autocomplete prospects fields values by field name.
+- [Prospect Events](https://developers.explorium.ai/reference/prospects/events/fetch_prospects_events.md): Create events and fetch for prospects.
+- [Add prospects enrollments](https://developers.explorium.ai/reference/prospects/events/add_prospects_enrollments.md): Add enrollments for prospects
+- [Update Prospects Enrollments](https://developers.explorium.ai/reference/prospects/events/update_prospects_enrollments.md): Update enrollments for prospects
+- [Delete Prospects Enrollments](https://developers.explorium.ai/reference/prospects/events/delete_prospects_enrollments.md): Delete events enrollments records
+- [Get Prospects Enrollments](https://developers.explorium.ai/reference/prospects/events/get_prospects_enrollments.md): Show prospects events enrollments records for user.
+- [Employee changed workplace](https://developers.explorium.ai/reference/prospects/events/types/recently_changed_company.md)
+- [Employee's workplace anniversary](https://developers.explorium.ai/reference/prospects/events/types/employee_workplace_anniversary.md)
+- [Employee changed role](https://developers.explorium.ai/reference/prospects/events/types/employee_job_changes.md)
+- [Prospects Enrichments](https://developers.explorium.ai/reference/prospects/enrichments/prospects_enrichments.md)
+- [Contact details](https://developers.explorium.ai/reference/prospects/enrichments/contacts_information.md)
+- [Individual's social media presence](https://developers.explorium.ai/reference/prospects/enrichments/individual_social_media_presence.md)
+- [Professional profile: contact and workplace](https://developers.explorium.ai/reference/prospects/enrichments/professional_profile_contact_and_workplace.md)
+- [Bulk Prospects Enrichments](https://developers.explorium.ai/reference/prospects/enrichments/bulk/bulk_prospects_enrichments.md)
+- [Contact details (Bulk)](https://developers.explorium.ai/reference/prospects/enrichments/bulk/prospects_contacts_information_bulk_enrich.md)
+- [Individual's social media presence (Bulk)](https://developers.explorium.ai/reference/prospects/enrichments/bulk/individuals_social_media_bulk_enrich.md)
+- [Professional profile: contact and workplace (Bulk)](https://developers.explorium.ai/reference/prospects/enrichments/bulk/professional_profile_contact_bulk_enrich.md)
+- [Webhooks: Receiving Real-Time Events](https://developers.explorium.ai/reference/webhooks/webhooks.md)
+- [Add Webhook](https://developers.explorium.ai/reference/webhooks/add_webhook.md): Add a webhook for events enrollments.
+- [Get Webhook](https://developers.explorium.ai/reference/webhooks/get_webhook.md): Get an events enrollments webhook by partner_id.
+- [Delete Webhook](https://developers.explorium.ai/reference/webhooks/delete_webhook.md): Delete an events enrollments webhook by partner_id.
+- [Check Webhook Connectivity](https://developers.explorium.ai/reference/webhooks/check_webhook_connectivity.md)
+- [Pagination](https://developers.explorium.ai/reference/pagination.md): Learn how to paginate through large result sets using offset-based or cursor-based (search_after) pagination.
+- [Error Handling](https://developers.explorium.ai/reference/error-handling.md): Guide to API error codes and handling
+- [Rate Limit](https://developers.explorium.ai/reference/rate-limit.md)
+- [Get Active Credits Summary](https://developers.explorium.ai/reference/credits/get_active_credits_summary.md)
+- [Get Credit Consumption Aggregation](https://developers.explorium.ai/reference/credits/get_credit_consumption_aggregation.md): Retrieve aggregated credit consumption data with configurable time ranges and resolutions
+- [Per-Call Credit Usage](https://developers.explorium.ai/reference/credits/per-call-credit-usage.md): Opt in to per-call credit reporting and receive the exact credits deducted for each API request directly in the response.
+- [Research (Beta)](https://developers.explorium.ai/reference/research.md): Run a custom, AI-powered research task over a list of businesses or prospects using a natural-language query or a prompt template, grounded in real-time web data.
+- [Support & Help Center](https://developers.explorium.ai/reference/support-help-center.md)
+- [Additional Resources](https://developers.explorium.ai/reference/additional_resources.md)
+- [Data Catalog](https://developers.explorium.ai/reference/data.md)
+- [Outreach users: Getting Your API key](https://developers.explorium.ai/reference/outreach-getting-your-api-key.md)
+- [AgentSource MCP](https://developers.explorium.ai/mcp-docs/agentsource-mcp.md)
+- [Developers Implementation Guides](https://developers.explorium.ai/mcp-docs/developers-implementation-guides.md): Choose the right implementation method for integrating AgentSource MCP into your applications and workflows.
+- [LangGraph Integration with Explorium MCP](https://developers.explorium.ai/mcp-docs/implement-with-langgraph.md): Learn how to integrate AgentSource MCP with LangGraph framework to build AI agents that can access real-time business and contact data.
+- [OpenAI Implementation Guide](https://developers.explorium.ai/mcp-docs/implement-with-openai.md): Learn how to integrate AgentSource MCP with OpenAI's API  to build AI agents that can access real-time business and contact data.
+- [Python SDK Implementation Guide](https://developers.explorium.ai/mcp-docs/python-sdk-implementation-guide.md): Learn how to integrate AgentSource MCP using the official Python MCP SDK for direct, programmatic access to Explorium's business and contact data.
+- [MCP Integrations](https://developers.explorium.ai/integrations/mcp-integrations.md): Connect AgentSource MCP with your favorite platforms and tools to access business and contact data wherever you work.
+- [Claude Desktop Integration](https://developers.explorium.ai/integrations/claude/claude-desktop-integration.md)
+- [Cursor Integration](https://developers.explorium.ai/integrations/cursor/cursor-integration.md)
+- [Integrate with n8n](https://developers.explorium.ai/integrations/n8n/integrate-with-n8n.md)
+- [Integrate with Zapier](https://developers.explorium.ai/integrations/zapier/integrate-with-zapier.md): This document provides an overview and guidance on how to use our company's Zapier integration.
+- [Integrate with Base44](https://developers.explorium.ai/integrations/base44/integrate-with-base44.md): Add company & prospect data to any Base44 AI app in under 3 minutes.
+- [n8n](https://developers.explorium.ai/integrations/n8n/n8n.md): Explorium n8n Workflow Templates
+- [Explorium Event Triggered Outreach](https://developers.explorium.ai/integrations/n8n/explorium-event-triggered-outreach.md): Automatically identify meaningful events such as product launches, new office opening and much more, enrich company & prospect data, and generate fully personalized outbound emails using Explorium MCP and LLM agents
+- [Google Sheets Company Enrichment with Explorium MCP](https://developers.explorium.ai/integrations/n8n/google-sheets-company-enrichment-with-explorium-mcp.md): Automatically enrich company data in Google Sheets using Explorium's comprehensive B2B intelligence platform through n8n automation.
+- [Explorium Prospects Search Chatbot](https://developers.explorium.ai/integrations/n8n/explorium-prospects-search-chatbot.md): An intelligent conversational interface that translates natural language queries into Explorium API calls to find B2B prospects and export them as CSV files. ##
+- [Salesforce Data Enrichment Workflow](https://developers.explorium.ai/integrations/n8n/salesforce-data-enrichment-workflow.md): Automatically enrich new Salesforce leads with contact information (email addresses and phone numbers) using Explorium's B2B intelligence platform.
+- [HubSpot Contact Enrichment with Explorium](https://developers.explorium.ai/integrations/n8n/hubspot-contact-enrichment.md): Automatically enrich new HubSpot contacts with professional email addresses and phone numbers using Explorium's B2B intelligence platform.
+- [Zapier](https://developers.explorium.ai/integrations/zapier/zapier.md): Explorium AgentSource Zapier Integration Templates
+
+## OpenAPI Specs
+
+- [openapi](https://developers.explorium.ai/openapi.json)
+
+## Optional
+
+- [Contact Us](https://www.explorium.ai/about#contact?utm_source=developers)
+- [Blog](https://www.explorium.ai/blog?utm_source=developers)

@@ -1,0 +1,103 @@
+generated: '2026-08-14'
+method: searched
+source:
+- https://www.explorium.ai/product-updates/
+- https://developers.explorium.ai/reference/error-handling
+description: >-
+  Explorium runs no developer-facing changelog. There is no /changelog on the
+  docs host (404), no release-notes page on the marketing site (404), no
+  releases feed in the GitHub org for the API itself, and no changelog entry in
+  either the api-catalog linkset or the ai-catalog manifest. What exists is a
+  marketing "Product Updates" blog category with irregular, mostly undated
+  posts, plus one small version table buried at the bottom of the error-handling
+  reference. Neither is a machine-readable or reliably dated record of API
+  change - notable for a provider that ships a beta v2 surface and warns that
+  its paths and fields may change before GA.
+scheme:
+  api_versioning: uri-path (v1 stable, v2 beta)
+  doc_versioning: >-
+    The OpenAPI carries info.version, which moves independently of the API
+    version - 0.3.19 at api.explorium.ai and 0.3.18 at developers.explorium.ai
+    on the same day, so the two published copies of the contract were out of
+    step at probe time.
+  current_spec_version: 0.3.19
+  observed: '2026-08-14'
+dedicated_changelog:
+  published: false
+  probed:
+  - url: https://developers.explorium.ai/changelog
+    status: 404
+  - url: https://developers.explorium.ai/reference/changelog
+    status: 404
+  - url: https://www.explorium.ai/release-notes/
+    status: 404
+entries:
+- version: v1.5
+  date: '2025-06'
+  source: https://developers.explorium.ai/reference/error-handling
+  highlights:
+  - Enhanced error handling with specific error codes and improved messages.
+  breaking: false
+- version: v1.4
+  date: null
+  source: https://developers.explorium.ai/reference/error-handling
+  highlights:
+  - Added 10K enrichments.
+  breaking: false
+- version: v1.3
+  date: null
+  source: https://developers.explorium.ai/reference/error-handling
+  highlights:
+  - Added prospects match.
+  breaking: false
+- version: v1.2
+  date: null
+  source: https://developers.explorium.ai/reference/error-handling
+  highlights:
+  - Added social media posts and workforce trends.
+  breaking: false
+- version: v1.1
+  date: null
+  source: https://developers.explorium.ai/reference/error-handling
+  highlights:
+  - Added events pipelines.
+  breaking: false
+- version: v1.0
+  date: null
+  source: https://developers.explorium.ai/reference/error-handling
+  highlights:
+  - Initial release.
+  breaking: false
+product_updates:
+- title: Product Updates Q4 2025 - Q1 2026
+  url: https://www.explorium.ai/blog/product-updates/product-updates-q4-2025-q1-2026/
+  date: null
+  highlights:
+  - Event-based discovery
+  - Improved API management
+  - Cleaner targeting capabilities
+- title: 'Explorium n8n Node v1.24: Smarter Fetching & Enrichments'
+  url: https://www.explorium.ai/blog/product-updates/explorium-n8n-node-v1-24-smarter-fetching-enrichments/
+  date: null
+  version: '1.24'
+  note: Requires n8n v2.3.5 or later.
+- title: 'Introducing MCP v2: Scaled Prospecting & Smarter Workflows'
+  url: https://www.explorium.ai/blog/product-updates/introducing-mcp-v2-scaled-prospecting-smarter-workflows/
+  date: null
+  version: MCP v2
+- title: 'Explorium AgentSource: Comprehensive B2B Data Toolkit'
+  url: https://www.explorium.ai/blog/product-updates/explorium-agensource/
+  date: '2025-03-26'
+- title: Release Notes - September 2024
+  url: https://www.explorium.ai/blog/product-updates/release-notes-august-2024/
+  date: '2024-09'
+gap:
+  note: >-
+    The v1.x table stops at June 2025 and the v2 surface - async jobs, unified
+    enrichments, AI research, per-call credit reporting - appears in the live
+    OpenAPI with no corresponding changelog entry anywhere. A consumer cannot
+    learn from any Explorium-published document when v2 endpoints appeared,
+    changed, or will stabilise.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

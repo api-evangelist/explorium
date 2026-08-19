@@ -1,0 +1,180 @@
+generated: '2026-08-14'
+method: searched
+source:
+- https://developers.explorium.ai/reference/pagination
+- https://developers.explorium.ai/reference/error-handling
+- https://developers.explorium.ai/reference/rate-limit
+- https://www.explorium.ai/auth.md
+- openapi/_original/explorium-agentsource-openapi.json
+description: >-
+  Cross-cutting request/response semantics for the Explorium AgentSource API,
+  read from the published reference pages and confirmed against the harvested
+  OpenAPI.
+authentication:
+  style: api-key-header
+  header: api_key
+  note: >-
+    The OpenAPI securityScheme is APIKeyHeader, an apiKey in the header named
+    api_key (lowercase). Older Explorium material and some third-party guides
+    write it API_KEY; HTTP header names are case-insensitive so both reach the
+    same header, but api_key is what the contract declares. The MCP surface uses
+    OAuth 2.0 bearer tokens instead. Full profile in
+    authentication/explorium-authentication.yml.
+  applied_to: 125 of 127 operations; only healthcheck and version are anonymous.
+partner_id:
+  required: true
+  note: >-
+    A second identity dimension beyond the key. Several operations take
+    partner_id as a path parameter, and the error reference documents a 401
+    whose message names three interchangeable headers for it -
+    X-Context-Partner-ID, partner-id, partner_id. This is a real onboarding
+    trap: a valid api_key with a missing or wrong partner ID fails as an
+    authentication error, not a validation error.
+  headers_accepted:
+  - X-Context-Partner-ID
+  - partner-id
+  - partner_id
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    Explorium documents no idempotency mechanism and the OpenAPI declares no
+    Idempotency-Key parameter anywhere across 127 operations - a case-insensitive
+    search of the whole 685KB spec and of the pagination, error-handling,
+    rate-limit and authentication references returns zero matches. This matters
+    because every read on this API is a POST that spends credits: a retried
+    request after a timeout is charged again, and there is no key to deduplicate
+    it. Recorded as an honest absence. No Idempotency pointer is emitted in
+    apis.yml.
+  mitigations_available:
+  - >-
+    Async jobs are addressable by job_id (v2_job_status), so a batch run can be
+    polled rather than resubmitted.
+  - >-
+    The MCP surface exposes estimate-cost and show-sample so an agent can price
+    and preview before spending, which is a cost control rather than an
+    idempotency guarantee.
+pagination:
+  styles:
+  - style: offset
+    params:
+      page: 1-based page number, defaults to 1
+      page_size: records per page, maximum 500
+      size: maximum total records across all pages, defaults to and capped at 60000
+    response_fields:
+    - total_results
+    - total_pages
+    - page
+    max_results: 60000
+  - style: cursor
+    params:
+      search_after: opaque cursor token from the previous response
+    response_fields:
+    - next_cursor
+    max_results: unlimited
+    note: Preferred for large datasets; avoids deep-offset cost.
+  page_size_max: 500
+  applies_to:
+  - fetch_businesses
+  - fetch_prospects
+  - v2_businesses_fetch
+  - v2_prospects_fetch
+  docs: https://developers.explorium.ai/reference/pagination
+request_tracing:
+  field: response_context.correlation_id
+  location: response body
+  header: null
+  note: >-
+    The correlation ID is returned INSIDE the JSON envelope, not as a response
+    header, so it cannot be logged by proxies or read from a failed parse. The
+    error reference calls it "crucial for troubleshooting" and asks for it on
+    every support contact.
+response_envelope:
+  wrapper: response_context
+  fields:
+  - correlation_id
+  - request_status
+  - time_took_in_seconds
+  request_status_values:
+  - success
+  - miss
+  - failure
+  note: >-
+    request_status carries a per-record outcome distinct from the HTTP status -
+    a 200 can contain a "miss", meaning the entity was not found. Agents that
+    branch on HTTP status alone will silently treat unmatched entities as
+    successes.
+  data_field: data
+error_envelope:
+  shape: >-
+    {"details": "<human-readable>", "correlation_id": "<id>"} for general
+    errors; FastAPI-style {"detail": [{"loc": [...], "msg": ..., "type": ...,
+    "ctx": {...}}]} for 422 validation errors; {"code": 429, "message": ...,
+    "retry_after": <seconds>} for rate limiting.
+  rfc9457: false
+  note: >-
+    Three different error shapes across the same API, none of them
+    application/problem+json. Catalogued in errors/explorium-problem-types.yml.
+rate_limit_signaling:
+  limit: 200 queries per minute per API key
+  window: 60-second sliding
+  counting: per entity, not per HTTP request
+  status_on_exhaustion: 429
+  headers:
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  - Retry-After
+  note: >-
+    Retry-After appears only on 429 responses; the three X-RateLimit-* headers
+    are returned on every response. Detail in
+    rate-limits/explorium-rate-limits.yml.
+batch_semantics:
+  sync_max_records: 50
+  async_max_records: 10000
+  ordering: >-
+    Match endpoints return a list the same length and in the same order as the
+    input, with null for entities that did not resolve.
+  note: >-
+    A batch of 50 costs 50 queries against the rate limit and 50 credits against
+    the balance. Batching saves round trips, not quota.
+versioning:
+  scheme: uri-path
+  versions:
+  - version: v1
+    status: stable
+    note: The only version with webhooks and event enrollment.
+  - version: v2
+    status: beta
+    note: >-
+      Recommended for new work by Explorium's own guidance. Unifies single and
+      bulk into one endpoint per enrichment, adds an async job for every
+      enrichment, and adds AI research. No webhooks yet.
+  cutover: >-
+    No hard cutover announced; v1 and v2 run in parallel and Explorium states
+    v2 paths, fields and timing may change before GA.
+  docs: https://developers.explorium.ai/
+filters:
+  note: >-
+    Search filters are objects of the form {"field": {"values": [...]}}. Several
+    filter families require values drawn from the autocomplete endpoint rather
+    than free text - linkedin_category, google_category, naics_category,
+    company_tech_stack_tech and job_title. Explorium documents that no more than
+    one category type may be used per request, and that company_country_code
+    (company HQ) and country_code (prospect location) are distinct.
+metering:
+  unit: credits
+  note: >-
+    Every search, enrichment and event operation draws from one shared prepaid
+    credit pool. Per-call credit reporting is opt-in and returns the exact
+    credits deducted in the response. See plans/ and finops/.
+  opt_in_docs: https://developers.explorium.ai/reference/credits/per-call-credit-usage
+cross_links:
+  errors: errors/explorium-problem-types.yml
+  lifecycle: lifecycle/explorium-lifecycle.yml
+  authentication: authentication/explorium-authentication.yml
+  rate_limits: rate-limits/explorium-rate-limits.yml
+  webhooks: asyncapi/explorium-webhooks.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

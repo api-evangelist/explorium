@@ -1,0 +1,70 @@
+generated: '2026-08-14'
+method: searched
+probe: true
+url: https://www.explorium.ai/data-security/
+description: >-
+  Explorium publishes a security-and-compliance marketing page rather than a
+  trust center. It names certifications through badge images and links a
+  Security & Privacy FAQ PDF, but publishes no certificate numbers, no report
+  scopes, no audit dates, no sub-processor list and no self-serve document
+  portal. The automated probe (probe-security-programs.py) returned trust=none
+  because the page carries the certification names in image filenames rather
+  than in body text; this file is the searched upgrade over that miss.
+certifications:
+- name: SOC 2
+  evidence: badge asset https://www.explorium.ai/wp-content/uploads/2023/11/soc2.svg
+  type_disclosed: false
+  report_available: not publicly; detail is in a gated Security & Privacy FAQ PDF
+- name: ISO 27001
+  evidence: badge asset https://www.explorium.ai/wp-content/uploads/2023/11/ISO-27001.svg
+  certificate_number_disclosed: false
+- name: GDPR
+  evidence: badge asset https://www.explorium.ai/wp-content/uploads/2023/11/GDPR.svg
+  detail: >-
+    Privacy policy names an EU representative - explorium.eu@privacyminders.com,
+    +357 24 323333.
+- name: CCPA
+  evidence: badge asset https://www.explorium.ai/wp-content/uploads/2023/11/CCPA.svg
+  detail: '"Do Not Sell My Personal Info" page at https://explorium.ai/do-not-sell-my-personal-info/'
+documents:
+- title: Security & Privacy FAQ
+  url: https://info.explorium.ai/hubfs/Legal/Security%20&%20Privacy%20FAQ-24.2.26.pdf
+  format: pdf
+  note: >-
+    Hosted on the HubSpot marketing CDN, dated 2026-02-24 in the filename. This
+    is where the certification detail the page omits actually lives - a PDF is
+    not a machine-readable trust surface.
+- title: Privacy Policy
+  url: https://www.explorium.ai/privacy-policy/
+- title: Website Terms of Use
+  url: https://www.explorium.ai/explorium-website-terms-of-use/
+contacts:
+  privacy: privacy@explorium.ai
+  registered_address: 3 Daniel Frisch St., Tel-Aviv, Israel
+  legal_entity: Explorium Ltd
+gaps:
+  trust_portal: false
+  subprocessor_list: false
+  audit_dates: false
+  certificate_numbers: false
+  pen_test_summary: false
+  status_page: false
+  note: >-
+    For a company whose entire product is other companies' business and people
+    data, the compliance surface is asserted rather than evidenced. Every
+    verifiable artifact - report, certificate, sub-processor list - is either
+    absent or behind a marketing PDF.
+evidence:
+- source: https://www.explorium.ai/data-security/
+  http_status: 200
+  fetched: '2026-08-14'
+  keywords: [soc 2, iso 27001, gdpr, ccpa, security, privacy, certifications]
+- source: https://www.explorium.ai/privacy-policy/
+  http_status: 200
+  fetched: '2026-08-14'
+- source: https://trust.explorium.ai
+  http_status: 000
+  note: DNS does not resolve; no trust subdomain exists.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

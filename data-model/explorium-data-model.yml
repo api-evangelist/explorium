@@ -1,0 +1,199 @@
+generated: '2026-08-14'
+method: derived
+source: openapi/_original/explorium-agentsource-openapi.json
+description: >-
+  Entity-relationship graph derived from the 316 component schemas and the
+  id-reference fields that link them. The model is small and very regular: two
+  root entities (Business, Prospect) that everything else hangs off, resolved by
+  a match step into opaque IDs, then used as the key for every enrichment, event
+  and job. Field counts below are occurrences of that id field across schemas in
+  the harvested spec.
+identifiers:
+- field: business_id
+  entity: Business
+  occurrences: 58
+  note: >-
+    The primary key of the whole platform. Opaque, obtained only from a match
+    operation, and required by every business enrichment and enrollment.
+- field: prospect_id
+  entity: Prospect
+  occurrences: 16
+- field: entity_id
+  entity: Business or Prospect
+  occurrences: 40
+  note: >-
+    The v2 generalization - one field that carries either a business_id or a
+    prospect_id, which is why v2 could collapse per-entity endpoints into shared
+    ones.
+- field: list_id
+  entity: EntityIdDataset
+  occurrences: 23
+  note: Returned by the dataset upload; the input handle for every async job.
+- field: job_id
+  entity: AsyncJob
+  occurrences: 3
+- field: enrollment_id
+  entity: Enrollment
+  occurrences: 10
+- field: enrollment_key
+  entity: Enrollment
+  occurrences: 10
+  note: >-
+    Caller-assigned, not server-assigned. Echoed back on every webhook delivery
+    so the consumer can route events to their own use case.
+- field: partner_id
+  entity: Partner
+  occurrences: 3
+  note: >-
+    Account-level identity. Also the path parameter for the webhook and credit
+    menu operations, and a required header on every call.
+- field: correlation_id
+  entity: ResponseContext
+  occurrences: 1
+  note: Per-request trace ID, returned in the body rather than a header.
+entities:
+- name: Partner
+  description: The Explorium account. Owns the api_key, the credit balance, and exactly one webhook.
+  key: partner_id
+- name: Business
+  description: A company in the 150M+ record dataset.
+  key: business_id
+  obtained_by: [match_businesses, v2_businesses_match, fetch_businesses, v2_businesses_fetch]
+- name: Prospect
+  description: A person in the 800M+ record dataset.
+  key: prospect_id
+  obtained_by: [match_prospects, v2_prospects_match, fetch_prospects, v2_prospects_fetch]
+- name: BusinessEnrichment
+  description: >-
+    One of seventeen attribute families attached to a business - firmographics,
+    technographics, webstack, website traffic, website changes, financial
+    indicators, funding and acquisition, workforce trends, company hierarchies,
+    ratings by employees, website keywords, lookalikes, Bombora intent, LinkedIn
+    posts, and three 10-K-derived analyses (strategy, competitive landscape,
+    business challenges).
+  key: business_id
+- name: ProspectEnrichment
+  description: Contact information, professional profile, or LinkedIn posts for a prospect.
+  key: prospect_id
+- name: Event
+  description: >-
+    A dated business or prospect signal. Fifteen business event types and three
+    prospect event types; catalogued in asyncapi/explorium-webhooks.yml.
+  key: [business_id, prospect_id]
+- name: Enrollment
+  description: A subscription binding an entity to event types, tagged with a caller-supplied enrollment_key.
+  key: enrollment_id
+- name: Webhook
+  description: >-
+    The single delivery endpoint per partner, with a generated webhook_secret
+    used to sign deliveries.
+  key: partner_id
+- name: EntityIdDataset
+  description: An uploaded list of entity IDs that async enrichment jobs run against.
+  key: list_id
+- name: AsyncJob
+  description: A queued enrichment run over a dataset; up to 10,000 records, 24-hour runtime, 7-day result retention.
+  key: job_id
+- name: Credit
+  description: The single prepaid pool that meters every operation on both REST and MCP.
+  key: partner_id
+- name: CustomEnrichment
+  description: A customer-specific enrichment provisioned by Explorium and called by ID.
+  key: custom_enrichment_id
+- name: ResponseContext
+  description: >-
+    The envelope wrapper returned on every response - correlation_id,
+    request_status (success/miss/failure), time_took_in_seconds.
+relationships:
+- from: Partner
+  to: Webhook
+  type: has_one
+  via: partner_id
+  note: >-
+    Strictly one. Registering a second webhook overwrites the first and rotates
+    the secret.
+- from: Partner
+  to: Credit
+  type: has_one
+  via: partner_id
+- from: Partner
+  to: Enrollment
+  type: has_many
+  via: partner_id
+- from: Business
+  to: BusinessEnrichment
+  type: has_many
+  via: business_id
+- from: Prospect
+  to: ProspectEnrichment
+  type: has_many
+  via: prospect_id
+- from: Business
+  to: Event
+  type: has_many
+  via: business_id
+- from: Prospect
+  to: Event
+  type: has_many
+  via: prospect_id
+- from: Enrollment
+  to: Business
+  type: belongs_to
+  via: business_id
+- from: Enrollment
+  to: Prospect
+  type: belongs_to
+  via: prospect_id
+- from: Enrollment
+  to: Event
+  type: has_many
+  via: enrollment_key
+- from: Event
+  to: Webhook
+  type: belongs_to
+  via: partner_id
+  note: Delivery path; the webhook receives events for all of the partner's enrollments.
+- from: EntityIdDataset
+  to: Business
+  type: has_many
+  via: entity_id
+- from: EntityIdDataset
+  to: Prospect
+  type: has_many
+  via: entity_id
+- from: AsyncJob
+  to: EntityIdDataset
+  type: belongs_to
+  via: list_id
+- from: AsyncJob
+  to: Credit
+  type: has_one
+  via: V2JobCreditUsage
+  note: Each job reports its own credit consumption.
+- from: Business
+  to: Business
+  type: belongs_to
+  via: parent_company_id
+  note: From the company_hierarchies enrichment - a self-referential corporate tree.
+- from: Business
+  to: Business
+  type: belongs_to
+  via: ultimate_parent_id
+  note: Same enrichment; the root of the tree.
+- from: Business
+  to: Business
+  type: has_many
+  via: lookalike_business_id
+  note: From the lookalikes enrichment (powered by Ocean.io).
+core_workflow:
+  sequence: match -> fetch/enrich -> enroll -> receive
+  note: >-
+    Nothing in this model is addressable by a natural key. A domain name or an
+    email address is not an identifier here - it is an input to a match
+    operation that returns one. That single constraint shapes every integration:
+    an agent must always spend a match call (and its credits) before it can
+    spend an enrichment call.
+render: null
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,22 +1,31 @@
-generated: '2026-07-15'
+generated: '2026-08-14'
 method: generated
-source: openapi/explorium-openapi.yml
+source: openapi/explorium-asyncenrichmentjobs-api-openapi.yml, openapi/explorium-asyncjobs-api-openapi.yml,
+  openapi/explorium-bulkbusinessenrichments-api-openapi.yml, openapi/explorium-businessenrichments-api-openapi.yml,
+  openapi/explorium-businesses-api-openapi.yml, openapi/explorium-credits-api-openapi.yml, openapi/explorium-customenrichments-api-openapi.yml,
+  openapi/explorium-entityiddatasets-api-openapi.yml, openapi/explorium-healthcheck-api-openapi.yml,
+  openapi/explorium-prospects-api-openapi.yml, openapi/explorium-prospectsbulkenrichments-api-openapi.yml,
+  openapi/explorium-prospectsenrichments-api-openapi.yml, openapi/explorium-v2autocomplete-api-openapi.yml,
+  openapi/explorium-v2businessenrichments-api-openapi.yml, openapi/explorium-v2businesses-api-openapi.yml,
+  openapi/explorium-v2credits-api-openapi.yml, openapi/explorium-v2prospectenrichments-api-openapi.yml,
+  openapi/explorium-v2prospects-api-openapi.yml, openapi/explorium-v2research-api-openapi.yml,
+  openapi/explorium-version-api-openapi.yml, openapi/explorium-webhooks-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
-  operations: 17
+  operations: 127
   by_action_class:
-    acting: 14
-    connected: 3
+    acting: 113
+    connected: 14
   by_consequence:
-    write: 14
-    read: 3
+    write: 113
+    read: 14
   human_in_the_loop_required: 0
 operations:
-- path: /v1/businesses/match
+- path: /v2/businesses/bombora_intent/job
   method: post
-  operationId: matchBusinesses
+  operationId: v2_businesses_bombora_intent_job
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -30,9 +39,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v1/businesses
+- path: /v2/businesses/company_hierarchies/job
   method: post
-  operationId: fetchBusinesses
+  operationId: v2_businesses_company_hierarchies_job
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -46,9 +55,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v1/businesses/stats
+- path: /v2/businesses/company_ratings_by_employees/job
   method: post
-  operationId: fetchBusinessStats
+  operationId: v2_businesses_company_ratings_by_employees_job
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -62,9 +71,313 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v1/businesses/autocomplete
+- path: /v2/businesses/company_website_keywords/job
+  method: post
+  operationId: v2_businesses_company_website_keywords_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/financial_indicators/job
+  method: post
+  operationId: v2_businesses_financial_indicators_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/firmographics/job
+  method: post
+  operationId: v2_businesses_firmographics_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/funding_and_acquisition/job
+  method: post
+  operationId: v2_businesses_funding_and_acquisition_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/linkedin_posts/job
+  method: post
+  operationId: v2_businesses_linkedin_posts_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/lookalikes/job
+  method: post
+  operationId: v2_businesses_lookalikes_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/pc_business_challenges_10k/job
+  method: post
+  operationId: v2_businesses_pc_business_challenges_10k_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/pc_competitive_landscape_10k/job
+  method: post
+  operationId: v2_businesses_pc_competitive_landscape_10k_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/pc_strategy_10k/job
+  method: post
+  operationId: v2_businesses_pc_strategy_10k_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/research/job
+  method: post
+  operationId: v2_businesses_research_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/technographics/job
+  method: post
+  operationId: v2_businesses_technographics_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/website_changes/job
+  method: post
+  operationId: v2_businesses_website_changes_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/website_traffic/job
+  method: post
+  operationId: v2_businesses_website_traffic_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/webstack/job
+  method: post
+  operationId: v2_businesses_webstack_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/workforce_trends/job
+  method: post
+  operationId: v2_businesses_workforce_trends_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects/contact_information/job
+  method: post
+  operationId: v2_prospects_contact_information_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects/linkedin_posts/job
+  method: post
+  operationId: v2_prospects_linkedin_posts_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects/profiles/job
+  method: post
+  operationId: v2_prospects_profiles_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects/research/job
+  method: post
+  operationId: v2_prospects_research_job
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/jobs
   method: get
-  operationId: autocompleteBusinesses
+  operationId: v2_jobs
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -72,9 +385,19 @@ operations:
     token:
       max-ttl: 3600
     audit: none
-- path: /v1/businesses/firmographics/enrich
+- path: /v2/jobs/status/{job_id}
+  method: get
+  operationId: v2_job_status
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/jobs/cancel/{job_id}
   method: post
-  operationId: enrichFirmographics
+  operationId: v2_job_cancel
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -88,9 +411,73 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v1/businesses/technographics/enrich
+- path: /v1/businesses/bombora_intent/bulk_enrich
   method: post
-  operationId: enrichTechnographics
+  operationId: businesses_bombora_intent_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/company_hierarchies/bulk_enrich
+  method: post
+  operationId: businesses_company_hierarchies_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/company_ratings_by_employees/bulk_enrich
+  method: post
+  operationId: businesses_company_ratings_by_employees_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/company_website_keywords/bulk_enrich
+  method: post
+  operationId: businesses_company_website_keywords_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/financial_indicators/bulk_enrich
+  method: post
+  operationId: businesses_financial_indicators_bulk_enrich
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -106,7 +493,487 @@ operations:
     audit: required
 - path: /v1/businesses/firmographics/bulk_enrich
   method: post
-  operationId: bulkEnrichFirmographics
+  operationId: businesses_firmographics_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/funding_and_acquisition/bulk_enrich
+  method: post
+  operationId: businesses_funding_and_acquisition_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/linkedin_posts/bulk_enrich
+  method: post
+  operationId: businesses_linkedin_posts_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/lookalikes/bulk_enrich
+  method: post
+  operationId: businesses_lookalikes_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/pc_business_challenges_10k/bulk_enrich
+  method: post
+  operationId: businesses_pc_business_challenges_10k_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/pc_competitive_landscape_10k/bulk_enrich
+  method: post
+  operationId: businesses_pc_competitive_landscape_10k_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/pc_strategy_10k/bulk_enrich
+  method: post
+  operationId: businesses_pc_strategy_10k_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/technographics/bulk_enrich
+  method: post
+  operationId: businesses_technographics_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/website_changes/bulk_enrich
+  method: post
+  operationId: businesses_website_changes_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/website_traffic/bulk_enrich
+  method: post
+  operationId: businesses_website_traffic_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/webstack/bulk_enrich
+  method: post
+  operationId: businesses_webstack_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/workforce_trends/bulk_enrich
+  method: post
+  operationId: businesses_workforce_trends_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/bombora_intent/enrich
+  method: post
+  operationId: businesses_bombora_intent_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/company_hierarchies/enrich
+  method: post
+  operationId: businesses_company_hierarchies_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/company_ratings_by_employees/enrich
+  method: post
+  operationId: businesses_company_ratings_by_employees_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/company_website_keywords/enrich
+  method: post
+  operationId: businesses_company_website_keywords_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/financial_indicators/enrich
+  method: post
+  operationId: businesses_financial_indicators_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/firmographics/enrich
+  method: post
+  operationId: businesses_firmographics_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/funding_and_acquisition/enrich
+  method: post
+  operationId: businesses_funding_and_acquisition_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/linkedin_posts/enrich
+  method: post
+  operationId: businesses_linkedin_posts_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/lookalikes/enrich
+  method: post
+  operationId: businesses_lookalikes_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/pc_business_challenges_10k/enrich
+  method: post
+  operationId: businesses_pc_business_challenges_10k_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/pc_competitive_landscape_10k/enrich
+  method: post
+  operationId: businesses_pc_competitive_landscape_10k_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/pc_strategy_10k/enrich
+  method: post
+  operationId: businesses_pc_strategy_10k_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/technographics/enrich
+  method: post
+  operationId: businesses_technographics_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/website_changes/enrich
+  method: post
+  operationId: businesses_website_changes_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/website_traffic/enrich
+  method: post
+  operationId: businesses_website_traffic_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/webstack/enrich
+  method: post
+  operationId: businesses_webstack_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/workforce_trends/enrich
+  method: post
+  operationId: businesses_workforce_trends_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/match
+  method: post
+  operationId: match_businesses
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses
+  method: post
+  operationId: fetch_businesses
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -122,7 +989,7 @@ operations:
     audit: required
 - path: /v1/businesses/events
   method: post
-  operationId: fetchBusinessEvents
+  operationId: fetch_businesses_events
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -136,9 +1003,197 @@ operations:
       - abnormal
       - high-value
     audit: required
+- path: /v1/businesses/autocomplete
+  method: get
+  operationId: businesses_autocomplete
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/businesses/stats
+  method: post
+  operationId: fetch_stats
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/events/enrollments
+  method: get
+  operationId: get_businesses_enrollments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/businesses/events/enrollments
+  method: post
+  operationId: add_businesses_enrollments
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/events/enrollments
+  method: delete
+  operationId: delete_businesses_enrollments
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/businesses/events/enrollments
+  method: patch
+  operationId: update_businesses_enrollments
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/credits/menu/{partner_id}
+  method: get
+  operationId: get_credits_menu_partner_id
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/credits
+  method: get
+  operationId: get_active_credits_summary
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/credits/aggregation
+  method: post
+  operationId: get_credit_aggregation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/custom_enrichments/{custom_enrichment_id}/enrich
+  method: post
+  operationId: enrich_with_custom_enrichment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/custom_enrichments/{enrichment_id}/bulk_enrich
+  method: post
+  operationId: bulk_enrich_with_custom_enrichment
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/async/entity-id-datasets/upload
+  method: post
+  operationId: v2_entity_id_lists_upload
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /healthcheck/http
+  method: get
+  operationId: healthcheck
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /healthcheck/http_payload/{response_bytes}
+  method: get
+  operationId: healthcheck_bytes
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /v1/prospects/match
   method: post
-  operationId: matchProspects
+  operationId: match_prospects
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -154,7 +1209,7 @@ operations:
     audit: required
 - path: /v1/prospects
   method: post
-  operationId: fetchProspects
+  operationId: fetch_prospects
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -170,49 +1225,7 @@ operations:
     audit: required
 - path: /v1/prospects/stats
   method: post
-  operationId: fetchProspectStats
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/prospects/autocomplete
-  method: get
-  operationId: autocompleteProspects
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-- path: /v1/prospects/contacts_information/enrich
-  method: post
-  operationId: enrichProspectContacts
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/prospects/profiles/enrich
-  method: post
-  operationId: enrichProspectProfiles
+  operationId: prospect_fetch_stats
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -228,7 +1241,7 @@ operations:
     audit: required
 - path: /v1/prospects/events
   method: post
-  operationId: fetchProspectEvents
+  operationId: fetch_prospects_events
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -242,25 +1255,9 @@ operations:
       - abnormal
       - high-value
     audit: required
-- path: /v1/webhooks
-  method: post
-  operationId: addWebhook
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-- path: /v1/credits
+- path: /v1/prospects/autocomplete
   method: get
-  operationId: getActiveCredits
+  operationId: prospects_autocomplete
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -268,3 +1265,709 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /v1/prospects/events/enrollments
+  method: get
+  operationId: get_prospects_enrollments
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/prospects/events/enrollments
+  method: post
+  operationId: add_prospects_enrollments
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/prospects/events/enrollments
+  method: delete
+  operationId: delete_prospects_enrollments
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/prospects/events/enrollments
+  method: patch
+  operationId: update_prospects_enrollments
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/prospects/contacts_information/bulk_enrich
+  method: post
+  operationId: prospects_contacts_information_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/prospects/linkedin_posts/bulk_enrich
+  method: post
+  operationId: prospects_linkedin_posts_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/prospects/profiles/bulk_enrich
+  method: post
+  operationId: prospects_profiles_bulk_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/prospects/contacts_information/enrich
+  method: post
+  operationId: prospects_contacts_information_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/prospects/linkedin_posts/enrich
+  method: post
+  operationId: prospects_linkedin_posts_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/prospects/profiles/enrich
+  method: post
+  operationId: prospects_profiles_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/autocomplete
+  method: get
+  operationId: v2_autocomplete
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/businesses/bombora_intent/enrich
+  method: post
+  operationId: v2_businesses_bombora_intent_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/company_hierarchies/enrich
+  method: post
+  operationId: v2_businesses_company_hierarchies_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/company_ratings_by_employees/enrich
+  method: post
+  operationId: v2_businesses_company_ratings_by_employees_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/company_website_keywords/enrich
+  method: post
+  operationId: v2_businesses_company_website_keywords_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/financial_indicators/enrich
+  method: post
+  operationId: v2_businesses_financial_indicators_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/firmographics/enrich
+  method: post
+  operationId: v2_businesses_firmographics_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/funding_and_acquisition/enrich
+  method: post
+  operationId: v2_businesses_funding_and_acquisition_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/linkedin_posts/enrich
+  method: post
+  operationId: v2_businesses_linkedin_posts_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/lookalikes/enrich
+  method: post
+  operationId: v2_businesses_lookalikes_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/pc_business_challenges_10k/enrich
+  method: post
+  operationId: v2_businesses_pc_business_challenges_10k_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/pc_competitive_landscape_10k/enrich
+  method: post
+  operationId: v2_businesses_pc_competitive_landscape_10k_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/pc_strategy_10k/enrich
+  method: post
+  operationId: v2_businesses_pc_strategy_10k_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/technographics/enrich
+  method: post
+  operationId: v2_businesses_technographics_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/website_changes/enrich
+  method: post
+  operationId: v2_businesses_website_changes_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/website_traffic/enrich
+  method: post
+  operationId: v2_businesses_website_traffic_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/webstack/enrich
+  method: post
+  operationId: v2_businesses_webstack_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/workforce_trends/enrich
+  method: post
+  operationId: v2_businesses_workforce_trends_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/match
+  method: post
+  operationId: v2_businesses_match
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses
+  method: post
+  operationId: v2_businesses_fetch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/stats
+  method: post
+  operationId: v2_businesses_stats
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/credits
+  method: get
+  operationId: v2_credits_get
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v2/credits/aggregation
+  method: post
+  operationId: v2_credits_aggregation
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects/contact_information/enrich
+  method: post
+  operationId: v2_prospects_contact_information_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects/linkedin_posts/enrich
+  method: post
+  operationId: v2_prospects_linkedin_posts_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects/profiles/enrich
+  method: post
+  operationId: v2_prospects_profiles_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects/match
+  method: post
+  operationId: v2_prospects_match
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects
+  method: post
+  operationId: v2_prospects_fetch
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects/stats
+  method: post
+  operationId: v2_prospects_stats
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/businesses/research/enrich
+  method: post
+  operationId: v2_businesses_research_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v2/prospects/research/enrich
+  method: post
+  operationId: v2_prospects_research_enrich
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /version/
+  method: get
+  operationId: version
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/webhooks
+  method: post
+  operationId: add_webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/webhooks/{partner_id}
+  method: get
+  operationId: get_webhook
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+- path: /v1/webhooks/{partner_id}
+  method: delete
+  operationId: delete_webhook
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+- path: /v1/webhooks/check_connectivity
+  method: post
+  operationId: check_webhook_connectivity
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required

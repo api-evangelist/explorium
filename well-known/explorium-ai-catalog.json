@@ -1,0 +1,82 @@
+{
+    "specVersion": "1.0",
+    "host": {
+        "displayName": "Explorium",
+        "documentationUrl": "https://developers.explorium.ai/",
+        "logoUrl": "https://www.explorium.ai/wp-content/themes/moveo-theme/assets/icon/v2-logo.svg",
+        "trustManifest": {
+            "identity": "https://www.explorium.ai",
+            "identityType": "https"
+        }
+    },
+    "entries": [
+        {
+            "identifier": "urn:air:explorium.ai:server:business-data-hub",
+            "displayName": "Explorium Business Data Hub (MCP)",
+            "type": "application/mcp-server-card+json",
+            "url": "https://www.explorium.ai/.well-known/mcp/server-card.json",
+            "description": "Hosted MCP server for B2B company and prospect search, matching, enrichment and business event signals. OAuth required.",
+            "tags": [
+                "mcp",
+                "b2b-data",
+                "enrichment",
+                "signals"
+            ],
+            "trustManifest": {
+                "identity": "https://mcp.explorium.ai",
+                "identityType": "https"
+            },
+            "representativeQueries": [
+                "find software companies in Germany with more than 200 employees",
+                "enrich this list of domains with funding and headcount",
+                "which of my accounts raised a round in the last quarter"
+            ]
+        },
+        {
+            "identifier": "urn:air:explorium.ai:agent:business-data-hub",
+            "displayName": "Explorium Business Data Hub (A2A)",
+            "type": "application/a2a-agent-card+json",
+            "url": "https://www.explorium.ai/.well-known/agent-card.json",
+            "description": "Agent-to-agent descriptor for the same capabilities, for clients that discover over A2A rather than MCP.",
+            "tags": [
+                "a2a",
+                "b2b-data"
+            ],
+            "trustManifest": {
+                "identity": "https://mcp.explorium.ai",
+                "identityType": "https"
+            }
+        },
+        {
+            "identifier": "urn:air:explorium.ai:api:rest",
+            "displayName": "Explorium REST API",
+            "type": "application/vnd.oai.openapi+json",
+            "url": "https://api.explorium.ai/openapi.json",
+            "description": "OpenAPI 3.1 description of the REST API: company and prospect search, match, enrichment and events. Authenticates with an api_key header.",
+            "tags": [
+                "rest",
+                "openapi",
+                "b2b-data"
+            ],
+            "trustManifest": {
+                "identity": "https://api.explorium.ai",
+                "identityType": "https"
+            }
+        },
+        {
+            "identifier": "urn:air:explorium.ai:skills:index",
+            "displayName": "Explorium agent skills index",
+            "type": "application/json",
+            "url": "https://www.explorium.ai/.well-known/agent-skills/index.json",
+            "description": "Capability-level view of the platform, one level above the individual MCP tools.",
+            "tags": [
+                "skills",
+                "capabilities"
+            ],
+            "trustManifest": {
+                "identity": "https://www.explorium.ai",
+                "identityType": "https"
+            }
+        }
+    ]
+}

@@ -1,0 +1,135 @@
+generated: '2026-08-14'
+method: searched
+source: >-
+  registry.npmjs.org, pypi.org/pypi/*/json, api.github.com/orgs/explorium-ai,
+  https://developers.explorium.ai/mcp-docs/developers-implementation-guides
+description: >-
+  Explorium publishes NO first-party client library for its REST API in any
+  language. Every package it ships wraps the MCP server or a specific agent
+  host, and the two that reach a public registry are both materially stale
+  relative to the API they front: the OpenAPI at api.explorium.ai was serving
+  0.3.19 with a full v2 surface (async jobs, AI research, unified enrichments)
+  at probe time, while the PyPI MCP server last shipped 2025-05-13 and the n8n
+  node 2025-06-04 - both before v2 existed. An integrator working in Python,
+  Java, Go, Ruby, PHP or .NET calls this API with a plain HTTP client and the
+  api_key header. The "Python SDK Implementation Guide" in Explorium's docs
+  teaches the generic modelcontextprotocol Python SDK, not an Explorium SDK.
+rest_sdk:
+  published: false
+  note: >-
+    No first-party REST client library was found on npm, PyPI, Maven Central,
+    NuGet, pkg.go.dev, RubyGems, Packagist or crates.io, and none is linked from
+    the developer documentation, the GitHub org, or the api-catalog.
+packages:
+- language: python
+  registry: pypi
+  name: explorium-mcp-server
+  url: https://pypi.org/project/explorium-mcp-server/
+  install: pip install explorium-mcp-server
+  official: true
+  version: 0.2.11
+  published: '2025-05-13'
+  requires_python: '>=3.10'
+  source: https://github.com/explorium-ai/mcp-explorium
+  scope: mcp-server
+  note: >-
+    The self-hostable stdio MCP server, not a REST client. Five published
+    releases (0.2.6 to 0.2.11). Latest release predates Explorium's v2 API
+    surface entirely - a fifteen-month gap between the newest package and the
+    live contract.
+- language: javascript
+  registry: npm
+  name: n8n-nodes-explorium
+  url: https://www.npmjs.com/package/n8n-nodes-explorium
+  install: npm install n8n-nodes-explorium
+  official: true
+  version: 1.0.7
+  published: '2025-06-04'
+  source: https://github.com/explorium-ai/n8n-nodes-explorium
+  scope: integration-node
+  note: >-
+    A community-node package for n8n that exposes Explorium MCP as an AI-agent
+    tool. Published from Explorium's own GitHub org, so first-party, but it is a
+    workflow-platform node rather than a general client library.
+- language: docker
+  registry: ghcr/docker
+  name: mcp-explorium
+  url: https://github.com/explorium-ai/mcp-explorium
+  install: >-
+    See the repository README - the server is distributed as a Dockerfile build
+    and run with API_ACCESS_TOKEN set to your Explorium api_key.
+  official: true
+  license: MIT
+  version: null
+  published: null
+  repo_last_pushed: '2026-03-03'
+  scope: mcp-server
+  note: >-
+    version and published are null because this distribution has no registry
+    metadata endpoint to query - the image is not published to Docker Hub under
+    an explorium namespace (hub.docker.com/v2/repositories/explorium/ returns
+    only an unrelated 2019 "explore" repo) and the repository publishes no
+    tagged releases. A consumer building from HEAD cannot tell what version they
+    are getting either, which is the finding. Repo last pushed 2026-03-03,
+    MIT-licensed, 21 stars.
+- language: javascript
+  registry: github
+  name: n8n-nodes-explorium-api
+  url: https://github.com/explorium-ai/n8n-nodes-explorium-api
+  official: true
+  version: null
+  published: null
+  scope: integration-node
+  note: >-
+    A newer successor to n8n-nodes-explorium that exists only as a GitHub
+    repository - the name n8n-nodes-explorium-api is NOT on npm (404), so it
+    cannot be installed as an n8n community node the normal way. Recorded as an
+    honest gap: checked, nothing published.
+- language: python
+  registry: github
+  name: agentsource-plugin
+  url: https://github.com/explorium-ai/agentsource-plugin
+  official: true
+  version: null
+  published: null
+  repo_last_pushed: '2026-06-18'
+  scope: agent-plugin
+  note: >-
+    B2B prospecting plugin for Claude Code that calls the AgentSource API. Not
+    on any package registry; installed from the repository.
+- language: typescript
+  registry: github
+  name: gtm-skills
+  url: https://github.com/explorium-ai/gtm-skills
+  official: true
+  version: null
+  published: null
+  repo_last_pushed: '2026-07-30'
+  scope: agent-skills
+  note: >-
+    Packaged GTM Agent Skills for Claude and Codex. Not on a registry. The most
+    recently maintained agent-facing artifact in the org, which is consistent
+    with Explorium investing in the agent surface rather than in SDKs.
+- language: javascript
+  registry: github
+  name: vibeprospecting-mcp
+  url: https://github.com/explorium-ai/vibeprospecting-mcp
+  official: true
+  version: null
+  published: null
+  repo_last_pushed: '2026-07-19'
+  scope: mcp-server
+  note: >-
+    A second, product-branded MCP server (Vibe Prospecting), shipped alongside
+    host-specific plugin variants for Cursor and openclaw. Not on npm; checked,
+    nothing published.
+currency_finding: >-
+  Of the seven first-party packages, two reach a public registry and both are
+  more than a year old. Every actively-maintained package in the org is an
+  agent-host plugin rather than a library. Read against a REST API that shipped
+  an entire v2 surface in the interim, this is a provider that has moved its
+  client-side investment from SDKs to agent surfaces, and left the registry
+  artifacts behind.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

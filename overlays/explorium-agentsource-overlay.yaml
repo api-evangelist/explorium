@@ -1,0 +1,228 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Explorium AgentSource
+  version: 1.0.0
+extends: openapi/_original/explorium-agentsource-openapi.json
+x-generated: '2026-08-14'
+x-method: generated
+x-source: >-
+  Derived from the harvested spec plus the published references at
+  developers.explorium.ai (pagination, error-handling, rate-limit) and
+  www.explorium.ai/auth.md. Records what the contract does NOT say; the original
+  is never mutated.
+actions:
+- target: $.info
+  description: >-
+    Name the product. The published spec's info.title is the internal service
+    name "Partner Service", which tells a consumer nothing and makes the
+    document unattributable on its own. Ownership was confirmed independently:
+    servers[] is https://api.explorium.ai, and Explorium's own RFC 9727
+    api-catalog at https://www.explorium.ai/.well-known/api-catalog names this
+    exact URL as the service-desc for the Explorium REST API.
+  update:
+    title: Explorium AgentSource API
+    x-internal-title: Partner Service
+    description: >-
+      Explorium AgentSource is a B2B data and enrichment API for AI agents and
+      go-to-market teams, over a company dataset and a people dataset. It
+      exposes match, fetch, statistics, autocomplete, seventeen company
+      enrichment families, three people enrichment families, event tracking with
+      signed webhooks, asynchronous batch jobs, AI research, and credit
+      accounting - on two parallel surfaces, v1 (stable) and v2 (beta).
+    contact:
+      name: Explorium
+      url: https://developers.explorium.ai/
+    termsOfService: https://www.explorium.ai/explorium-website-terms-of-use/
+    x-apievangelist-rating-artifacts:
+      conventions: conventions/explorium-conventions.yml
+      errors: errors/explorium-problem-types.yml
+      rate_limits: rate-limits/explorium-rate-limits.yml
+      plans: plans/explorium-plans-pricing.yml
+      lifecycle: lifecycle/explorium-lifecycle.yml
+      data_model: data-model/explorium-data-model.yml
+      mcp: mcp/explorium-mcp.yml
+      crosswalk: mcp/explorium-tool-crosswalk.yml
+      agent_card: a2a/explorium-a2a.yml
+- target: $.info
+  description: >-
+    Record the metering contract. Nothing in the published spec says a call
+    costs money, which is the single most consequential omission for an agent -
+    every read on this API is a POST that spends a prepaid credit per entity.
+  update:
+    x-metering:
+      unit: credit
+      basis: per-entity
+      pool: shared across REST and MCP
+      exhaustion_status: 403
+      exhaustion_message: You have insufficient credits to perform this operation.
+      balance_operation: get_active_credits_summary
+      pricing: https://www.explorium.ai/pricing.md
+      note: >-
+        A 50-record batch costs 50 credits and 50 rate-limit queries. Batching
+        saves round trips, not spend.
+- target: $.info
+  description: >-
+    Record the throttling contract. The spec declares no 429 anywhere, and no
+    rate-limit headers, though the docs publish both.
+  update:
+    x-rate-limit:
+      limit: 200
+      unit: queries
+      window_seconds: 60
+      window_type: sliding
+      scope: per-api-key
+      counting: per-entity
+      status: 429
+      headers:
+      - X-RateLimit-Limit
+      - X-RateLimit-Remaining
+      - X-RateLimit-Reset
+      - Retry-After
+      docs: https://developers.explorium.ai/reference/rate-limit
+- target: $.info
+  description: >-
+    Record the absence of an idempotency contract. Stated positively so a
+    consumer cannot mistake silence for support.
+  update:
+    x-idempotency:
+      supported: false
+      header: null
+      note: >-
+        No idempotency mechanism is documented and no Idempotency-Key parameter
+        appears in any of the 127 operations. A retried request after a timeout
+        is charged again. There is no safe automatic retry for a write on this
+        API.
+- target: $.info
+  description: >-
+    Record the second identity dimension. partner_id is required on every call
+    via one of three interchangeable headers, but it appears in the spec only as
+    a path parameter on a handful of operations - so a generated client omits it
+    and every call fails 401 for a reason the contract never mentions.
+  update:
+    x-partner-identity:
+      required: true
+      headers_accepted:
+      - X-Context-Partner-ID
+      - partner-id
+      - partner_id
+      failure_status: 401
+      docs: https://developers.explorium.ai/reference/error-handling
+- target: $.info
+  description: >-
+    Record the response envelope and its soft-failure mode. request_status
+    "miss" arrives on an HTTP 200; an agent branching on status codes alone
+    records a data miss as a success.
+  update:
+    x-response-envelope:
+      wrapper: response_context
+      fields:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      request_status_values:
+      - success
+      - miss
+      - failure
+      data_field: data
+      note: >-
+        Branch on response_context.request_status, not on the HTTP status.
+        correlation_id is returned in the body, not as a header, so it cannot be
+        captured by a proxy or read from a failed parse.
+- target: $.info
+  description: >-
+    Record the error shapes the spec omits. 125 of 127 operations declare only
+    422; 400, 401, 403, 429, 500 and 503 are all documented but undeclared.
+  update:
+    x-error-catalog:
+      rfc9457: false
+      declared_in_spec:
+      - 422
+      documented_but_undeclared:
+      - 400
+      - 401
+      - 403
+      - 429
+      - 500
+      - 503
+      envelopes:
+        general: '{"details": "...", "correlation_id": "..."}'
+        validation: '{"detail": [{"loc": [...], "msg": "...", "type": "..."}]}'
+        rate_limit: '{"code": 429, "message": "...", "retry_after": 60}'
+      catalog: errors/explorium-problem-types.yml
+- target: $.info
+  description: Record the pagination contract, which is documented but not modelled in the spec.
+  update:
+    x-pagination:
+      modes:
+      - style: offset
+        params: [page, page_size, size]
+        page_size_max: 500
+        total_max: 60000
+        response_fields: [total_results, total_pages, page]
+      - style: cursor
+        params: [search_after]
+        response_fields: [next_cursor]
+        total_max: null
+      docs: https://developers.explorium.ai/reference/pagination
+- target: $.info
+  description: >-
+    Record the version posture. Both v1 and v2 paths live in one document with
+    no marker distinguishing the stable surface from the beta one.
+  update:
+    x-versioning:
+      scheme: uri-path
+      v1: stable - the only surface with webhooks and event enrollment
+      v2: beta - recommended for new work; paths, fields and timing may change before GA
+      cutover: none announced; the two run in parallel
+      deprecation_policy: null
+      sunset_header: false
+- target: $.servers
+  description: Annotate the server with the auth surface split.
+  update:
+    x-auth-surfaces:
+      rest:
+        base: https://api.explorium.ai
+        scheme: apiKey
+        header: api_key
+      mcp:
+        base: https://mcp.explorium.ai/mcp
+        scheme: oauth2
+        transport: streamable-http
+        metadata: https://mcp.explorium.ai/.well-known/oauth-authorization-server
+      docs: https://www.explorium.ai/auth.md
+- target: $.paths['/v1/webhooks']['post']
+  description: >-
+    Record the webhook signing contract and the destructive-overwrite behaviour.
+    Neither is discoverable from the schema, and the overwrite silently rotates
+    the secret.
+  update:
+    x-webhook-delivery:
+      signature_header: X-Signature
+      timestamp_header: X-Timestamp
+      algorithm: HMAC-SHA256
+      key_encoding: base64url-decoded webhook_secret
+      signed_message: '{X-Timestamp}.{raw body}'
+      digest_encoding: base64url
+      replay_window_seconds: 300
+      comparison: constant-time
+    x-cardinality:
+      webhooks_per_partner: 1
+      on_conflict: >-
+        Registering a second webhook OVERWRITES the first and generates a new
+        webhook_secret. There is no fan-out and no non-destructive update.
+    x-catalog: asyncapi/explorium-webhooks.yml
+- target: $.paths['/v1/businesses/match']['post']
+  description: Record the ordered-list contract and the null-on-miss behaviour.
+  update:
+    x-batch-semantics:
+      max_records: 50
+      ordering: Response list is the same length and order as the input list.
+      on_miss: business_id is null; the HTTP status is still 200.
+      guidance: Send name and domain together for materially higher match rates.
+- target: $.paths['/v1/prospects/match']['post']
+  description: Same ordered-list contract on the people dataset.
+  update:
+    x-batch-semantics:
+      max_records: 50
+      ordering: Response list is the same length and order as the input list.
+      on_miss: prospect_id is null; the HTTP status is still 200.

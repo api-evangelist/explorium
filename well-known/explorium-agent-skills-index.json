@@ -1,0 +1,57 @@
+{
+    "version": "1.0.0",
+    "name": "Explorium",
+    "description": "Explorium provides real-time, structured B2B data infrastructure for AI agents, copilots and GTM automations: company and prospect search, enrichment, and business event signals over a unified REST API and a hosted MCP server.",
+    "homepage": "https://www.explorium.ai",
+    "skills": [
+        {
+            "name": "company-search",
+            "title": "Company search",
+            "description": "Find companies matching firmographic, technographic, location, size, revenue and intent filters.",
+            "endpoint": "https://api.explorium.ai/v1/businesses",
+            "documentation": "https://developers.explorium.ai/"
+        },
+        {
+            "name": "company-enrichment",
+            "title": "Company enrichment",
+            "description": "Enrich a known company with firmographics, technographics, funding, financials and workforce trends.",
+            "endpoint": "https://api.explorium.ai/v1/businesses/enrich",
+            "documentation": "https://developers.explorium.ai/"
+        },
+        {
+            "name": "company-matching",
+            "title": "Company matching",
+            "description": "Resolve a company name or domain to a stable Explorium business identifier.",
+            "endpoint": "https://api.explorium.ai/v1/businesses/match",
+            "documentation": "https://developers.explorium.ai/"
+        },
+        {
+            "name": "prospect-search",
+            "title": "Prospect search",
+            "description": "Find people by role, seniority, department, skills and employer attributes.",
+            "endpoint": "https://api.explorium.ai/v1/prospects",
+            "documentation": "https://developers.explorium.ai/"
+        },
+        {
+            "name": "prospect-enrichment",
+            "title": "Prospect enrichment",
+            "description": "Enrich a matched person with professional profile and contact details.",
+            "endpoint": "https://api.explorium.ai/v1/prospects/enrich",
+            "documentation": "https://developers.explorium.ai/"
+        },
+        {
+            "name": "business-events",
+            "title": "Business event signals",
+            "description": "Read events such as funding rounds, hiring and headcount changes, new products, office moves and acquisitions.",
+            "endpoint": "https://api.explorium.ai/v1/businesses/events",
+            "documentation": "https://developers.explorium.ai/"
+        },
+        {
+            "name": "mcp-access",
+            "title": "MCP server access",
+            "description": "Use the same capabilities as native tools from any MCP-compatible agent over Streamable HTTP.",
+            "endpoint": "https://mcp.explorium.ai/mcp",
+            "documentation": "https://www.explorium.ai/mcp/"
+        }
+    ]
+}

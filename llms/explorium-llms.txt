@@ -1,0 +1,68 @@
+# Explorium
+
+> The B2B data layer for AI agents and GTM systems. Explorium provides real-time, structured B2B data infrastructure for AI agents, copilots and GTM automations: company and prospect search, enrichment, and business event signals over a unified REST API and a hosted MCP server.
+
+Explorium delivers B2B company and prospect data, and business event signals, over a REST API and a hosted MCP server.
+
+## Start here
+
+- [Site overview (markdown)](https://www.explorium.ai/index.md): canonical machine-readable summary of the site.
+- [Homepage](https://www.explorium.ai/): product positioning and primary calls to action.
+- [Product overview](https://www.explorium.ai/our-product/): enrichment pipelines, signal APIs and account intelligence.
+
+## Developers
+
+- [Developer documentation](https://developers.explorium.ai/): REST reference, guides and SDKs.
+- [Getting started](https://developers.explorium.ai/reference/quick-starts/quick-starts): make a first authenticated request.
+- [Getting your API key](https://developers.explorium.ai/reference/setup/getting_your_api_key): how credentials are issued and scoped.
+- [OpenAPI description](https://api.explorium.ai/openapi.json): machine-readable specification of the REST API.
+- [Rate limits](https://developers.explorium.ai/reference/rate-limit): quotas, throttling and retry behaviour.
+- [Authentication for agents](https://www.explorium.ai/auth.md): credential issuance, use, errors and revocation.
+- [API catalog](https://www.explorium.ai/.well-known/api-catalog): RFC 9727 linkset of API descriptions.
+- [GitHub](https://github.com/explorium-ai): SDKs, examples and open source tooling.
+
+## MCP and agents
+
+- [MCP server](https://www.explorium.ai/mcp/): hosted Streamable HTTP endpoint at `https://mcp.explorium.ai/mcp`.
+- [MCP server card](https://www.explorium.ai/.well-known/mcp/server-card.json): tools and branding, readable before connecting.
+- [Agent skills index](https://www.explorium.ai/.well-known/agent-skills/index.json): capability-level view of the platform.
+- [ARD capability catalog](https://www.explorium.ai/.well-known/ai-catalog.json): every callable resource this domain publishes, in one manifest.
+- [A2A agent card](https://www.explorium.ai/.well-known/agent-card.json): agent-to-agent discovery descriptor.
+- [MCP playground](https://www.explorium.ai/mcp-playground/): try the tools in a browser.
+
+## Data
+
+- [Data catalog](https://www.explorium.ai/data/): technographics, firmographics, contact data, hiring signals and events.
+- [Data partnership](https://www.explorium.ai/data-partnership/): how Explorium works with data providers.
+- [Integrations](https://www.explorium.ai/integrations/): LangGraph, Airbyte, Snowflake, Segment and more.
+
+## Use cases
+
+- [Sales intelligence](https://www.explorium.ai/use-case/sales/): enriched contacts, segmentation and live trigger signals.
+- [Marketing automation](https://www.explorium.ai/use-case/marketing/): ICP segments and campaign orchestration.
+- [HR tech](https://www.explorium.ai/use-case/hr-tech/): sourcing and workforce intelligence.
+- [RevOps and engineering](https://www.explorium.ai/use-case/revops/): routing, scoring and outbound automation.
+
+## Pricing
+
+- [Pricing (markdown)](https://www.explorium.ai/pricing.md): plans, credits and limits in machine-readable form.
+- [Pricing page](https://www.explorium.ai/pricing/): full plan comparison and FAQ.
+
+## Scoped indexes
+
+- [Blog](https://www.explorium.ai/blog/llms.txt): Engineering and GTM writing: building data agents, orchestration architectures, signal design patterns and use case deep dives.
+- [Resource center](https://www.explorium.ai/resource-center/llms.txt): Webinars, datasheets, analyst reports and customer stories.
+- [Use cases](https://www.explorium.ai/use-case/llms.txt): How teams apply Explorium data across sales, marketing, HR tech and RevOps.
+- [Integrations](https://www.explorium.ai/integrations/llms.txt): Connectors and orchestration paths into existing data and GTM stacks.
+
+## Company
+
+- [Blog](https://www.explorium.ai/blog/)
+- [Resource center](https://www.explorium.ai/resource-center/)
+- [About](https://www.explorium.ai/about/)
+- [Contact](https://www.explorium.ai/contact-us/)
+- [Book a demo](https://www.explorium.ai/demo/)
+
+## Optional
+
+- [Full context](https://www.explorium.ai/llms-full.txt): expanded description of capabilities and terms.

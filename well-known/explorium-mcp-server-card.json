@@ -1,0 +1,80 @@
+{
+    "name": "explorium",
+    "displayName": "Explorium Business Data Hub",
+    "description": "Search, match and enrich B2B companies and prospects, and read business event signals, from Explorium's live data platform.",
+    "version": "1.0.0",
+    "serverUrl": "https://mcp.explorium.ai/mcp",
+    "transport": "streamable-http",
+    "iconUrl": "https://www.explorium.ai/wp-content/themes/moveo-theme/assets/icon/v2-logo.svg",
+    "icon": "https://www.explorium.ai/wp-content/themes/moveo-theme/assets/icon/v2-logo.svg",
+    "websiteUrl": "https://www.explorium.ai/mcp/",
+    "documentationUrl": "https://developers.explorium.ai/",
+    "privacyPolicyUrl": "https://www.explorium.ai/privacy-policy/",
+    "provider": {
+        "name": "Explorium",
+        "url": "https://www.explorium.ai"
+    },
+    "authentication": {
+        "type": "oauth2",
+        "required": true,
+        "description": "Connect through an MCP client that supports OAuth. The server issues an authorization challenge on initialize."
+    },
+    "tools": [
+        {
+            "name": "fetch-entities",
+            "description": "Find companies or prospects using firmographic, technographic, role and intent filters."
+        },
+        {
+            "name": "match-business",
+            "description": "Resolve a company name and/or domain to an Explorium business ID in bulk."
+        },
+        {
+            "name": "match-prospects",
+            "description": "Resolve a person (email, or full name plus company) to an Explorium prospect ID."
+        },
+        {
+            "name": "enrich-business",
+            "description": "Add firmographics, technographics, funding, financials, workforce trends and related attributes to matched companies."
+        },
+        {
+            "name": "enrich-prospects",
+            "description": "Add contact details and professional profiles to matched prospects."
+        },
+        {
+            "name": "fetch-businesses-events",
+            "description": "Retrieve business event signals such as funding rounds, hiring changes, new products and acquisitions."
+        },
+        {
+            "name": "fetch-prospects-events",
+            "description": "Retrieve prospect-level events such as role changes and company moves."
+        },
+        {
+            "name": "fetch-entities-statistics",
+            "description": "Return aggregate statistics describing how a filtered audience is distributed."
+        },
+        {
+            "name": "autocomplete",
+            "description": "Resolve free-text input to the standardized filter values the search API accepts."
+        },
+        {
+            "name": "estimate-cost",
+            "description": "Estimate the credit cost of an operation before it is run."
+        },
+        {
+            "name": "show-sample",
+            "description": "Preview sample rows from a result table before exporting."
+        },
+        {
+            "name": "export-to-csv",
+            "description": "Export a prepared result table to CSV."
+        },
+        {
+            "name": "get-dataset",
+            "description": "Retrieve a previously saved dataset."
+        },
+        {
+            "name": "show-pricing-plans",
+            "description": "Show the available credit packages and their pricing."
+        }
+    ]
+}

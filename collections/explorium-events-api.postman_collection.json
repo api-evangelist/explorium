@@ -1,0 +1,361 @@
+{
+  "item": [
+    {
+      "id": "72a0c7b3-d853-40ed-a2f2-813813996f52",
+      "name": "Events",
+      "description": {
+        "content": "Business and prospect event tracking plus enrollment management.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ec880746-1fb0-4a4a-bdff-42c75cbe914e",
+          "name": "Fetch business events",
+          "request": {
+            "name": "Fetch business events",
+            "description": {
+              "content": "Retrieve real-time business signals such as funding rounds, hiring surges, office moves, and leadership changes.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "businesses",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"prospect_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp_from\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1e6f7bc4-44bb-40f8-a281-9eedbd023b5d",
+              "name": "A list of business events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"prospect_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp_from\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": 5114.671304851467\n    },\n    {\n      \"key_0\": false,\n      \"key_1\": 904,\n      \"key_2\": 6591\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "da22a47e-dd11-489b-b111-bf02b9c6178a",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "businesses",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"prospect_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp_from\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8e395620-1d64-459a-aea4-19ddf427e171",
+          "name": "Fetch prospect events",
+          "request": {
+            "name": "Fetch prospect events",
+            "description": {
+              "content": "Retrieve real-time prospect signals such as job changes and role promotions.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "prospects",
+                "events"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"business_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"prospect_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp_from\": \"<dateTime>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "247bd9fc-0f99-4786-b6e6-83065eeb10bc",
+              "name": "A list of prospect events.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"prospect_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp_from\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"key_0\": 5950\n    },\n    {\n      \"key_0\": true\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48f3a6bb-a308-4742-bb78-450acd6b1a15",
+              "name": "Missing or invalid API key.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "prospects",
+                    "events"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: apikey",
+                      "type": "text/plain"
+                    },
+                    "key": "API_KEY",
+                    "value": "<API Key>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"business_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"prospect_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event_types\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timestamp_from\": \"<dateTime>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.explorium.ai",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "apikey",
+    "apikey": [
+      {
+        "key": "key",
+        "value": "API_KEY"
+      },
+      {
+        "key": "value",
+        "value": "{{apiKey}}"
+      },
+      {
+        "key": "in",
+        "value": "header"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "452e6893-5934-4bd7-a205-2a2e4c2ac35d",
+    "name": "Explorium AgentSource Business Enrichments Events API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The Explorium AgentSource API is a single external-data and enrichment API for AI agents and go-to-market teams. It exposes match, fetch, statistics, autocomplete, enrichment, bulk enrichment, and event/enrollment endpoints over a business dataset (150M+ companies) and a prospect dataset (800M+ people) aggregated from 100+ external sources. All endpoints are hosted at https://api.explorium.ai and authenticated with an API key sent in the API_KEY request header. Access is gated behind an Explorium account and a credit balance (a free developer tier of 100 credits is available), so this document is honestly modeled from Explorium's published OpenAPI index and reference pages - the endpoint paths and HTTP methods are confirmed from Explorium's own documentation, while request and response schemas are represented at a representative level. Not every one of the 30+ enrichment endpoints is enumerated here; a representative subset is included. endpointsModeled - request/response bodies are modeled; paths are confirmed.\n\nContact Support:\n Name: Explorium",
+      "type": "text/plain"
+    }
+  }
+}

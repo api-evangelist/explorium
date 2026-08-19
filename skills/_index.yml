@@ -1,0 +1,88 @@
+generated: '2026-08-14'
+method: searched
+description: >-
+  Explorium is one of the few providers in the catalog that publishes its own
+  Agent Skill. That document is saved verbatim below and is the authoritative
+  one. The five API Evangelist skills alongside it are generated per marquee
+  flow, each grounded in operationIds grepped out of the harvested OpenAPI at
+  openapi/_original/explorium-agentsource-openapi.json, and each carrying the
+  conventions, credit-cost and error rules captured in conventions/, errors/ and
+  rate-limits/.
+provider_published:
+- file: explorium-agentsource.md
+  name: Explorium
+  method: searched
+  source: https://developers.explorium.ai/.well-known/agent-skills/explorium/skill.md
+  http_status: 200
+  fetched: '2026-08-14'
+  note: >-
+    Saved verbatim. Served from the docs host at the agent-skills well-known
+    path and referenced by the docs agent card's skills[0].url. Covers product
+    summary, v1-vs-v2 and sync-vs-async decision tables, the 11-tool MCP list,
+    rate-limit counting, async job flow, and a twelve-item gotchas section.
+  index: https://www.explorium.ai/.well-known/agent-skills/index.json
+skills:
+- file: explorium-build-a-target-account-list.md
+  name: Build a target account list with Explorium
+  method: generated
+  api: openapi/explorium-businesses-api-openapi.yml
+  operations:
+  - businesses_autocomplete
+  - fetch_stats
+  - fetch_businesses
+- file: explorium-match-and-enrich-companies.md
+  name: Match and enrich companies with Explorium
+  method: generated
+  api: openapi/explorium-businesses-api-openapi.yml
+  operations:
+  - match_businesses
+  - businesses_firmographics_enrich
+  - businesses_technographics_enrich
+  - businesses_firmographics_bulk_enrich
+  - get_active_credits_summary
+- file: explorium-find-and-enrich-prospects.md
+  name: Find and enrich prospects with Explorium
+  method: generated
+  api: openapi/explorium-prospects-api-openapi.yml
+  operations:
+  - prospects_autocomplete
+  - prospect_fetch_stats
+  - fetch_prospects
+  - match_prospects
+  - prospects_contacts_information_enrich
+  - prospects_contacts_information_bulk_enrich
+  - prospects_profiles_enrich
+- file: explorium-monitor-business-events.md
+  name: Monitor business and prospect events with Explorium
+  method: generated
+  api: openapi/explorium-webhooks-api-openapi.yml
+  operations:
+  - add_webhook
+  - check_webhook_connectivity
+  - get_webhook
+  - delete_webhook
+  - add_businesses_enrollments
+  - get_businesses_enrollments
+  - delete_businesses_enrollments
+  - add_prospects_enrollments
+  - fetch_businesses_events
+  - fetch_prospects_events
+- file: explorium-run-a-bulk-enrichment-job.md
+  name: Run a bulk enrichment job with Explorium
+  method: generated
+  api: openapi/explorium-asyncjobs-api-openapi.yml
+  operations:
+  - v2_entity_id_lists_upload
+  - v2_businesses_firmographics_job
+  - v2_jobs
+  - v2_job_status
+  - v2_job_cancel
+  - v2_businesses_research_enrich
+grounding:
+  spec: openapi/_original/explorium-agentsource-openapi.json
+  verified: >-
+    Every operationId listed above was confirmed present in the refined
+    per-tag specs under openapi/ before the skill was written. None was invented.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

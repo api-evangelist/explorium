@@ -1,0 +1,95 @@
+generated: '2026-08-14'
+method: searched
+source:
+- https://developers.explorium.ai/
+- https://www.explorium.ai/auth.md
+- openapi/_original/explorium-agentsource-openapi.json
+description: >-
+  Explorium's operational-transparency posture is thin relative to how good its
+  agent surface is. There is a clear two-track version story (v1 stable, v2
+  beta) stated in the provider's own Agent Skill, but no published deprecation
+  policy, no Sunset/Deprecation header support, no SLA, and no status page
+  anywhere on the domain.
+versioning:
+  scheme: uri-path
+  current: v1
+  next: v2
+  status:
+    v1: stable / production
+    v2: beta, recommended for new work
+  parallel: true
+  cutover: >-
+    "v1 runs in parallel; migrate at your own pace" and "no hard cutover" -
+    Explorium's own published Agent Skill. v2 paths, fields and timing may
+    change before GA.
+  docs: https://developers.explorium.ai/
+  spec_version: 0.3.19
+  note: >-
+    v1 remains the only version with webhooks and event enrollment; v2 webhooks
+    are stated as "coming before GA". So the stable version and the recommended
+    version each carry capabilities the other lacks.
+deprecation:
+  policy_url: null
+  policy_published: false
+  sunset_header: false
+  deprecation_header: false
+  note: >-
+    No deprecation or sunset policy is published anywhere - not in the docs, not
+    on the marketing site, not in the terms of use. No operation in the harvested
+    OpenAPI carries deprecated: true, and no RFC 8594 Sunset or Deprecation
+    header is documented or declared. With a beta surface running in parallel to
+    a stable one and no stated policy, a consumer has no contractual notice
+    period for a v2 change.
+deprecated_operations: []
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment. The pricing page's enterprise tier
+    mentions a dedicated customer success manager but no availability target.
+    Credits expire 12 months after purchase and service stops when the balance
+    is exhausted, which is the only published availability-affecting term.
+status_page:
+  url: null
+  published: false
+  probed:
+  - url: https://status.explorium.ai
+    status: 000
+    note: DNS does not resolve.
+  - url: https://www.explorium.ai/status/
+    status: 404
+  note: >-
+    No status page. The API does expose liveness endpoints - GET /healthcheck/http
+    (operationId healthcheck) and GET /version/ (operationId version), both
+    anonymous - so a consumer can build their own monitor, but there is no
+    provider-published incident history or uptime record. No StatusPage pointer
+    is emitted in apis.yml.
+health_endpoints:
+- operationId: healthcheck
+  path: /healthcheck/http
+  method: get
+  auth: none
+- operationId: healthcheck_bytes
+  path: /healthcheck/http_payload/{response_bytes}
+  method: get
+  auth: none
+  note: Returns a payload of the requested size; a throughput probe.
+- operationId: version
+  path: /version/
+  method: get
+  auth: none
+support:
+  docs: https://developers.explorium.ai/reference/support-help-center
+  contact: https://www.explorium.ai/contact-us/
+  note: >-
+    Enterprise support is routed through a shared Slack channel rather than a
+    public ticket system, per the error-handling reference.
+data_retention:
+  async_results_days: 7
+  async_result_url_expiry: ~1 hour
+  async_max_runtime_hours: 24
+  credit_expiry: 12 months from purchase for paid packages, 90 days for the free trial
+  source: https://developers.explorium.ai/.well-known/agent-skills/explorium/skill.md
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

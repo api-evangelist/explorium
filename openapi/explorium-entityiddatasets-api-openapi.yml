@@ -1,0 +1,141 @@
+openapi: 3.2.0
+info:
+  title: Partner Service Entity ID Datasets API
+  version: 0.3.19
+servers:
+- url: https://api.explorium.ai
+  description: AgentSource Server
+tags:
+- name: EntityIdDatasets
+paths:
+  /v2/async/entity-id-datasets/upload:
+    post:
+      tags:
+      - EntityIdDatasets
+      summary: Upload Entity Ids
+      operationId: v2_entity_id_lists_upload
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Body_v2_entity_id_lists_upload'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2EntityIdsUploadResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    V2EntityIdsUploadResponse:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        rowCount:
+          type: integer
+          title: Rowcount
+        entityType:
+          type: string
+          enum:
+          - business
+          - prospect
+          title: Entitytype
+        tenantId:
+          type: string
+          title: Tenantid
+        expiresAt:
+          type: string
+          format: date-time
+          title: Expiresat
+      type: object
+      required:
+      - list_id
+      - name
+      - description
+      - rowCount
+      - entityType
+      - tenantId
+      - expiresAt
+      title: V2EntityIdsUploadResponse
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    Body_v2_entity_id_lists_upload:
+      properties:
+        file:
+          type: string
+          format: binary
+          title: File
+          description: CSV file with entity IDs
+        entity_type:
+          type: string
+          enum:
+          - business
+          - prospect
+          title: Entity Type
+          description: Entity type
+        name:
+          type: string
+          title: Name
+          description: Dataset name
+        description:
+          type: string
+          title: Description
+          description: Dataset description
+      type: object
+      required:
+      - file
+      - entity_type
+      - name
+      - description
+      title: Body_v2_entity_id_lists_upload
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: api_key

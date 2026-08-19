@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Explorium AgentSource Business Enrichments Events API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "apikey",
+      "key": "API_KEY",
+      "value": "{{API_KEY}}",
+      "placement": "header"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Events",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Fetch business events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/businesses/events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve real-time business signals such as funding rounds, hiring surges, office moves, and leadership changes."
+        },
+        {
+          "info": {
+            "name": "Fetch prospect events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.explorium.ai/v1/prospects/events",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Retrieve real-time prospect signals such as job changes and role promotions."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

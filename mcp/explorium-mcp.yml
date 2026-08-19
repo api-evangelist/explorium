@@ -1,0 +1,125 @@
+generated: '2026-08-14'
+method: searched
+status: published
+source: https://www.explorium.ai/.well-known/mcp/server-card.json
+docs: https://developers.explorium.ai/mcp-docs/agentsource-mcp
+deployment:
+  mode: both
+  endpoint: https://mcp.explorium.ai/mcp
+  install: docker run -i --rm -e API_ACCESS_TOKEN=<key> explorium/mcp-explorium
+  package: https://github.com/explorium-ai/mcp-explorium
+  auth: oauth
+  verified: probed
+  note: >-
+    Explorium ships BOTH shapes. The hosted remote endpoint is
+    https://mcp.explorium.ai/mcp over Streamable HTTP with OAuth - an agent can
+    reach it today with no installation. A self-hostable stdio build is also
+    published as the MIT-licensed Docker image in explorium-ai/mcp-explorium and
+    the PyPI package explorium-mcp-server, which authenticates with the same
+    api_key value passed as API_ACCESS_TOKEN. The stdio path is materially
+    staler than the hosted one - explorium-mcp-server last published 0.2.11 on
+    2025-05-13, and the mcp-explorium repo was last pushed 2026-03-03, while the
+    hosted server card was current at probe time.
+server:
+  name: explorium
+  display_name: Explorium Business Data Hub
+  version: 1.0.0
+  transport: streamable-http
+  url: https://mcp.explorium.ai/mcp
+  legacy_sse_url: https://mcp.explorium.ai/sse
+  website: https://www.explorium.ai/mcp/
+  playground: https://www.explorium.ai/mcp-playground/
+  privacy_policy: https://www.explorium.ai/privacy-policy/
+  provider: Explorium
+authentication:
+  type: oauth2
+  required: true
+  challenge: >-
+    An unauthenticated POST to /mcp returns HTTP 401 with
+    WWW-Authenticate: Bearer realm="OAuth", error="invalid_token" and a JSON
+    body {"error":"invalid_token"}. Observed 2026-08-14.
+  authorization_server: https://mcp.explorium.ai
+  metadata: well-known/explorium-oauth-authorization-server.json
+  flows: [authorization_code, refresh_token]
+  pkce: [S256, plain]
+  dynamic_client_registration: https://mcp.explorium.ai/register
+  scopes_published: false
+  self_hosted_auth: >-
+    The Docker/stdio build takes the REST api_key as the API_ACCESS_TOKEN
+    environment variable instead of running the OAuth flow.
+introspection:
+  tools_list: gated
+  probe:
+    url: https://mcp.explorium.ai/mcp
+    method: 'POST {"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+    http_status: 401
+    body: '{"error":"invalid_token","error_description":"Missing or invalid access token"}'
+    fetched: '2026-08-14'
+  note: >-
+    Live tools/list and initialize both require a bearer token, so per-tool
+    inputSchema could not be read anonymously. The tool names and descriptions
+    below are taken verbatim from Explorium's own anonymous server card, not
+    inferred. Input schemas require authenticated introspection.
+tool_list_divergence:
+  note: >-
+    Explorium publishes TWO tool lists that do not agree, and this matters to an
+    agent choosing which to code against. The MCP server card (the machine-
+    readable one, saved to well-known/) names 14 tools built around a unified
+    fetch-entities / fetch-entities-statistics pair plus a
+    dataset/export/cost-estimation group. The documentation and the published
+    Agent Skill both name 11 tools split by entity type
+    (fetch-businesses / fetch-prospects, fetch-businesses-statistics /
+    fetch-prospects-statistics) with no export, dataset, cost-estimate or
+    pricing tools. The server card is treated as authoritative here because it
+    is the document the server itself publishes for pre-connection discovery.
+  server_card_tools: 14
+  documented_tools: 11
+  documented_source: https://developers.explorium.ai/mcp-docs/agentsource-mcp
+tools:
+- name: fetch-entities
+  description: Find companies or prospects using firmographic, technographic, role and intent filters.
+- name: match-business
+  description: Resolve a company name and/or domain to an Explorium business ID in bulk.
+- name: match-prospects
+  description: Resolve a person (email, or full name plus company) to an Explorium prospect ID.
+- name: enrich-business
+  description: >-
+    Add firmographics, technographics, funding, financials, workforce trends and
+    related attributes to matched companies.
+- name: enrich-prospects
+  description: Add contact details and professional profiles to matched prospects.
+- name: fetch-businesses-events
+  description: >-
+    Retrieve business event signals such as funding rounds, hiring changes, new
+    products and acquisitions.
+- name: fetch-prospects-events
+  description: Retrieve prospect-level events such as role changes and company moves.
+- name: fetch-entities-statistics
+  description: Return aggregate statistics describing how a filtered audience is distributed.
+- name: autocomplete
+  description: Resolve free-text input to the standardized filter values the search API accepts.
+- name: estimate-cost
+  description: Estimate the credit cost of an operation before it is run.
+- name: show-sample
+  description: Preview sample rows from a result table before exporting.
+- name: export-to-csv
+  description: Export a prepared result table to CSV.
+- name: get-dataset
+  description: Retrieve a previously saved dataset.
+- name: show-pricing-plans
+  description: Show the available credit packages and their pricing.
+clients:
+  documented:
+  - Claude Desktop
+  - Cursor
+  - VS Code
+  - n8n
+  - Zapier
+  - LangGraph
+  - OpenAI
+  - Base44
+  docs: https://developers.explorium.ai/integrations/mcp-integrations
+crosswalk: mcp/explorium-tool-crosswalk.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
