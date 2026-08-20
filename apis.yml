@@ -42,6 +42,22 @@ tags:
 - Agent Readiness
 - Sales Intelligence
 - Business Events
+- Webhook
+- Market Intelligence
+tags_raw:
+- Data Enrichment
+- B2B Data
+- Company Data
+- Prospect Enrichment
+- Firmographics
+- Technographics
+- Web Intelligence
+- Reference Data
+- AI Agents
+- MCP
+- Agent Readiness
+- Sales Intelligence
+- Business Events
 - Webhooks
 - Market Intelligence
 created: '2026-07-11'
@@ -51,6 +67,11 @@ apis:
 - aid: explorium:explorium-agentsource-mcp-server
   name: Explorium AgentSource MCP Server
   tags:
+  - MCP
+  - AI Agents
+  - B2B Data
+  - Web Intelligence
+  tags_raw:
   - MCP
   - AI Agents
   - Model Context Protocol
@@ -124,6 +145,8 @@ apis:
   humanURL: https://developers.explorium.ai/reference/webhooks/webhooks
   baseURL: https://api.explorium.ai
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
@@ -154,6 +177,8 @@ apis:
   humanURL: https://developers.explorium.ai/v2/async-jobs
   baseURL: https://api.explorium.ai
   tags:
+  - Async Jobs
+  tags_raw:
   - AsyncJobs
   properties:
   - type: OpenAPI
@@ -228,6 +253,8 @@ apis:
   humanURL: https://developers.explorium.ai/reference/quick-starts/introduction
   baseURL: https://api.explorium.ai
   tags:
+  - Health Check
+  tags_raw:
   - Healthcheck
   properties:
   - type: OpenAPI
