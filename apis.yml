@@ -14,6 +14,19 @@ description: Explorium is the B2B data layer for AI agents and go-to-market syst
   is unusually agent-forward at the discovery layer, serving an RFC 9727 api-catalog, a conformant A2A
   agent card, an MCP server card, an ARD capability catalog, an agent-skills index and llms.txt from its
   own domain.
+deliveryModel:
+  model: unknown
+  open_source: unknown
+  commercial: true
+  callable_host: true
+  label: Delivery model not determined — needs a product licence on record
+  confidence: low
+  source:
+  - openapi
+  - pricing
+  - repository-unlicensed
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
