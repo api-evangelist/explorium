@@ -190,7 +190,7 @@ apis:
   humanURL: https://developers.explorium.ai/v2/async-jobs
   baseURL: https://api.explorium.ai
   tags:
-  - Async Jobs
+  - AsyncJobs
   tags_raw:
   - AsyncJobs
   properties:
@@ -266,7 +266,7 @@ apis:
   humanURL: https://developers.explorium.ai/reference/quick-starts/introduction
   baseURL: https://api.explorium.ai
   tags:
-  - Health Check
+  - Healthcheck
   tags_raw:
   - Healthcheck
   properties:
