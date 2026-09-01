@@ -266,7 +266,7 @@ apis:
   humanURL: https://developers.explorium.ai/reference/quick-starts/introduction
   baseURL: https://api.explorium.ai
   tags:
-  - Healthcheck
+  - Health Check
   tags_raw:
   - Healthcheck
   properties:
