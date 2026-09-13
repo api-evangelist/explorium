@@ -46,6 +46,7 @@ conformance:
       media type. ARD permits extension types without core registration.'
     - '[Explorium agent skills index] Media type ''application/json'' is a valid application extension
       media type. ARD permits extension types without core registration.'
+  did_web: null
 catalog:
   host_display_name: Explorium
   host_identifier: null
