@@ -515,6 +515,8 @@ common:
   url: https://www.explorium.ai/privacy-policy/
 - type: Console
   url: https://www.explorium.ai/mcp-playground/
+- type: Contact
+  url: mailto:support@explorium.ai
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
