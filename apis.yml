@@ -118,6 +118,8 @@ apis:
   humanURL: https://developers.explorium.ai/reference/businesses/businesses_api
   baseURL: https://api.explorium.ai
   tags:
+  - Business
+  tags_raw:
   - Businesses
   properties:
   - type: OpenAPI
@@ -134,6 +136,8 @@ apis:
   humanURL: https://developers.explorium.ai/reference/credits/get_active_credits_summary
   baseURL: https://api.explorium.ai
   tags:
+  - Credit
+  tags_raw:
   - Credits
   properties:
   - type: OpenAPI
