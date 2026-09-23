@@ -94,178 +94,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    JobSeniorityLevel:
-      type: string
-      enum:
-      - owner
-      - c-suite
-      - vice president
-      - director
-      - senior non-managerial
-      - manager
-      - partner
-      - non-managerial
-      - junior
-      - president
-      - senior manager
-      - advisor
-      - freelancer
-      - board member
-      - founder
-      - training
-      - unpaid
-      title: JobSeniorityLevel
-      description: 'The `JobSeniorityLevel` class is an enumeration that represents various levels of job seniority.
-
-
-        This enum is used to categorize jobs based on their seniority levels, such as:
-
-        - Entry-level positions
-
-        - Managerial roles
-
-        - Executive roles (e.g., C-Suite, VP)
-
-
-        These categories ensure consistent filtering and classification of job-related data across the application.'
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
-    ProspectsBulkEnrichRow_ContactsInformationOutputSchema_:
-      properties:
-        prospect_id:
-          type: string
-          pattern: ^[a-f0-9]{40}$
-          title: Prospect Id
-        data:
-          $ref: '#/components/schemas/ContactsInformationOutputSchema'
-      type: object
-      required:
-      - prospect_id
-      title: ProspectsBulkEnrichRow[ContactsInformationOutputSchema]
-    ProspectsBulkEnrichResponse_ContactsInformationOutputSchema_:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        data:
-          items:
-            $ref: '#/components/schemas/ProspectsBulkEnrichRow_ContactsInformationOutputSchema_'
-          type: array
-          title: Data
-        entity_id:
-          anyOf:
-          - type: string
-            pattern: ^[a-f0-9]{32}$
-          - type: string
-            pattern: ^[a-f0-9]{40}$
-          title: Entity Id
-        total_results:
-          type: integer
-          title: Total Results
-      type: object
-      required:
-      - response_context
-      - total_results
-      title: ProspectsBulkEnrichResponse[ContactsInformationOutputSchema]
-      description: This is base response model for all responses in partner service.
-    JobLevel:
-      type: string
-      enum:
-      - owner
-      - cxo
-      - vp
-      - director
-      - senior
-      - manager
-      - partner
-      - non-managerial
-      - entry
-      - training
-      - unpaid
-      - unknown
-      title: JobLevel
-      description: 'The `JobLevel` enum for enrichment responses with enhanced taxonomy.
-
-        This is used for v1 fields from enrichment.'
-    partner_service__models__prospects__enrich_requests__LinkedInPostsBulkEnrichRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        parameters:
-          allOf:
-          - $ref: '#/components/schemas/LinkedInPostsEnrichmentParams'
-          title: Parameters
-          nullable: true
-        prospect_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{40}$
-          type: array
-          maxItems: 50
-          minItems: 1
-          title: Prospect Ids
-      additionalProperties: false
-      type: object
-      required:
-      - prospect_ids
-      title: LinkedInPostsBulkEnrichRequest
-    ProspectsBulkEnrichRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        parameters:
-          type: object
-          title: Parameters
-          nullable: true
-        prospect_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{40}$
-          type: array
-          maxItems: 50
-          minItems: 1
-          title: Prospect Ids
-      additionalProperties: false
-      type: object
-      required:
-      - prospect_ids
-      title: ProspectsBulkEnrichRequest
-    ProspectsBulkEnrichResponse_LinkedinProspectsPostsOutputSchema_:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        data:
-          items:
-            $ref: '#/components/schemas/ProspectsBulkEnrichRow_LinkedinProspectsPostsOutputSchema_'
-          type: array
-          title: Data
-        entity_id:
-          anyOf:
-          - type: string
-            pattern: ^[a-f0-9]{32}$
-          - type: string
-            pattern: ^[a-f0-9]{40}$
-          title: Entity Id
-        total_results:
-          type: integer
-          title: Total Results
-      type: object
-      required:
-      - response_context
-      - total_results
-      title: ProspectsBulkEnrichResponse[LinkedinProspectsPostsOutputSchema]
-      description: This is base response model for all responses in partner service.
     JobDepartmentEnrichment:
       type: string
       enum:
@@ -290,56 +118,55 @@ components:
       description: 'The `JobDepartmentEnrichment` enum for enrichment responses with enhanced taxonomy.
 
         This is used for v1 fields from enrichment.'
-    JobDepartment:
-      type: string
-      enum:
-      - administration
-      - real estate
-      - healthcare
-      - partnerships
-      - c-suite
-      - design
-      - human resources
-      - engineering
-      - education
-      - strategy
-      - product
-      - sales
-      - r&d
-      - retail
-      - customer success
-      - security
-      - public service
-      - creative
-      - it
-      - support
-      - marketing
-      - trade
-      - legal
-      - operations
-      - procurement
-      - data
-      - manufacturing
-      - logistics
-      - finance
-      title: JobDepartment
-      description: 'The `JobDepartment` class is an enumeration that represents various job departments.
-
-
-        This enum is used to categorize jobs based on their associated departments, such as:
-
-        - Engineering
-
-        - Marketing
-
-        - Sales
-
-        - Legal
-
-        - Customer Service
-
-
-        These categories ensure consistent filtering and classification of job-related data across the application.'
+    ProspectsBulkEnrichRow_LinkedinProspectsPostsOutputSchema_:
+      properties:
+        prospect_id:
+          type: string
+          pattern: ^[a-f0-9]{40}$
+          title: Prospect Id
+        data:
+          $ref: '#/components/schemas/LinkedinProspectsPostsOutputSchema'
+      type: object
+      required:
+      - prospect_id
+      title: ProspectsBulkEnrichRow[LinkedinProspectsPostsOutputSchema]
+    ProspectsBulkContactsEnrichRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        parameters:
+          allOf:
+          - $ref: '#/components/schemas/ContactsEnrichmentParams'
+          title: Parameters
+          nullable: true
+        prospect_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{40}$
+          type: array
+          maxItems: 50
+          minItems: 1
+          title: Prospect Ids
+      additionalProperties: false
+      type: object
+      required:
+      - prospect_ids
+      title: ProspectsBulkContactsEnrichRequest
+    ProspectsBulkEnrichRow_ContactsInformationOutputSchema_:
+      properties:
+        prospect_id:
+          type: string
+          pattern: ^[a-f0-9]{40}$
+          title: Prospect Id
+        data:
+          $ref: '#/components/schemas/ContactsInformationOutputSchema'
+      type: object
+      required:
+      - prospect_id
+      title: ProspectsBulkEnrichRow[ContactsInformationOutputSchema]
     ProspectsBulkEnrichResponse_ProfilesOutputSchema_:
       properties:
         response_context:
@@ -468,31 +295,6 @@ components:
           title: Linkedin Url Array
       type: object
       title: ProfilesOutputSchema
-    ProspectsBulkContactsEnrichRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        parameters:
-          allOf:
-          - $ref: '#/components/schemas/ContactsEnrichmentParams'
-          title: Parameters
-          nullable: true
-        prospect_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{40}$
-          type: array
-          maxItems: 50
-          minItems: 1
-          title: Prospect Ids
-      additionalProperties: false
-      type: object
-      required:
-      - prospect_ids
-      title: ProspectsBulkContactsEnrichRequest
     EmailValidationStatus:
       enum:
       - valid
@@ -512,6 +314,34 @@ components:
 
 
         These statuses are used to ensure consistent handling of email validation results across the application.'
+    ContactsInformationOutputSchema:
+      properties:
+        emails:
+          items:
+            additionalProperties:
+              type: string
+            type: object
+          type: array
+          title: Emails
+        professions_email:
+          type: string
+          title: Professions Email
+        professional_email_status:
+          $ref: '#/components/schemas/EmailValidationStatus'
+        phone_numbers:
+          items:
+            additionalProperties:
+              type: string
+              pattern: ^\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,12}$
+            type: object
+          type: array
+          title: Phone Numbers
+        mobile_phone:
+          type: string
+          pattern: ^\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,12}$
+          title: Mobile Phone
+      type: object
+      title: ContactsInformationOutputSchema
     ProspectsBulkEnrichRow_ProfilesOutputSchema_:
       properties:
         prospect_id:
@@ -524,23 +354,47 @@ components:
       required:
       - prospect_id
       title: ProspectsBulkEnrichRow[ProfilesOutputSchema]
-    LinkedInPostsEnrichmentParams:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: LinkedInPostsEnrichmentParams
-    ProspectsBulkEnrichRow_LinkedinProspectsPostsOutputSchema_:
+    ResponseContext:
       properties:
-        prospect_id:
+        correlation_id:
           type: string
-          pattern: ^[a-f0-9]{40}$
-          title: Prospect Id
-        data:
-          $ref: '#/components/schemas/LinkedinProspectsPostsOutputSchema'
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
       type: object
       required:
-      - prospect_id
-      title: ProspectsBulkEnrichRow[LinkedinProspectsPostsOutputSchema]
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
+    ProspectsBulkEnrichResponse_ContactsInformationOutputSchema_:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        data:
+          items:
+            $ref: '#/components/schemas/ProspectsBulkEnrichRow_ContactsInformationOutputSchema_'
+          type: array
+          title: Data
+        entity_id:
+          anyOf:
+          - type: string
+            pattern: ^[a-f0-9]{32}$
+          - type: string
+            pattern: ^[a-f0-9]{40}$
+          title: Entity Id
+        total_results:
+          type: integer
+          title: Total Results
+      type: object
+      required:
+      - response_context
+      - total_results
+      title: ProspectsBulkEnrichResponse[ContactsInformationOutputSchema]
+      description: This is base response model for all responses in partner service.
     LinkedinProspectsPostsOutputSchema:
       properties:
         display_name:
@@ -570,6 +424,64 @@ components:
           title: Created At
       type: object
       title: LinkedinProspectsPostsOutputSchema
+    JobSeniorityLevel:
+      type: string
+      enum:
+      - owner
+      - c-suite
+      - vice president
+      - director
+      - senior non-managerial
+      - manager
+      - partner
+      - non-managerial
+      - junior
+      - president
+      - senior manager
+      - advisor
+      - freelancer
+      - board member
+      - founder
+      - training
+      - unpaid
+      title: JobSeniorityLevel
+      description: 'The `JobSeniorityLevel` class is an enumeration that represents various levels of job seniority.
+
+
+        This enum is used to categorize jobs based on their seniority levels, such as:
+
+        - Entry-level positions
+
+        - Managerial roles
+
+        - Executive roles (e.g., C-Suite, VP)
+
+
+        These categories ensure consistent filtering and classification of job-related data across the application.'
+    ProspectsBulkEnrichRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        parameters:
+          type: object
+          title: Parameters
+          nullable: true
+        prospect_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{40}$
+          type: array
+          maxItems: 50
+          minItems: 1
+          title: Prospect Ids
+      additionalProperties: false
+      type: object
+      required:
+      - prospect_ids
+      title: ProspectsBulkEnrichRequest
     HTTPValidationError:
       properties:
         detail:
@@ -579,47 +491,113 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ContactsEnrichmentParams:
-      properties:
-        contact_types:
-          items:
-            type: string
-            enum:
-            - email
-            - phone
-          type: array
-          title: Contact Types
+    LinkedInPostsEnrichmentParams:
+      properties: {}
       additionalProperties: false
       type: object
-      title: ContactsEnrichmentParams
-    ContactsInformationOutputSchema:
+      title: LinkedInPostsEnrichmentParams
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    JobDepartment:
+      type: string
+      enum:
+      - administration
+      - real estate
+      - healthcare
+      - partnerships
+      - c-suite
+      - design
+      - human resources
+      - engineering
+      - education
+      - strategy
+      - product
+      - sales
+      - r&d
+      - retail
+      - customer success
+      - security
+      - public service
+      - creative
+      - it
+      - support
+      - marketing
+      - trade
+      - legal
+      - operations
+      - procurement
+      - data
+      - manufacturing
+      - logistics
+      - finance
+      title: JobDepartment
+      description: 'The `JobDepartment` class is an enumeration that represents various job departments.
+
+
+        This enum is used to categorize jobs based on their associated departments, such as:
+
+        - Engineering
+
+        - Marketing
+
+        - Sales
+
+        - Legal
+
+        - Customer Service
+
+
+        These categories ensure consistent filtering and classification of job-related data across the application.'
+    ProspectsBulkEnrichResponse_LinkedinProspectsPostsOutputSchema_:
       properties:
-        emails:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        data:
           items:
-            additionalProperties:
-              type: string
-            type: object
+            $ref: '#/components/schemas/ProspectsBulkEnrichRow_LinkedinProspectsPostsOutputSchema_'
           type: array
-          title: Emails
-        professions_email:
-          type: string
-          title: Professions Email
-        professional_email_status:
-          $ref: '#/components/schemas/EmailValidationStatus'
-        phone_numbers:
-          items:
-            additionalProperties:
-              type: string
-              pattern: ^\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,12}$
-            type: object
-          type: array
-          title: Phone Numbers
-        mobile_phone:
-          type: string
-          pattern: ^\+(9[976]\d|8[987530]\d|6[987]\d|5[90]\d|42\d|3[875]\d|2[98654321]\d|9[8543210]|8[6421]|6[6543210]|5[87654321]|4[987654310]|3[9643210]|2[70]|7|1)\d{1,12}$
-          title: Mobile Phone
+          title: Data
+        entity_id:
+          anyOf:
+          - type: string
+            pattern: ^[a-f0-9]{32}$
+          - type: string
+            pattern: ^[a-f0-9]{40}$
+          title: Entity Id
+        total_results:
+          type: integer
+          title: Total Results
       type: object
-      title: ContactsInformationOutputSchema
+      required:
+      - response_context
+      - total_results
+      title: ProspectsBulkEnrichResponse[LinkedinProspectsPostsOutputSchema]
+      description: This is base response model for all responses in partner service.
+    JobLevel:
+      type: string
+      enum:
+      - owner
+      - cxo
+      - vp
+      - director
+      - senior
+      - manager
+      - partner
+      - non-managerial
+      - entry
+      - training
+      - unpaid
+      - unknown
+      title: JobLevel
+      description: 'The `JobLevel` enum for enrichment responses with enhanced taxonomy.
+
+        This is used for v1 fields from enrichment.'
     ValidationError:
       properties:
         loc:
@@ -641,22 +619,44 @@ components:
       - msg
       - type
       title: ValidationError
-    ResponseContext:
+    ContactsEnrichmentParams:
       properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
+        contact_types:
+          items:
+            type: string
+            enum:
+            - email
+            - phone
+          type: array
+          title: Contact Types
+      additionalProperties: false
+      type: object
+      title: ContactsEnrichmentParams
+    partner_service__models__prospects__enrich_requests__LinkedInPostsBulkEnrichRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        parameters:
+          allOf:
+          - $ref: '#/components/schemas/LinkedInPostsEnrichmentParams'
+          title: Parameters
+          nullable: true
+        prospect_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{40}$
+          type: array
+          maxItems: 50
+          minItems: 1
+          title: Prospect Ids
+      additionalProperties: false
       type: object
       required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
+      - prospect_ids
+      title: LinkedInPostsBulkEnrichRequest
   securitySchemes:
     APIKeyHeader:
       type: apiKey

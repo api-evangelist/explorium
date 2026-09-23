@@ -1,7 +1,7 @@
 {
   "provider": "explorium",
   "sources": [
-    "explorium-agentsource-openapi.json"
+    "_original/explorium-agentsource-openapi.json"
   ],
   "outputs": [
     "explorium-asyncenrichmentjobs-api-openapi.yml",
@@ -27,11 +27,12 @@
     "explorium-webhooks-api-openapi.yml"
   ],
   "archived": [
-    "archived openapi/explorium-agentsource-openapi.json"
+    "deleted 1 superseded output(s) from the previous generation"
   ],
   "errors": [],
   "warnings": [],
   "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
     "explorium-agentsource-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
     "explorium-agentsource-openapi.json: declared missing tag: AsyncEnrichmentJobs",
     "explorium-agentsource-openapi.json: declared missing tag: AsyncJobs",
@@ -54,7 +55,30 @@
     "explorium-agentsource-openapi.json: declared missing tag: V2Research",
     "explorium-agentsource-openapi.json: declared missing tag: Version",
     "explorium-agentsource-openapi.json: declared missing tag: Webhooks",
-    "apis.yml register: written (+17 apis, 22 total)"
+    "superseded outputs removed: explorium-health-check-api-openapi.yml",
+    "apis.yml register: written (+1 apis, 22 total)"
   ],
-  "skipped": []
+  "skipped": [
+    "explorium-asyncenrichmentjobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-asyncjobs-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-bulkbusinessenrichments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-businessenrichments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-businesses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-credits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-customenrichments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-entityiddatasets-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-health-check-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-prospects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-prospectsbulkenrichments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-prospectsenrichments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-v2autocomplete-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-v2businessenrichments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-v2businesses-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-v2credits-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-v2prospectenrichments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-v2prospects-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-v2research-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-version-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "explorium-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

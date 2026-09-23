@@ -86,31 +86,53 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    HTTPValidationError:
+    BusinessesEnrichRequest:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ResponseContext:
-      properties:
-        correlation_id:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        parameters:
+          type: object
+          title: Parameters
+          nullable: true
+        business_id:
           type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
+          pattern: ^[a-f0-9]{32}$
+          title: Business Id
+      additionalProperties: false
       type: object
       required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
+      - business_id
+      title: BusinessesEnrichRequest
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    CustomEnrichmentEnrichResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        data:
+          items:
+            $ref: '#/components/schemas/CustomEnrichmentResponseRow'
+          type: array
+          title: Data
+        total_results:
+          type: integer
+          title: Total Results
+      type: object
+      required:
+      - response_context
+      - data
+      - total_results
+      title: CustomEnrichmentEnrichResponse
+      description: Response model for enriched data from a custom enrichment.
     BusinessesBulkEnrichRequest:
       properties:
         request_context:
@@ -135,14 +157,6 @@ components:
       required:
       - business_ids
       title: BusinessesBulkEnrichRequest
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
     ValidationError:
       properties:
         loc:
@@ -164,45 +178,15 @@ components:
       - msg
       - type
       title: ValidationError
-    CustomEnrichmentEnrichResponse:
+    HTTPValidationError:
       properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        data:
+        detail:
           items:
-            $ref: '#/components/schemas/CustomEnrichmentResponseRow'
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Data
-        total_results:
-          type: integer
-          title: Total Results
+          title: Detail
       type: object
-      required:
-      - response_context
-      - data
-      - total_results
-      title: CustomEnrichmentEnrichResponse
-      description: Response model for enriched data from a custom enrichment.
-    BusinessesEnrichRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        parameters:
-          type: object
-          title: Parameters
-          nullable: true
-        business_id:
-          type: string
-          pattern: ^[a-f0-9]{32}$
-          title: Business Id
-      additionalProperties: false
-      type: object
-      required:
-      - business_id
-      title: BusinessesEnrichRequest
+      title: HTTPValidationError
     CustomEnrichmentResponseRow:
       properties:
         business_id:
@@ -218,6 +202,22 @@ components:
       - business_id
       - data
       title: CustomEnrichmentResponseRow
+    ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
   securitySchemes:
     APIKeyHeader:
       type: apiKey

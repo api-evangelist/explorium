@@ -60,6 +60,42 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AccountType:
+      type: string
+      enum:
+      - trial
+      - paid
+      title: AccountType
+      description: An enumeration.
     HTTPValidationError:
       properties:
         detail:
@@ -118,14 +154,6 @@ components:
       - aggregations
       title: CreditAggregationResponse
       description: This is base response model for all responses in partner service.
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
     CreditAggregationRequest:
       properties:
         request_context:
@@ -172,6 +200,22 @@ components:
       - to_date
       - mode
       title: CreditAggregationRequest
+    ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
     ActiveCreditSummaryWithAccountTypeResponse:
       properties:
         response_context:
@@ -195,50 +239,6 @@ components:
       - remaining_credits
       title: ActiveCreditSummaryWithAccountTypeResponse
       description: This is base response model for all responses in partner service.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    AccountType:
-      type: string
-      enum:
-      - trial
-      - paid
-      title: AccountType
-      description: An enumeration.
-    ResponseContext:
-      properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
-      type: object
-      required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
   securitySchemes:
     APIKeyHeader:
       type: apiKey

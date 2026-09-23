@@ -89,27 +89,97 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    CustomCreditMenu:
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    ChargingRule:
       properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        partner_id:
-          type: string
-          title: Partner Id
-          description: Partner ID for this credit menu
-        charging_menu:
-          additionalProperties:
-            $ref: '#/components/schemas/ChargingRule'
-          type: object
-          title: Charging Menu
-          description: Dictionary of operation names to charging rules
+        credit_cost:
+          type: integer
+          title: Credit Cost
       type: object
       required:
-      - response_context
-      - partner_id
-      - charging_menu
-      title: CustomCreditMenu
-      description: This is base response model for all responses in partner service.
+      - credit_cost
+      title: ChargingRule
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AccountType:
+      type: string
+      enum:
+      - trial
+      - paid
+      title: AccountType
+      description: An enumeration.
+    CreditAggregationRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        from_date:
+          type: string
+          title: From Date
+          description: ISO 8601 datetime string for start date
+        to_date:
+          type: string
+          title: To Date
+          description: ISO 8601 datetime string for end date
+        mode:
+          type: string
+          enum:
+          - timely
+          - endpoints
+          title: Mode
+          description: Aggregation mode
+        resolution:
+          type: string
+          enum:
+          - hour
+          - day
+          - month
+          title: Resolution
+          description: Aggregation resolution (required for timely mode, optional for endpoints mode)
+        timezone:
+          type: string
+          title: Timezone
+          description: Timezone for aggregation, defaults to UTC
+          default: UTC
+        key_name:
+          type: string
+          title: Key Name
+          description: Optional API key name to scope aggregation results
+      additionalProperties: false
+      type: object
+      required:
+      - from_date
+      - to_date
+      - mode
+      title: CreditAggregationRequest
     HTTPValidationError:
       properties:
         detail:
@@ -168,69 +238,43 @@ components:
       - aggregations
       title: CreditAggregationResponse
       description: This is base response model for all responses in partner service.
-    ChargingRule:
+    CustomCreditMenu:
       properties:
-        credit_cost:
-          type: integer
-          title: Credit Cost
-      type: object
-      required:
-      - credit_cost
-      title: ChargingRule
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
-    CreditAggregationRequest:
-      properties:
-        request_context:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        partner_id:
+          type: string
+          title: Partner Id
+          description: Partner ID for this credit menu
+        charging_menu:
+          additionalProperties:
+            $ref: '#/components/schemas/ChargingRule'
           type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        from_date:
-          type: string
-          title: From Date
-          description: ISO 8601 datetime string for start date
-        to_date:
-          type: string
-          title: To Date
-          description: ISO 8601 datetime string for end date
-        mode:
-          type: string
-          enum:
-          - timely
-          - endpoints
-          title: Mode
-          description: Aggregation mode
-        resolution:
-          type: string
-          enum:
-          - hour
-          - day
-          - month
-          title: Resolution
-          description: Aggregation resolution (required for timely mode, optional for endpoints mode)
-        timezone:
-          type: string
-          title: Timezone
-          description: Timezone for aggregation, defaults to UTC
-          default: UTC
-        key_name:
-          type: string
-          title: Key Name
-          description: Optional API key name to scope aggregation results
-      additionalProperties: false
+          title: Charging Menu
+          description: Dictionary of operation names to charging rules
       type: object
       required:
-      - from_date
-      - to_date
-      - mode
-      title: CreditAggregationRequest
+      - response_context
+      - partner_id
+      - charging_menu
+      title: CustomCreditMenu
+      description: This is base response model for all responses in partner service.
+    ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
     ActiveCreditSummaryWithAccountTypeResponse:
       properties:
         response_context:
@@ -254,50 +298,6 @@ components:
       - remaining_credits
       title: ActiveCreditSummaryWithAccountTypeResponse
       description: This is base response model for all responses in partner service.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    AccountType:
-      type: string
-      enum:
-      - trial
-      - paid
-      title: AccountType
-      description: An enumeration.
-    ResponseContext:
-      properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
-      type: object
-      required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
   securitySchemes:
     APIKeyHeader:
       type: apiKey

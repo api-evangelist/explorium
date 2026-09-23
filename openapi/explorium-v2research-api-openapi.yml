@@ -66,58 +66,31 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    GenAIResearchOutputSchema:
+    V2ProspectEnrichRow_GenAIResearchOutputSchema_:
       properties:
-        research_result:
-          title: Research Result
-      type: object
-      title: GenAIResearchOutputSchema
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    V2BusinessResearchInput:
-      properties:
-        business_id:
+        prospect_id:
           type: string
-          pattern: ^[a-f0-9]{32}$
-          title: Business Id
-        custom_fields:
-          type: object
-          title: Custom Fields
-      type: object
-      required:
-      - business_id
-      title: V2BusinessResearchInput
-    V2ProspectResearchRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        parameters:
-          $ref: '#/components/schemas/GenAIResearchParams'
-        prospects:
+          pattern: ^[a-f0-9]{40}$
+          title: Prospect Id
+        data:
           anyOf:
-          - $ref: '#/components/schemas/V2ProspectResearchInput'
+          - $ref: '#/components/schemas/GenAIResearchOutputSchema'
           - items:
-              $ref: '#/components/schemas/V2ProspectResearchInput'
+              $ref: '#/components/schemas/GenAIResearchOutputSchema'
             type: array
-            maxItems: 50
-            minItems: 1
-          title: Prospects
-      additionalProperties: false
+          title: Data
       type: object
       required:
-      - parameters
-      - prospects
-      title: V2ProspectResearchRequest
+      - prospect_id
+      title: V2ProspectEnrichRow[GenAIResearchOutputSchema]
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
     V2BusinessResearchResponse_GenAIResearchOutputSchema_:
       properties:
         response_context:
@@ -140,73 +113,26 @@ components:
       - total_results
       title: V2BusinessResearchResponse[GenAIResearchOutputSchema]
       description: This is base response model for all responses in partner service.
-    V2BusinessResearchRequest:
+    GenAIResearchParams:
       properties:
-        request_context:
+        output_schema:
           type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        parameters:
-          $ref: '#/components/schemas/GenAIResearchParams'
-        businesses:
-          anyOf:
-          - $ref: '#/components/schemas/V2BusinessResearchInput'
-          - items:
-              $ref: '#/components/schemas/V2BusinessResearchInput'
-            type: array
-            maxItems: 50
-            minItems: 1
-          title: Businesses
+          title: Output Schema
+        query:
+          type: string
+          title: Query
+        prompt_template:
+          type: string
+          title: Prompt Template
       additionalProperties: false
       type: object
-      required:
-      - parameters
-      - businesses
-      title: V2BusinessResearchRequest
-    V2ProspectResearchResponse_GenAIResearchOutputSchema_:
+      title: GenAIResearchParams
+    GenAIResearchOutputSchema:
       properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        data:
-          items:
-            $ref: '#/components/schemas/V2ProspectEnrichRow_GenAIResearchOutputSchema_'
-          type: array
-          title: Data
-        total_results:
-          type: integer
-          title: Total Results
-        generated_prompt:
-          type: string
-          title: Generated Prompt
+        research_result:
+          title: Research Result
       type: object
-      required:
-      - response_context
-      - data
-      - total_results
-      title: V2ProspectResearchResponse[GenAIResearchOutputSchema]
-      description: This is base response model for all responses in partner service.
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
-    V2ProspectResearchInput:
-      properties:
-        prospect_id:
-          type: string
-          pattern: ^[a-f0-9]{40}$
-          title: Prospect Id
-        custom_fields:
-          type: object
-          title: Custom Fields
-      type: object
-      required:
-      - prospect_id
-      title: V2ProspectResearchInput
+      title: GenAIResearchOutputSchema
     V2BusinessEnrichRow_GenAIResearchOutputSchema_:
       properties:
         business_id:
@@ -245,37 +171,111 @@ components:
       - msg
       - type
       title: ValidationError
-    V2ProspectEnrichRow_GenAIResearchOutputSchema_:
+    V2ProspectResearchResponse_GenAIResearchOutputSchema_:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        data:
+          items:
+            $ref: '#/components/schemas/V2ProspectEnrichRow_GenAIResearchOutputSchema_'
+          type: array
+          title: Data
+        total_results:
+          type: integer
+          title: Total Results
+        generated_prompt:
+          type: string
+          title: Generated Prompt
+      type: object
+      required:
+      - response_context
+      - data
+      - total_results
+      title: V2ProspectResearchResponse[GenAIResearchOutputSchema]
+      description: This is base response model for all responses in partner service.
+    V2BusinessResearchRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        parameters:
+          $ref: '#/components/schemas/GenAIResearchParams'
+        businesses:
+          anyOf:
+          - $ref: '#/components/schemas/V2BusinessResearchInput'
+          - items:
+              $ref: '#/components/schemas/V2BusinessResearchInput'
+            type: array
+            maxItems: 50
+            minItems: 1
+          title: Businesses
+      additionalProperties: false
+      type: object
+      required:
+      - parameters
+      - businesses
+      title: V2BusinessResearchRequest
+    V2ProspectResearchRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        parameters:
+          $ref: '#/components/schemas/GenAIResearchParams'
+        prospects:
+          anyOf:
+          - $ref: '#/components/schemas/V2ProspectResearchInput'
+          - items:
+              $ref: '#/components/schemas/V2ProspectResearchInput'
+            type: array
+            maxItems: 50
+            minItems: 1
+          title: Prospects
+      additionalProperties: false
+      type: object
+      required:
+      - parameters
+      - prospects
+      title: V2ProspectResearchRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    V2BusinessResearchInput:
+      properties:
+        business_id:
+          type: string
+          pattern: ^[a-f0-9]{32}$
+          title: Business Id
+        custom_fields:
+          type: object
+          title: Custom Fields
+      type: object
+      required:
+      - business_id
+      title: V2BusinessResearchInput
+    V2ProspectResearchInput:
       properties:
         prospect_id:
           type: string
           pattern: ^[a-f0-9]{40}$
           title: Prospect Id
-        data:
-          anyOf:
-          - $ref: '#/components/schemas/GenAIResearchOutputSchema'
-          - items:
-              $ref: '#/components/schemas/GenAIResearchOutputSchema'
-            type: array
-          title: Data
+        custom_fields:
+          type: object
+          title: Custom Fields
       type: object
       required:
       - prospect_id
-      title: V2ProspectEnrichRow[GenAIResearchOutputSchema]
-    GenAIResearchParams:
-      properties:
-        output_schema:
-          type: object
-          title: Output Schema
-        query:
-          type: string
-          title: Query
-        prompt_template:
-          type: string
-          title: Prompt Template
-      additionalProperties: false
-      type: object
-      title: GenAIResearchParams
+      title: V2ProspectResearchInput
     ResponseContext:
       properties:
         correlation_id:

@@ -55,6 +55,57 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
+    AutoCompleteItem:
+      properties:
+        query:
+          type: string
+          title: Query
+        label:
+          type: string
+          title: Label
+        value:
+          type: string
+          title: Value
+      type: object
+      required:
+      - query
+      - label
+      - value
+      title: AutoCompleteItem
+      example:
+        query: united
+        label: United States
+        value: us
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     AutocompleteType:
       enum:
       - country
@@ -80,57 +131,6 @@ components:
       - interests
       title: AutocompleteType
       description: Enum for autocomplete types.
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    AutoCompleteItem:
-      properties:
-        query:
-          type: string
-          title: Query
-        label:
-          type: string
-          title: Label
-        value:
-          type: string
-          title: Value
-      type: object
-      required:
-      - query
-      - label
-      - value
-      title: AutoCompleteItem
-      example:
-        query: united
-        label: United States
-        value: us
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

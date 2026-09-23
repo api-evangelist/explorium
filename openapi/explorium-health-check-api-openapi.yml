@@ -6,12 +6,12 @@ servers:
 - url: https://api.explorium.ai
   description: AgentSource Server
 tags:
-- name: Healthcheck
+- name: Health Check
 paths:
   /healthcheck/http:
     get:
       tags:
-      - Healthcheck
+      - Health Check
       summary: Healthcheck
       operationId: healthcheck
       responses:
@@ -25,7 +25,7 @@ paths:
   /healthcheck/http_payload/{response_bytes}:
     get:
       tags:
-      - Healthcheck
+      - Health Check
       summary: Healthcheck Bytes
       operationId: healthcheck_bytes
       parameters:
