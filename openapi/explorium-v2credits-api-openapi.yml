@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Partner Service V2 Credits API
+  title: Partner Service V2Credits API
   version: 0.3.19
 servers:
 - url: https://api.explorium.ai
@@ -60,51 +60,45 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
-    ValidationError:
+    ResponseContext:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        correlation_id:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    AccountType:
-      type: string
-      enum:
-      - trial
-      - paid
-      title: AccountType
-      description: An enumeration.
-    HTTPValidationError:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
+    ActiveCreditSummaryWithAccountTypeResponse:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        allocated_credits:
+          type: integer
+          title: Allocated Credits
+          description: Number of allocated credits
+        remaining_credits:
+          type: integer
+          title: Remaining Credits
+          description: Number of remaining credits
+        account_type:
+          allOf:
+          - $ref: '#/components/schemas/AccountType'
+          description: Type of the last package assigned to the account. trial means no purchase was made; paid means the user purchased a package.
       type: object
-      title: HTTPValidationError
+      required:
+      - response_context
+      - allocated_credits
+      - remaining_credits
+      title: ActiveCreditSummaryWithAccountTypeResponse
+      description: This is base response model for all responses in partner service.
     CreditAggregationResponse:
       properties:
         response_context:
@@ -154,6 +148,23 @@ components:
       - aggregations
       title: CreditAggregationResponse
       description: This is base response model for all responses in partner service.
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     CreditAggregationRequest:
       properties:
         request_context:
@@ -200,45 +211,34 @@ components:
       - to_date
       - mode
       title: CreditAggregationRequest
-    ResponseContext:
+    ValidationError:
       properties:
-        correlation_id:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
-    ActiveCreditSummaryWithAccountTypeResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        allocated_credits:
-          type: integer
-          title: Allocated Credits
-          description: Number of allocated credits
-        remaining_credits:
-          type: integer
-          title: Remaining Credits
-          description: Number of remaining credits
-        account_type:
-          allOf:
-          - $ref: '#/components/schemas/AccountType'
-          description: Type of the last package assigned to the account. trial means no purchase was made; paid means the user purchased a package.
-      type: object
-      required:
-      - response_context
-      - allocated_credits
-      - remaining_credits
-      title: ActiveCreditSummaryWithAccountTypeResponse
-      description: This is base response model for all responses in partner service.
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    AccountType:
+      type: string
+      enum:
+      - trial
+      - paid
+      title: AccountType
+      description: An enumeration.
   securitySchemes:
     APIKeyHeader:
       type: apiKey

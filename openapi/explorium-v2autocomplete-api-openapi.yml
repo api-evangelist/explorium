@@ -1,6 +1,6 @@
 openapi: 3.2.0
 info:
-  title: Partner Service V2 Autocomplete API
+  title: Partner Service V2Autocomplete API
   version: 0.3.19
 servers:
 - url: https://api.explorium.ai
@@ -55,27 +55,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    AutoCompleteItem:
-      properties:
-        query:
-          type: string
-          title: Query
-        label:
-          type: string
-          title: Label
-        value:
-          type: string
-          title: Value
-      type: object
-      required:
-      - query
-      - label
-      - value
-      title: AutoCompleteItem
-      example:
-        query: united
-        label: United States
-        value: us
     ValidationError:
       properties:
         loc:
@@ -97,15 +76,27 @@ components:
       - msg
       - type
       title: ValidationError
-    HTTPValidationError:
+    AutoCompleteItem:
       properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
+        query:
+          type: string
+          title: Query
+        label:
+          type: string
+          title: Label
+        value:
+          type: string
+          title: Value
       type: object
-      title: HTTPValidationError
+      required:
+      - query
+      - label
+      - value
+      title: AutoCompleteItem
+      example:
+        query: united
+        label: United States
+        value: us
     AutocompleteType:
       enum:
       - country
@@ -131,6 +122,15 @@ components:
       - interests
       title: AutocompleteType
       description: Enum for autocomplete types.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

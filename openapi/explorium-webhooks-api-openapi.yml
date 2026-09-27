@@ -126,23 +126,38 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    WebhookCheckConnectivityRequest:
+    ResponseContext:
       properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        partner_id:
+        correlation_id:
           type: string
-          title: Partner Id
-        simulation:
-          $ref: '#/components/schemas/WebhookSimulation'
-      additionalProperties: false
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
       type: object
       required:
-      - partner_id
-      title: WebhookCheckConnectivityRequest
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
+    WebhookSimulation:
+      properties:
+        event_name:
+          $ref: '#/components/schemas/WebhookSimulationEventType'
+        number_of_events:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Number Of Events
+          description: Number of events to generate in simulation (between 1 and 10)
+        event_time:
+          type: string
+          format: date-time
+          title: Event Time
+      type: object
+      title: WebhookSimulation
     RequestStatus:
       type: string
       enum:
@@ -179,38 +194,6 @@ components:
       - partner_id
       - webhook_url
       title: WebhookAddRequest
-    PayloadFormat:
-      type: string
-      enum:
-      - json
-      - stringified_json
-      title: PayloadFormat
-      description: An enumeration.
-    WebhookSimulation:
-      properties:
-        event_name:
-          $ref: '#/components/schemas/WebhookSimulationEventType'
-        number_of_events:
-          type: integer
-          maximum: 10.0
-          minimum: 1.0
-          title: Number Of Events
-          description: Number of events to generate in simulation (between 1 and 10)
-        event_time:
-          type: string
-          format: date-time
-          title: Event Time
-      type: object
-      title: WebhookSimulation
-    WebhookDeleteResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-      type: object
-      required:
-      - response_context
-      title: WebhookDeleteResponse
-      description: This is base response model for all responses in partner service.
     ValidationError:
       properties:
         loc:
@@ -232,25 +215,14 @@ components:
       - msg
       - type
       title: ValidationError
-    WebhookCheckConnectivityResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-      type: object
-      required:
-      - response_context
-      title: WebhookCheckConnectivityResponse
-      description: This is base response model for all responses in partner service.
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    WebhookGetResponse:
+    PayloadFormat:
+      type: string
+      enum:
+      - json
+      - stringified_json
+      title: PayloadFormat
+      description: An enumeration.
+    WebhookAddResponse:
       properties:
         response_context:
           $ref: '#/components/schemas/ResponseContext'
@@ -284,8 +256,25 @@ components:
       - last_modified_time
       - webhook_url
       - webhook_secret
-      title: WebhookGetResponse
+      title: WebhookAddResponse
       description: This is base response model for all responses in partner service.
+    WebhookCheckConnectivityRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        partner_id:
+          type: string
+          title: Partner Id
+        simulation:
+          $ref: '#/components/schemas/WebhookSimulation'
+      additionalProperties: false
+      type: object
+      required:
+      - partner_id
+      title: WebhookCheckConnectivityRequest
     WebhookSimulationEventType:
       type: string
       enum:
@@ -335,23 +324,16 @@ components:
       - prospect_job_start_anniversary
       title: WebhookSimulationEventType
       description: The `WebhookSimulationEventType` class is an enumeration that represents various types of events
-    ResponseContext:
+    HTTPValidationError:
       properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
       type: object
-      required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
-    WebhookAddResponse:
+      title: HTTPValidationError
+    WebhookGetResponse:
       properties:
         response_context:
           $ref: '#/components/schemas/ResponseContext'
@@ -385,7 +367,25 @@ components:
       - last_modified_time
       - webhook_url
       - webhook_secret
-      title: WebhookAddResponse
+      title: WebhookGetResponse
+      description: This is base response model for all responses in partner service.
+    WebhookCheckConnectivityResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+      type: object
+      required:
+      - response_context
+      title: WebhookCheckConnectivityResponse
+      description: This is base response model for all responses in partner service.
+    WebhookDeleteResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+      type: object
+      required:
+      - response_context
+      title: WebhookDeleteResponse
       description: This is base response model for all responses in partner service.
   securitySchemes:
     APIKeyHeader:

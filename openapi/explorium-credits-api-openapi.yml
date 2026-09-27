@@ -89,6 +89,78 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
+    ActiveCreditSummaryWithAccountTypeResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        allocated_credits:
+          type: integer
+          title: Allocated Credits
+          description: Number of allocated credits
+        remaining_credits:
+          type: integer
+          title: Remaining Credits
+          description: Number of remaining credits
+        account_type:
+          allOf:
+          - $ref: '#/components/schemas/AccountType'
+          description: Type of the last package assigned to the account. trial means no purchase was made; paid means the user purchased a package.
+      type: object
+      required:
+      - response_context
+      - allocated_credits
+      - remaining_credits
+      title: ActiveCreditSummaryWithAccountTypeResponse
+      description: This is base response model for all responses in partner service.
+    CreditAggregationResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        from_date:
+          type: string
+          title: From Date
+          description: ISO 8601 datetime string for start date
+        to_date:
+          type: string
+          title: To Date
+          description: ISO 8601 datetime string for end date
+        mode:
+          type: string
+          title: Mode
+          description: Aggregation mode
+        resolution:
+          type: string
+          enum:
+          - hour
+          - day
+          - month
+          title: Resolution
+          description: Aggregation resolution (not applicable for endpoints mode)
+        timezone:
+          type: string
+          title: Timezone
+          description: Timezone used for aggregation
+        total_credits:
+          type: integer
+          title: Total Credits
+          description: Total credits consumed in the period
+        aggregations:
+          items:
+            type: object
+          type: array
+          title: Aggregations
+          description: Array of aggregation data points
+      type: object
+      required:
+      - response_context
+      - from_date
+      - to_date
+      - mode
+      - timezone
+      - total_credits
+      - aggregations
+      title: CreditAggregationResponse
+      description: This is base response model for all responses in partner service.
     RequestStatus:
       type: string
       enum:
@@ -127,13 +199,6 @@ components:
       - msg
       - type
       title: ValidationError
-    AccountType:
-      type: string
-      enum:
-      - trial
-      - paid
-      title: AccountType
-      description: An enumeration.
     CreditAggregationRequest:
       properties:
         request_context:
@@ -189,55 +254,22 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    CreditAggregationResponse:
+    ResponseContext:
       properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        from_date:
+        correlation_id:
           type: string
-          title: From Date
-          description: ISO 8601 datetime string for start date
-        to_date:
-          type: string
-          title: To Date
-          description: ISO 8601 datetime string for end date
-        mode:
-          type: string
-          title: Mode
-          description: Aggregation mode
-        resolution:
-          type: string
-          enum:
-          - hour
-          - day
-          - month
-          title: Resolution
-          description: Aggregation resolution (not applicable for endpoints mode)
-        timezone:
-          type: string
-          title: Timezone
-          description: Timezone used for aggregation
-        total_credits:
-          type: integer
-          title: Total Credits
-          description: Total credits consumed in the period
-        aggregations:
-          items:
-            type: object
-          type: array
-          title: Aggregations
-          description: Array of aggregation data points
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
       type: object
       required:
-      - response_context
-      - from_date
-      - to_date
-      - mode
-      - timezone
-      - total_credits
-      - aggregations
-      title: CreditAggregationResponse
-      description: This is base response model for all responses in partner service.
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
     CustomCreditMenu:
       properties:
         response_context:
@@ -259,45 +291,13 @@ components:
       - charging_menu
       title: CustomCreditMenu
       description: This is base response model for all responses in partner service.
-    ResponseContext:
-      properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
-      type: object
-      required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
-    ActiveCreditSummaryWithAccountTypeResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        allocated_credits:
-          type: integer
-          title: Allocated Credits
-          description: Number of allocated credits
-        remaining_credits:
-          type: integer
-          title: Remaining Credits
-          description: Number of remaining credits
-        account_type:
-          allOf:
-          - $ref: '#/components/schemas/AccountType'
-          description: Type of the last package assigned to the account. trial means no purchase was made; paid means the user purchased a package.
-      type: object
-      required:
-      - response_context
-      - allocated_credits
-      - remaining_credits
-      title: ActiveCreditSummaryWithAccountTypeResponse
-      description: This is base response model for all responses in partner service.
+    AccountType:
+      type: string
+      enum:
+      - trial
+      - paid
+      title: AccountType
+      description: An enumeration.
   securitySchemes:
     APIKeyHeader:
       type: apiKey
