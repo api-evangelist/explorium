@@ -89,29 +89,43 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    ActiveCreditSummaryWithAccountTypeResponse:
+    ValidationError:
       properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        allocated_credits:
-          type: integer
-          title: Allocated Credits
-          description: Number of allocated credits
-        remaining_credits:
-          type: integer
-          title: Remaining Credits
-          description: Number of remaining credits
-        account_type:
-          allOf:
-          - $ref: '#/components/schemas/AccountType'
-          description: Type of the last package assigned to the account. trial means no purchase was made; paid means the user purchased a package.
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - response_context
-      - allocated_credits
-      - remaining_credits
-      title: ActiveCreditSummaryWithAccountTypeResponse
-      description: This is base response model for all responses in partner service.
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
     CreditAggregationResponse:
       properties:
         response_context:
@@ -161,14 +175,27 @@ components:
       - aggregations
       title: CreditAggregationResponse
       description: This is base response model for all responses in partner service.
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    CustomCreditMenu:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        partner_id:
+          type: string
+          title: Partner Id
+          description: Partner ID for this credit menu
+        charging_menu:
+          additionalProperties:
+            $ref: '#/components/schemas/ChargingRule'
+          type: object
+          title: Charging Menu
+          description: Dictionary of operation names to charging rules
+      type: object
+      required:
+      - response_context
+      - partner_id
+      - charging_menu
+      title: CustomCreditMenu
+      description: This is base response model for all responses in partner service.
     ChargingRule:
       properties:
         credit_cost:
@@ -178,27 +205,23 @@ components:
       required:
       - credit_cost
       title: ChargingRule
-    ValidationError:
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    HTTPValidationError:
       properties:
-        loc:
+        detail:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/ValidationError'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Detail
       type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      title: HTTPValidationError
     CreditAggregationRequest:
       properties:
         request_context:
@@ -245,52 +268,6 @@ components:
       - to_date
       - mode
       title: CreditAggregationRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ResponseContext:
-      properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
-      type: object
-      required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
-    CustomCreditMenu:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        partner_id:
-          type: string
-          title: Partner Id
-          description: Partner ID for this credit menu
-        charging_menu:
-          additionalProperties:
-            $ref: '#/components/schemas/ChargingRule'
-          type: object
-          title: Charging Menu
-          description: Dictionary of operation names to charging rules
-      type: object
-      required:
-      - response_context
-      - partner_id
-      - charging_menu
-      title: CustomCreditMenu
-      description: This is base response model for all responses in partner service.
     AccountType:
       type: string
       enum:
@@ -298,6 +275,29 @@ components:
       - paid
       title: AccountType
       description: An enumeration.
+    ActiveCreditSummaryWithAccountTypeResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        allocated_credits:
+          type: integer
+          title: Allocated Credits
+          description: Number of allocated credits
+        remaining_credits:
+          type: integer
+          title: Remaining Credits
+          description: Number of remaining credits
+        account_type:
+          allOf:
+          - $ref: '#/components/schemas/AccountType'
+          description: Type of the last package assigned to the account. trial means no purchase was made; paid means the user purchased a package.
+      type: object
+      required:
+      - response_context
+      - allocated_credits
+      - remaining_credits
+      title: ActiveCreditSummaryWithAccountTypeResponse
+      description: This is base response model for all responses in partner service.
   securitySchemes:
     APIKeyHeader:
       type: apiKey

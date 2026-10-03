@@ -126,22 +126,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    ResponseContext:
-      properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
-      type: object
-      required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
     WebhookSimulation:
       properties:
         event_name:
@@ -158,14 +142,52 @@ components:
           title: Event Time
       type: object
       title: WebhookSimulation
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
+    WebhookDeleteResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+      type: object
+      required:
+      - response_context
+      title: WebhookDeleteResponse
+      description: This is base response model for all responses in partner service.
     WebhookAddRequest:
       properties:
         request_context:
@@ -194,34 +216,6 @@ components:
       - partner_id
       - webhook_url
       title: WebhookAddRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    PayloadFormat:
-      type: string
-      enum:
-      - json
-      - stringified_json
-      title: PayloadFormat
-      description: An enumeration.
     WebhookAddResponse:
       properties:
         response_context:
@@ -258,23 +252,23 @@ components:
       - webhook_secret
       title: WebhookAddResponse
       description: This is base response model for all responses in partner service.
-    WebhookCheckConnectivityRequest:
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    WebhookCheckConnectivityResponse:
       properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        partner_id:
-          type: string
-          title: Partner Id
-        simulation:
-          $ref: '#/components/schemas/WebhookSimulation'
-      additionalProperties: false
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
       type: object
       required:
-      - partner_id
-      title: WebhookCheckConnectivityRequest
+      - response_context
+      title: WebhookCheckConnectivityResponse
+      description: This is base response model for all responses in partner service.
     WebhookSimulationEventType:
       type: string
       enum:
@@ -333,6 +327,30 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
+    PayloadFormat:
+      type: string
+      enum:
+      - json
+      - stringified_json
+      title: PayloadFormat
+      description: An enumeration.
+    WebhookCheckConnectivityRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        partner_id:
+          type: string
+          title: Partner Id
+        simulation:
+          $ref: '#/components/schemas/WebhookSimulation'
+      additionalProperties: false
+      type: object
+      required:
+      - partner_id
+      title: WebhookCheckConnectivityRequest
     WebhookGetResponse:
       properties:
         response_context:
@@ -368,24 +386,6 @@ components:
       - webhook_url
       - webhook_secret
       title: WebhookGetResponse
-      description: This is base response model for all responses in partner service.
-    WebhookCheckConnectivityResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-      type: object
-      required:
-      - response_context
-      title: WebhookCheckConnectivityResponse
-      description: This is base response model for all responses in partner service.
-    WebhookDeleteResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-      type: object
-      required:
-      - response_context
-      title: WebhookDeleteResponse
       description: This is base response model for all responses in partner service.
   securitySchemes:
     APIKeyHeader:

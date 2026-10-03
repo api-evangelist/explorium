@@ -104,30 +104,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    V2JobResults:
-      properties:
-        format:
-          type: string
-          enum:
-          - csv
-          title: Format
-        download_url:
-          type: string
-          title: Download Url
-        expires_at:
-          type: string
-          format: date-time
-          title: Expires At
-        file_expires_at:
-          type: string
-          format: date-time
-          title: File Expires At
-      type: object
-      required:
-      - format
-      - download_url
-      - expires_at
-      title: V2JobResults
     V2JobStatusResponse:
       properties:
         job_id:
@@ -157,61 +133,27 @@ components:
       - input
       - timing
       title: V2JobStatusResponse
-    PartnerJobStatus:
-      type: string
-      enum:
-      - queued
-      - running
-      - succeeded
-      - failed
-      - cancelled
-      - expired
-      title: PartnerJobStatus
-      description: An enumeration.
-    V2JobTiming:
+    ValidationError:
       properties:
-        created_at:
-          type: string
-          format: date-time
-          title: Created At
-        started_at:
-          type: string
-          format: date-time
-          title: Started At
-        finished_at:
-          type: string
-          format: date-time
-          title: Finished At
-      type: object
-      title: V2JobTiming
-    V2JobCreditUsage:
-      properties:
-        total_credits:
-          type: integer
-          title: Total Credits
-        total_results:
-          type: integer
-          title: Total Results
-      type: object
-      required:
-      - total_credits
-      - total_results
-      title: V2JobCreditUsage
-    V2JobsResponse:
-      properties:
-        jobs:
+        loc:
           items:
-            $ref: '#/components/schemas/V2JobListItem'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Jobs
-        total:
-          type: integer
-          title: Total
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - jobs
-      - total
-      title: V2JobsResponse
+      - loc
+      - msg
+      - type
+      title: ValidationError
     V2JobInput:
       properties:
         list_id:
@@ -225,6 +167,39 @@ components:
           title: Entity Type
       type: object
       title: V2JobInput
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    V2JobResults:
+      properties:
+        format:
+          type: string
+          enum:
+          - csv
+          title: Format
+        download_url:
+          type: string
+          title: Download Url
+        expires_at:
+          type: string
+          format: date-time
+          title: Expires At
+        file_expires_at:
+          type: string
+          format: date-time
+          title: File Expires At
+      type: object
+      required:
+      - format
+      - download_url
+      - expires_at
+      title: V2JobResults
     V2JobListItem:
       properties:
         job_id:
@@ -253,36 +228,61 @@ components:
       - job_type
       - status
       title: V2JobListItem
-    HTTPValidationError:
+    PartnerJobStatus:
+      type: string
+      enum:
+      - queued
+      - running
+      - succeeded
+      - failed
+      - cancelled
+      - expired
+      title: PartnerJobStatus
+      description: An enumeration.
+    V2JobsResponse:
       properties:
-        detail:
+        jobs:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            $ref: '#/components/schemas/V2JobListItem'
           type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Jobs
+        total:
+          type: integer
+          title: Total
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - jobs
+      - total
+      title: V2JobsResponse
+    V2JobCreditUsage:
+      properties:
+        total_credits:
+          type: integer
+          title: Total Credits
+        total_results:
+          type: integer
+          title: Total Results
+      type: object
+      required:
+      - total_credits
+      - total_results
+      title: V2JobCreditUsage
+    V2JobTiming:
+      properties:
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        started_at:
+          type: string
+          format: date-time
+          title: Started At
+        finished_at:
+          type: string
+          format: date-time
+          title: Finished At
+      type: object
+      title: V2JobTiming
   securitySchemes:
     APIKeyHeader:
       type: apiKey

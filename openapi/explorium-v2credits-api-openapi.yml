@@ -60,6 +60,27 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
     ResponseContext:
       properties:
         correlation_id:
@@ -76,29 +97,6 @@ components:
       - request_status
       - time_took_in_seconds
       title: ResponseContext
-    ActiveCreditSummaryWithAccountTypeResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        allocated_credits:
-          type: integer
-          title: Allocated Credits
-          description: Number of allocated credits
-        remaining_credits:
-          type: integer
-          title: Remaining Credits
-          description: Number of remaining credits
-        account_type:
-          allOf:
-          - $ref: '#/components/schemas/AccountType'
-          description: Type of the last package assigned to the account. trial means no purchase was made; paid means the user purchased a package.
-      type: object
-      required:
-      - response_context
-      - allocated_credits
-      - remaining_credits
-      title: ActiveCreditSummaryWithAccountTypeResponse
-      description: This is base response model for all responses in partner service.
     CreditAggregationResponse:
       properties:
         response_context:
@@ -211,27 +209,6 @@ components:
       - to_date
       - mode
       title: CreditAggregationRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
     AccountType:
       type: string
       enum:
@@ -239,6 +216,29 @@ components:
       - paid
       title: AccountType
       description: An enumeration.
+    ActiveCreditSummaryWithAccountTypeResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        allocated_credits:
+          type: integer
+          title: Allocated Credits
+          description: Number of allocated credits
+        remaining_credits:
+          type: integer
+          title: Remaining Credits
+          description: Number of remaining credits
+        account_type:
+          allOf:
+          - $ref: '#/components/schemas/AccountType'
+          description: Type of the last package assigned to the account. trial means no purchase was made; paid means the user purchased a package.
+      type: object
+      required:
+      - response_context
+      - allocated_credits
+      - remaining_credits
+      title: ActiveCreditSummaryWithAccountTypeResponse
+      description: This is base response model for all responses in partner service.
   securitySchemes:
     APIKeyHeader:
       type: apiKey
