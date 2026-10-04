@@ -86,62 +86,25 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    BusinessesEnrichRequest:
+    CustomEnrichmentEnrichResponse:
       properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        parameters:
-          type: object
-          title: Parameters
-          nullable: true
-        business_id:
-          type: string
-          pattern: ^[a-f0-9]{32}$
-          title: Business Id
-      additionalProperties: false
-      type: object
-      required:
-      - business_id
-      title: BusinessesEnrichRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    CustomEnrichmentResponseRow:
-      properties:
-        business_id:
-          type: string
-          pattern: ^[a-f0-9]{32}$
-          title: Business Id
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
         data:
-          type: object
+          items:
+            $ref: '#/components/schemas/CustomEnrichmentResponseRow'
+          type: array
           title: Data
-          description: The enriched data from the custom enrichment
+        total_results:
+          type: integer
+          title: Total Results
       type: object
       required:
-      - business_id
+      - response_context
       - data
-      title: CustomEnrichmentResponseRow
+      - total_results
+      title: CustomEnrichmentEnrichResponse
+      description: Response model for enriched data from a custom enrichment.
     ResponseContext:
       properties:
         correlation_id:
@@ -158,6 +121,21 @@ components:
       - request_status
       - time_took_in_seconds
       title: ResponseContext
+    CustomEnrichmentResponseRow:
+      properties:
+        business_id:
+          type: string
+          pattern: ^[a-f0-9]{32}$
+          title: Business Id
+        data:
+          type: object
+          title: Data
+          description: The enriched data from the custom enrichment
+      type: object
+      required:
+      - business_id
+      - data
+      title: CustomEnrichmentResponseRow
     RequestStatus:
       type: string
       enum:
@@ -190,6 +168,26 @@ components:
       required:
       - business_ids
       title: BusinessesBulkEnrichRequest
+    BusinessesEnrichRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        parameters:
+          type: object
+          title: Parameters
+          nullable: true
+        business_id:
+          type: string
+          pattern: ^[a-f0-9]{32}$
+          title: Business Id
+      additionalProperties: false
+      type: object
+      required:
+      - business_id
+      title: BusinessesEnrichRequest
     HTTPValidationError:
       properties:
         detail:
@@ -199,25 +197,27 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    CustomEnrichmentEnrichResponse:
+    ValidationError:
       properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        data:
+        loc:
           items:
-            $ref: '#/components/schemas/CustomEnrichmentResponseRow'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Data
-        total_results:
-          type: integer
-          title: Total Results
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - response_context
-      - data
-      - total_results
-      title: CustomEnrichmentEnrichResponse
-      description: Response model for enriched data from a custom enrichment.
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

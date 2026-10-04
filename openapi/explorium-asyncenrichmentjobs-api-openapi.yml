@@ -626,23 +626,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    LinkedInPostsEnrichmentParams:
-      properties: {}
-      additionalProperties: false
-      type: object
-      title: LinkedInPostsEnrichmentParams
-    AsyncBusinessesLookalikesJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-      type: object
-      required:
-      - list_id
-      title: AsyncBusinessesLookalikesJobSubmitRequest
     AsyncBusinessesPcStrategy10KJobSubmitRequest:
       properties:
         list_id:
@@ -655,38 +638,26 @@ components:
       required:
       - list_id
       title: AsyncBusinessesPcStrategy10KJobSubmitRequest
-    FinancialIndicatorsEnrichmentParams:
-      properties:
-        date:
-          type: string
-          format: date-time
-          title: Date
+    LinkedInPostsEnrichmentParams:
+      properties: {}
       additionalProperties: false
       type: object
-      required:
-      - date
-      title: FinancialIndicatorsEnrichmentParams
-    ValidationError:
+      title: LinkedInPostsEnrichmentParams
+    V2AsyncResearchJobSubmitRequest:
       properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
+        list_id:
           type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/GenAIResearchParams'
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - list_id
+      - parameters
+      title: V2AsyncResearchJobSubmitRequest
     AsyncBusinessesWebsiteChangesJobSubmitRequest:
       properties:
         list_id:
@@ -699,6 +670,84 @@ components:
       required:
       - list_id
       title: AsyncBusinessesWebsiteChangesJobSubmitRequest
+    WebsiteTrafficEnrichmentParams:
+      properties:
+        month_period:
+          type: string
+          title: Month Period
+          description: The month period of the website. YYYY-MM
+      additionalProperties: false
+      type: object
+      required:
+      - month_period
+      title: WebsiteTrafficEnrichmentParams
+    AsyncBusinessesWebstackJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesWebstackJobSubmitRequest
+    AsyncBusinessesFundingAndAcquisitionJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesFundingAndAcquisitionJobSubmitRequest
+    FinancialIndicatorsEnrichmentParams:
+      properties:
+        date:
+          type: string
+          format: date-time
+          title: Date
+      additionalProperties: false
+      type: object
+      required:
+      - date
+      title: FinancialIndicatorsEnrichmentParams
+    AsyncBusinessesBomboraIntentJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/BomboraIntentEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesBomboraIntentJobSubmitRequest
+    AsyncBusinessesPcBusinessChallenges10KJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesPcBusinessChallenges10KJobSubmitRequest
+    V2AsyncJobNotifications:
+      properties:
+        email:
+          $ref: '#/components/schemas/V2AsyncJobEmailNotifications'
+      type: object
+      title: V2AsyncJobNotifications
     AsyncBusinessesFinancialIndicatorsJobSubmitRequest:
       properties:
         list_id:
@@ -713,7 +762,85 @@ components:
       required:
       - list_id
       title: AsyncBusinessesFinancialIndicatorsJobSubmitRequest
-    AsyncBusinessesPcBusinessChallenges10KJobSubmitRequest:
+    V2AsyncEnrichmentJobSubmitResponse:
+      properties:
+        job_id:
+          type: string
+          title: Job Id
+        status:
+          type: string
+          title: Status
+        status_url:
+          type: string
+          title: Status Url
+      type: object
+      required:
+      - job_id
+      - status
+      - status_url
+      title: V2AsyncEnrichmentJobSubmitResponse
+    AsyncBusinessesLinkedinPostsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/LinkedInPostsEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesLinkedinPostsJobSubmitRequest
+    ContactWaterfall:
+      type: string
+      enum:
+      - explorium_only
+      - full
+      title: ContactWaterfall
+      description: An enumeration.
+    GenAIResearchParams:
+      properties:
+        output_schema:
+          type: object
+          title: Output Schema
+        query:
+          type: string
+          title: Query
+        prompt_template:
+          type: string
+          title: Prompt Template
+      additionalProperties: false
+      type: object
+      title: GenAIResearchParams
+    CompanyWebsiteKeywordsEnrichmentParams:
+      properties:
+        keywords:
+          items:
+            type: string
+          type: array
+          title: Keywords
+      additionalProperties: false
+      type: object
+      required:
+      - keywords
+      title: CompanyWebsiteKeywordsEnrichmentParams
+    AsyncProspectsLinkedinPostsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/LinkedInPostsEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      title: AsyncProspectsLinkedinPostsJobSubmitRequest
+    AsyncBusinessesLookalikesJobSubmitRequest:
       properties:
         list_id:
           type: string
@@ -724,7 +851,108 @@ components:
       type: object
       required:
       - list_id
-      title: AsyncBusinessesPcBusinessChallenges10KJobSubmitRequest
+      title: AsyncBusinessesLookalikesJobSubmitRequest
+    BomboraIntentEnrichmentParams:
+      properties:
+        topics:
+          items:
+            type: string
+          type: array
+          title: Topics
+        min_score:
+          type: integer
+          title: Min Score
+      additionalProperties: false
+      type: object
+      title: BomboraIntentEnrichmentParams
+    AsyncBusinessesWorkforceTrendsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesWorkforceTrendsJobSubmitRequest
+    V2AsyncJobEmailNotifications:
+      properties:
+        enabled:
+          type: boolean
+          title: Enabled
+          default: false
+        'on':
+          items:
+            type: string
+            enum:
+            - success
+            - failure
+          type: array
+          title: 'On'
+      type: object
+      title: V2AsyncJobEmailNotifications
+    AsyncBusinessesCompanyRatingsByEmployeesJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesCompanyRatingsByEmployeesJobSubmitRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    AsyncBusinessesFirmographicsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesFirmographicsJobSubmitRequest
+    AsyncBusinessesCompanyWebsiteKeywordsJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+        parameters:
+          $ref: '#/components/schemas/CompanyWebsiteKeywordsEnrichmentParams'
+      type: object
+      required:
+      - list_id
+      - parameters
+      title: AsyncBusinessesCompanyWebsiteKeywordsJobSubmitRequest
+    AsyncBusinessesCompanyHierarchiesJobSubmitRequest:
+      properties:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncBusinessesCompanyHierarchiesJobSubmitRequest
     AsyncProspectsContactInformationJobSubmitRequest:
       properties:
         list_id:
@@ -753,18 +981,6 @@ components:
       required:
       - list_id
       title: AsyncBusinessesWebsiteTrafficJobSubmitRequest
-    AsyncBusinessesCompanyHierarchiesJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-      type: object
-      required:
-      - list_id
-      title: AsyncBusinessesCompanyHierarchiesJobSubmitRequest
     AsyncBusinessesPcCompetitiveLandscape10KJobSubmitRequest:
       properties:
         list_id:
@@ -777,46 +993,7 @@ components:
       required:
       - list_id
       title: AsyncBusinessesPcCompetitiveLandscape10KJobSubmitRequest
-    BomboraIntentEnrichmentParams:
-      properties:
-        topics:
-          items:
-            type: string
-          type: array
-          title: Topics
-        min_score:
-          type: integer
-          title: Min Score
-      additionalProperties: false
-      type: object
-      title: BomboraIntentEnrichmentParams
-    V2AsyncResearchJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-        parameters:
-          $ref: '#/components/schemas/GenAIResearchParams'
-      type: object
-      required:
-      - list_id
-      - parameters
-      title: V2AsyncResearchJobSubmitRequest
-    WebsiteTrafficEnrichmentParams:
-      properties:
-        month_period:
-          type: string
-          title: Month Period
-          description: The month period of the website. YYYY-MM
-      additionalProperties: false
-      type: object
-      required:
-      - month_period
-      title: WebsiteTrafficEnrichmentParams
-    AsyncBusinessesWorkforceTrendsJobSubmitRequest:
+    AsyncBusinessesTechnographicsJobSubmitRequest:
       properties:
         list_id:
           type: string
@@ -827,118 +1004,7 @@ components:
       type: object
       required:
       - list_id
-      title: AsyncBusinessesWorkforceTrendsJobSubmitRequest
-    ContactWaterfall:
-      type: string
-      enum:
-      - explorium_only
-      - full
-      title: ContactWaterfall
-      description: An enumeration.
-    V2AsyncJobEmailNotifications:
-      properties:
-        enabled:
-          type: boolean
-          title: Enabled
-          default: false
-        'on':
-          items:
-            type: string
-            enum:
-            - success
-            - failure
-          type: array
-          title: 'On'
-      type: object
-      title: V2AsyncJobEmailNotifications
-    V2AsyncJobNotifications:
-      properties:
-        email:
-          $ref: '#/components/schemas/V2AsyncJobEmailNotifications'
-      type: object
-      title: V2AsyncJobNotifications
-    AsyncBusinessesCompanyWebsiteKeywordsJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-        parameters:
-          $ref: '#/components/schemas/CompanyWebsiteKeywordsEnrichmentParams'
-      type: object
-      required:
-      - list_id
-      - parameters
-      title: AsyncBusinessesCompanyWebsiteKeywordsJobSubmitRequest
-    AsyncBusinessesCompanyRatingsByEmployeesJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-      type: object
-      required:
-      - list_id
-      title: AsyncBusinessesCompanyRatingsByEmployeesJobSubmitRequest
-    CompanyWebsiteKeywordsEnrichmentParams:
-      properties:
-        keywords:
-          items:
-            type: string
-          type: array
-          title: Keywords
-      additionalProperties: false
-      type: object
-      required:
-      - keywords
-      title: CompanyWebsiteKeywordsEnrichmentParams
-    V2AsyncEnrichmentJobSubmitResponse:
-      properties:
-        job_id:
-          type: string
-          title: Job Id
-        status:
-          type: string
-          title: Status
-        status_url:
-          type: string
-          title: Status Url
-      type: object
-      required:
-      - job_id
-      - status
-      - status_url
-      title: V2AsyncEnrichmentJobSubmitResponse
-    AsyncProspectsProfilesJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-      type: object
-      required:
-      - list_id
-      title: AsyncProspectsProfilesJobSubmitRequest
-    GenAIResearchParams:
-      properties:
-        output_schema:
-          type: object
-          title: Output Schema
-        query:
-          type: string
-          title: Query
-        prompt_template:
-          type: string
-          title: Prompt Template
-      additionalProperties: false
-      type: object
-      title: GenAIResearchParams
+      title: AsyncBusinessesTechnographicsJobSubmitRequest
     AsyncContactsEnrichmentParams:
       properties:
         contact_types:
@@ -956,105 +1022,39 @@ components:
       additionalProperties: false
       type: object
       title: AsyncContactsEnrichmentParams
-    HTTPValidationError:
+    AsyncProspectsProfilesJobSubmitRequest:
       properties:
-        detail:
+        list_id:
+          type: string
+          title: List Id
+          description: Entity ID list identifier returned by the upload endpoint
+        notifications:
+          $ref: '#/components/schemas/V2AsyncJobNotifications'
+      type: object
+      required:
+      - list_id
+      title: AsyncProspectsProfilesJobSubmitRequest
+    ValidationError:
+      properties:
+        loc:
           items:
-            $ref: '#/components/schemas/ValidationError'
+            anyOf:
+            - type: string
+            - type: integer
           type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    AsyncBusinessesFirmographicsJobSubmitRequest:
-      properties:
-        list_id:
+          title: Location
+        msg:
           type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - list_id
-      title: AsyncBusinessesFirmographicsJobSubmitRequest
-    AsyncBusinessesFundingAndAcquisitionJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-      type: object
-      required:
-      - list_id
-      title: AsyncBusinessesFundingAndAcquisitionJobSubmitRequest
-    AsyncProspectsLinkedinPostsJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-        parameters:
-          $ref: '#/components/schemas/LinkedInPostsEnrichmentParams'
-      type: object
-      required:
-      - list_id
-      title: AsyncProspectsLinkedinPostsJobSubmitRequest
-    AsyncBusinessesBomboraIntentJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-        parameters:
-          $ref: '#/components/schemas/BomboraIntentEnrichmentParams'
-      type: object
-      required:
-      - list_id
-      title: AsyncBusinessesBomboraIntentJobSubmitRequest
-    AsyncBusinessesLinkedinPostsJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-        parameters:
-          $ref: '#/components/schemas/LinkedInPostsEnrichmentParams'
-      type: object
-      required:
-      - list_id
-      title: AsyncBusinessesLinkedinPostsJobSubmitRequest
-    AsyncBusinessesTechnographicsJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-      type: object
-      required:
-      - list_id
-      title: AsyncBusinessesTechnographicsJobSubmitRequest
-    AsyncBusinessesWebstackJobSubmitRequest:
-      properties:
-        list_id:
-          type: string
-          title: List Id
-          description: Entity ID list identifier returned by the upload endpoint
-        notifications:
-          $ref: '#/components/schemas/V2AsyncJobNotifications'
-      type: object
-      required:
-      - list_id
-      title: AsyncBusinessesWebstackJobSubmitRequest
+      - loc
+      - msg
+      - type
+      title: ValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey
