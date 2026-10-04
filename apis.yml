@@ -47,6 +47,10 @@ accessModel:
   generated: '2026-09-03'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/explorium.png
+x-docs-platform: mintlify
+x-docs-platform-confidence: medium
+x-docs-platform-checked: 2026-10-03
+x-docs-hosting: vercel
 tags:
 - Data Enrichment
 - B2B Data
@@ -448,6 +452,9 @@ apis:
   - type: APIReference
     url: https://developers.explorium.ai/reference/quick-starts/introduction
 common:
+- type: CapabilityMap
+  url: capabilities/explorium-capability-edges.yml
+  name: Explorium Business Capability Map
 - type: DomainSecurity
   url: security/explorium-domain-security.yml
 - type: AgenticAccess
