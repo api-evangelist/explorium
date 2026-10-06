@@ -86,7 +86,7 @@ tags_raw:
 - Market Intelligence
 - A2A
 created: '2026-07-11'
-modified: '2026-08-14'
+modified: '2026-10-06'
 specificationVersion: '0.23'
 apis:
 - aid: explorium:explorium-agentsource-mcp-server
@@ -452,6 +452,10 @@ apis:
   - type: APIReference
     url: https://developers.explorium.ai/reference/quick-starts/introduction
 common:
+- url: https://www.explorium.ai/blog/news-and-updates/
+  type: Blog
+- url: https://www.explorium.ai/blog/category/news-and-updates/feed/
+  type: BlogRSS
 - type: CapabilityMap
   url: capabilities/explorium-capability-edges.yml
   name: Explorium Business Capability Map
