@@ -1,9 +1,9 @@
-generated: '2026-08-14'
+generated: '2026-09-23'
 method: generated
 source: openapi/explorium-asyncenrichmentjobs-api-openapi.yml, openapi/explorium-asyncjobs-api-openapi.yml,
   openapi/explorium-bulkbusinessenrichments-api-openapi.yml, openapi/explorium-businessenrichments-api-openapi.yml,
   openapi/explorium-businesses-api-openapi.yml, openapi/explorium-credits-api-openapi.yml, openapi/explorium-customenrichments-api-openapi.yml,
-  openapi/explorium-entityiddatasets-api-openapi.yml, openapi/explorium-healthcheck-api-openapi.yml,
+  openapi/explorium-entityiddatasets-api-openapi.yml, openapi/explorium-health-check-api-openapi.yml,
   openapi/explorium-prospects-api-openapi.yml, openapi/explorium-prospectsbulkenrichments-api-openapi.yml,
   openapi/explorium-prospectsenrichments-api-openapi.yml, openapi/explorium-v2autocomplete-api-openapi.yml,
   openapi/explorium-v2businessenrichments-api-openapi.yml, openapi/explorium-v2businesses-api-openapi.yml,
@@ -16,11 +16,11 @@ description: Recommended x-agentic-access execution contracts, classified heuris
 summary:
   operations: 127
   by_action_class:
-    acting: 113
-    connected: 14
+    acting: 102
+    connected: 25
   by_consequence:
-    write: 113
-    read: 14
+    write: 102
+    read: 25
   human_in_the_loop_required: 0
 operations:
 - path: /v2/businesses/bombora_intent/job
@@ -975,34 +975,22 @@ operations:
   method: post
   operationId: fetch_businesses
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/businesses/events
   method: post
   operationId: fetch_businesses_events
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/businesses/autocomplete
   method: get
   operationId: businesses_autocomplete
@@ -1017,18 +1005,12 @@ operations:
   method: post
   operationId: fetch_stats
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/businesses/events/enrollments
   method: get
   operationId: get_businesses_enrollments
@@ -1111,18 +1093,12 @@ operations:
   method: post
   operationId: get_credit_aggregation
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/custom_enrichments/{custom_enrichment_id}/enrich
   method: post
   operationId: enrich_with_custom_enrichment
@@ -1211,18 +1187,12 @@ operations:
   method: post
   operationId: fetch_prospects
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/prospects/stats
   method: post
   operationId: prospect_fetch_stats
@@ -1243,18 +1213,12 @@ operations:
   method: post
   operationId: fetch_prospects_events
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v1/prospects/autocomplete
   method: get
   operationId: prospects_autocomplete
@@ -1721,34 +1685,22 @@ operations:
   method: post
   operationId: v2_businesses_fetch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v2/businesses/stats
   method: post
   operationId: v2_businesses_stats
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v2/credits
   method: get
   operationId: v2_credits_get
@@ -1763,18 +1715,12 @@ operations:
   method: post
   operationId: v2_credits_aggregation
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v2/prospects/contact_information/enrich
   method: post
   operationId: v2_prospects_contact_information_enrich
@@ -1843,34 +1789,22 @@ operations:
   method: post
   operationId: v2_prospects_fetch
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v2/prospects/stats
   method: post
   operationId: v2_prospects_stats
   x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
+    action-class: connected
+    consequence: read
+    subject: optional
     token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
+      max-ttl: 3600
+    audit: none
 - path: /v2/businesses/research/enrich
   method: post
   operationId: v2_businesses_research_enrich
