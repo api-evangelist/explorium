@@ -67,7 +67,7 @@
     app_slug: explorium-agentsource-ca2244
     beta: false
     builder: unknown (not in the directory record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: explorium-n8n
   label: n8n
@@ -94,7 +94,7 @@
     published: '2025-12-31T14:44:17.634Z'
     matched_on: publisher-email
     builder: provider (package published from the provider's own domain)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: explorium-pipedream
   label: Pipedream
@@ -120,5 +120,5 @@
     actions: true
     sources: true
     builder: Pipedream repo (component)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
