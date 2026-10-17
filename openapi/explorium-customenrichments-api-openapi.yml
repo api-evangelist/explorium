@@ -86,25 +86,6 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    CustomEnrichmentEnrichResponse:
-      properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        data:
-          items:
-            $ref: '#/components/schemas/CustomEnrichmentResponseRow'
-          type: array
-          title: Data
-        total_results:
-          type: integer
-          title: Total Results
-      type: object
-      required:
-      - response_context
-      - data
-      - total_results
-      title: CustomEnrichmentEnrichResponse
-      description: Response model for enriched data from a custom enrichment.
     ResponseContext:
       properties:
         correlation_id:
@@ -121,29 +102,27 @@ components:
       - request_status
       - time_took_in_seconds
       title: ResponseContext
-    CustomEnrichmentResponseRow:
+    ValidationError:
       properties:
-        business_id:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
           type: string
-          pattern: ^[a-f0-9]{32}$
-          title: Business Id
-        data:
-          type: object
-          title: Data
-          description: The enriched data from the custom enrichment
+          title: Message
+        type:
+          type: string
+          title: Error Type
       type: object
       required:
-      - business_id
-      - data
-      title: CustomEnrichmentResponseRow
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+      - loc
+      - msg
+      - type
+      title: ValidationError
     BusinessesBulkEnrichRequest:
       properties:
         request_context:
@@ -197,27 +176,48 @@ components:
           title: Detail
       type: object
       title: HTTPValidationError
-    ValidationError:
+    CustomEnrichmentEnrichResponse:
       properties:
-        loc:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        data:
           items:
-            anyOf:
-            - type: string
-            - type: integer
+            $ref: '#/components/schemas/CustomEnrichmentResponseRow'
           type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
+          title: Data
+        total_results:
+          type: integer
+          title: Total Results
       type: object
       required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
+      - response_context
+      - data
+      - total_results
+      title: CustomEnrichmentEnrichResponse
+      description: Response model for enriched data from a custom enrichment.
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    CustomEnrichmentResponseRow:
+      properties:
+        business_id:
+          type: string
+          pattern: ^[a-f0-9]{32}$
+          title: Business Id
+        data:
+          type: object
+          title: Data
+          description: The enriched data from the custom enrichment
+      type: object
+      required:
+      - business_id
+      - data
+      title: CustomEnrichmentResponseRow
   securitySchemes:
     APIKeyHeader:
       type: apiKey

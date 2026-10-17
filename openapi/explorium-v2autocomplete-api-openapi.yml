@@ -80,6 +80,15 @@ components:
       - interests
       title: AutocompleteType
       description: Enum for autocomplete types.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     AutoCompleteItem:
       properties:
         query:
@@ -101,15 +110,6 @@ components:
         query: united
         label: United States
         value: us
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
     ValidationError:
       properties:
         loc:
