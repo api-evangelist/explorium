@@ -437,6 +437,34 @@ apis:
     url: https://developers.explorium.ai/
   - type: APIReference
     url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-v2enrollments-api
+  name: Explorium V2Enrollments API
+  description: The V2Enrollments API from Explorium — 4 operation(s) for v2enrollments.
+  humanURL: https://developers.explorium.ai/mcp-docs/agentsource-mcp
+  baseURL: https://mcp.explorium.ai/mcp
+  tags:
+  - V2Enrollments
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-v2enrollments-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
+- aid: explorium:explorium-v2webhooks-api
+  name: Explorium V2Webhooks API
+  description: The V2Webhooks API from Explorium — 4 operation(s) for v2webhooks.
+  humanURL: https://developers.explorium.ai/mcp-docs/agentsource-mcp
+  baseURL: https://mcp.explorium.ai/mcp
+  tags:
+  - V2Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/explorium-v2webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://developers.explorium.ai/
+  - type: APIReference
+    url: https://developers.explorium.ai/reference/quick-starts/introduction
 - aid: explorium:explorium-health-check-api
   name: Explorium Health Check API
   description: The Health Check API from Explorium — 2 operation(s) for health check.

@@ -1,0 +1,662 @@
+openapi: 3.2.0
+info:
+  title: Partner Service V2Webhooks API
+  version: 0.3.69
+servers:
+- url: https://api.explorium.ai
+  description: AgentSource Server
+tags:
+- name: V2Webhooks
+paths:
+  /v2/webhooks:
+    get:
+      tags:
+      - V2Webhooks
+      summary: List Webhooks
+      operationId: list_webhooks
+      parameters:
+      - required: false
+        schema:
+          $ref: '#/components/schemas/WebhookStatus'
+        name: status
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+    post:
+      tags:
+      - V2Webhooks
+      summary: Create
+      operationId: create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookCreateResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/webhooks/{webhook_id}:
+    get:
+      tags:
+      - V2Webhooks
+      summary: Get
+      operationId: get
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Webhook Id
+        name: webhook_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+    delete:
+      tags:
+      - V2Webhooks
+      summary: Delete
+      operationId: delete
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Webhook Id
+        name: webhook_id
+        in: path
+      - required: false
+        schema:
+          type: boolean
+          title: Force
+          default: false
+        name: force
+        in: query
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/partner_service__models__v2__webhooks__WebhookDeleteResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+    patch:
+      tags:
+      - V2Webhooks
+      summary: Patch
+      operationId: patch
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Webhook Id
+        name: webhook_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookPatchRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/webhooks/{webhook_id}/rotate_secret:
+    post:
+      tags:
+      - V2Webhooks
+      summary: Rotate Secret
+      operationId: rotate_secret
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Webhook Id
+        name: webhook_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookRotateSecretResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/webhooks/{webhook_id}/check_connectivity:
+    post:
+      tags:
+      - V2Webhooks
+      summary: Check Connectivity
+      operationId: check_connectivity
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Webhook Id
+        name: webhook_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookConnectivityRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookConnectivityResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    WebhookCreateRequest:
+      properties:
+        headers:
+          items:
+            type: string
+          type: array
+          title: Headers
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        webhook_url:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Webhook Url
+        payload_format:
+          allOf:
+          - $ref: '#/components/schemas/PayloadFormat'
+          default: json
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - webhook_url
+      title: WebhookCreateRequest
+    WebhookCreateResponse:
+      properties:
+        webhook_id:
+          type: string
+          title: Webhook Id
+        scope:
+          $ref: '#/components/schemas/WebhookScope'
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        webhook_url:
+          type: string
+          title: Webhook Url
+        headers:
+          items:
+            type: string
+          type: array
+          title: Headers
+        payload_format:
+          allOf:
+          - $ref: '#/components/schemas/PayloadFormat'
+          default: json
+        status:
+          $ref: '#/components/schemas/WebhookStatus'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        last_modified_time:
+          type: string
+          format: date-time
+          title: Last Modified Time
+        legacy:
+          type: boolean
+          title: Legacy
+          default: false
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
+        webhook_secret:
+          type: string
+          title: Webhook Secret
+      type: object
+      required:
+      - webhook_id
+      - scope
+      - name
+      - webhook_url
+      - status
+      - created_at
+      - last_modified_time
+      - response_context
+      - webhook_secret
+      title: WebhookCreateResponse
+      description: This is base response model for all responses in partner service.
+    WebhookConnectivityRequest:
+      properties:
+        simulation:
+          $ref: '#/components/schemas/V2WebhookSimulation'
+      additionalProperties: false
+      type: object
+      title: WebhookConnectivityRequest
+    WebhookResponse:
+      properties:
+        webhook_id:
+          type: string
+          title: Webhook Id
+        scope:
+          $ref: '#/components/schemas/WebhookScope'
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        webhook_url:
+          type: string
+          title: Webhook Url
+        headers:
+          items:
+            type: string
+          type: array
+          title: Headers
+        payload_format:
+          allOf:
+          - $ref: '#/components/schemas/PayloadFormat'
+          default: json
+        status:
+          $ref: '#/components/schemas/WebhookStatus'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        last_modified_time:
+          type: string
+          format: date-time
+          title: Last Modified Time
+        legacy:
+          type: boolean
+          title: Legacy
+          default: false
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
+      type: object
+      required:
+      - webhook_id
+      - scope
+      - name
+      - webhook_url
+      - status
+      - created_at
+      - last_modified_time
+      - response_context
+      title: WebhookResponse
+      description: This is base response model for all responses in partner service.
+    WebhookListResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
+        webhooks:
+          items:
+            $ref: '#/components/schemas/WebhookResource'
+          type: array
+          title: Webhooks
+      type: object
+      required:
+      - response_context
+      - webhooks
+      title: WebhookListResponse
+      description: This is base response model for all responses in partner service.
+    V2ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_taken_in_seconds:
+          type: number
+          title: Time Taken In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_taken_in_seconds
+      title: V2ResponseContext
+    WebhookConnectivityResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
+      type: object
+      required:
+      - response_context
+      title: WebhookConnectivityResponse
+      description: This is base response model for all responses in partner service.
+    WebhookScopeType:
+      type: string
+      enum:
+      - tenant
+      - organization
+      - partner
+      title: WebhookScopeType
+      description: An enumeration.
+    V2WebhookSimulation:
+      properties:
+        event_name:
+          $ref: '#/components/schemas/EventTypeEnum'
+        number_of_events:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Number Of Events
+        event_time:
+          type: string
+          format: date-time
+          title: Event Time
+      type: object
+      title: V2WebhookSimulation
+    WebhookScope:
+      properties:
+        type:
+          $ref: '#/components/schemas/WebhookScopeType'
+        id:
+          type: string
+          title: Id
+      type: object
+      required:
+      - type
+      - id
+      title: WebhookScope
+    EventTypeEnum:
+      type: string
+      enum:
+      - award
+      - closing_office
+      - company_award
+      - cost_cutting
+      - decrease_in_all_departments
+      - decrease_in_customer_service_department
+      - decrease_in_engineering_department
+      - decrease_in_marketing_department
+      - decrease_in_operations_department
+      - decrease_in_sales_department
+      - executive_joined_company
+      - funding_round
+      - hiring_in_creative_department
+      - hiring_in_education_department
+      - hiring_in_engineering_department
+      - hiring_in_finance_department
+      - hiring_in_health_department
+      - hiring_in_human_resources_department
+      - hiring_in_legal_department
+      - hiring_in_marketing_department
+      - hiring_in_operations_department
+      - hiring_in_professional_service_department
+      - hiring_in_sales_department
+      - hiring_in_support_department
+      - hiring_in_trade_department
+      - hiring_in_unknown_department
+      - increase_in_all_departments
+      - increase_in_customer_service_department
+      - increase_in_engineering_department
+      - increase_in_marketing_department
+      - increase_in_operations_department
+      - increase_in_sales_department
+      - ipo_announcement
+      - lawsuits_and_legal_issues
+      - merger_and_acquisitions
+      - new_funding_round
+      - new_investment
+      - new_office
+      - new_partnership
+      - new_product
+      - outages_and_security_breaches
+      - prospect_changed_company
+      - prospect_changed_role
+      - prospect_job_start_anniversary
+      title: EventTypeEnum
+      description: An enumeration.
+    WebhookResource:
+      properties:
+        webhook_id:
+          type: string
+          title: Webhook Id
+        scope:
+          $ref: '#/components/schemas/WebhookScope'
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        webhook_url:
+          type: string
+          title: Webhook Url
+        headers:
+          items:
+            type: string
+          type: array
+          title: Headers
+        payload_format:
+          allOf:
+          - $ref: '#/components/schemas/PayloadFormat'
+          default: json
+        status:
+          $ref: '#/components/schemas/WebhookStatus'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        last_modified_time:
+          type: string
+          format: date-time
+          title: Last Modified Time
+        legacy:
+          type: boolean
+          title: Legacy
+          default: false
+      type: object
+      required:
+      - webhook_id
+      - scope
+      - name
+      - webhook_url
+      - status
+      - created_at
+      - last_modified_time
+      title: WebhookResource
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    WebhookRotateSecretResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
+        webhook_id:
+          type: string
+          title: Webhook Id
+        webhook_secret:
+          type: string
+          title: Webhook Secret
+      type: object
+      required:
+      - response_context
+      - webhook_id
+      - webhook_secret
+      title: WebhookRotateSecretResponse
+      description: This is base response model for all responses in partner service.
+    WebhookStatus:
+      type: string
+      enum:
+      - active
+      - disabled
+      title: WebhookStatus
+      description: An enumeration.
+    partner_service__models__v2__webhooks__WebhookDeleteResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
+        affected_enrollment_ids:
+          items:
+            type: string
+          type: array
+          title: Affected Enrollment Ids
+      type: object
+      required:
+      - response_context
+      title: WebhookDeleteResponse
+      description: This is base response model for all responses in partner service.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PayloadFormat:
+      type: string
+      enum:
+      - json
+      - stringified_json
+      title: PayloadFormat
+      description: An enumeration.
+    WebhookPatchRequest:
+      properties:
+        headers:
+          items:
+            type: string
+          type: array
+          title: Headers
+        name:
+          type: string
+          title: Name
+        description:
+          type: string
+          title: Description
+        webhook_url:
+          type: string
+          maxLength: 65536
+          minLength: 1
+          format: uri
+          title: Webhook Url
+        payload_format:
+          $ref: '#/components/schemas/PayloadFormat'
+        status:
+          $ref: '#/components/schemas/WebhookStatus'
+      additionalProperties: false
+      type: object
+      title: WebhookPatchRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: api_key

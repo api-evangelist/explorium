@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   title: Partner Service Version API
-  version: 0.3.19
+  version: 0.3.69
 servers:
 - url: https://api.explorium.ai
   description: AgentSource Server

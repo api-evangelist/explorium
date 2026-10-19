@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   title: Partner Service V2Credits API
-  version: 0.3.19
+  version: 0.3.69
 servers:
 - url: https://api.explorium.ai
   description: AgentSource Server
@@ -20,7 +20,64 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ActiveCreditSummaryWithAccountTypeResponse'
+                $ref: '#/components/schemas/V2ActiveCreditSummaryWithAccountTypeResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/credits/locks:
+    post:
+      tags:
+      - V2Credits
+      summary: Create Credit Lock
+      operationId: v2_credits_lock_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2CreditLockRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditLockResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/credits/locks/{credit_lock_id}/settle:
+    post:
+      tags:
+      - V2Credits
+      summary: Settle Credit Lock
+      operationId: v2_credits_lock_settle
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Credit Lock Id
+        name: credit_lock_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditLockResponse'
         '422':
           description: Validation Error
           content:
@@ -48,7 +105,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/CreditAggregationResponse'
+                $ref: '#/components/schemas/V2CreditAggregationResponse'
         '422':
           description: Validation Error
           content:
@@ -60,22 +117,14 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    ResponseContext:
-      properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
-      type: object
-      required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
     AccountType:
       type: string
       enum:
@@ -83,36 +132,181 @@ components:
       - paid
       title: AccountType
       description: An enumeration.
-    ActiveCreditSummaryWithAccountTypeResponse:
+    ValidationError:
       properties:
-        response_context:
-          $ref: '#/components/schemas/ResponseContext'
-        allocated_credits:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    V2ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_taken_in_seconds:
+          type: number
+          title: Time Taken In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_taken_in_seconds
+      title: V2ResponseContext
+    CreditServiceEntityType:
+      enum:
+      - business_data
+      - prospect_data
+      - business_event_data
+      - prospect_event_data
+      - custom_signals_data
+      - business_data_free_first_visit
+      - prospect_data_free_first_visit
+      title: CreditServiceEntityType
+      description: An enumeration.
+    CreditLockResponse:
+      properties:
+        credit_lock_id:
+          type: string
+          title: Credit Lock Id
+        status:
+          type: string
+          title: Status
+        credit_cost:
           type: integer
-          title: Allocated Credits
-          description: Number of allocated credits
+          title: Credit Cost
+        credit_costs:
+          additionalProperties:
+            type: integer
+          type: object
+          title: Credit Costs
+        locked_credits:
+          type: integer
+          title: Locked Credits
+        consumed_credits:
+          type: integer
+          title: Consumed Credits
+        released_credits:
+          type: integer
+          title: Released Credits
         remaining_credits:
           type: integer
           title: Remaining Credits
-          description: Number of remaining credits
-        account_type:
-          allOf:
-          - $ref: '#/components/schemas/AccountType'
-          description: Type of the last package assigned to the account. trial means no purchase was made; paid means the user purchased a package.
+        expires_at:
+          type: string
+          format: date-time
+          title: Expires At
       type: object
       required:
-      - response_context
-      - allocated_credits
-      - remaining_credits
-      title: ActiveCreditSummaryWithAccountTypeResponse
-      description: This is base response model for all responses in partner service.
+      - credit_lock_id
+      - status
+      - locked_credits
+      title: CreditLockResponse
+    V2CreditLockRequest:
+      properties:
+        entity_type:
+          $ref: '#/components/schemas/CreditServiceEntityType'
+        operation_types:
+          items:
+            $ref: '#/components/schemas/CreditServiceOperationType'
+          type: array
+          minItems: 1
+        entities_amount:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Entities Amount
+        endpoint_name:
+          type: string
+          title: Endpoint Name
+        ttl_hours:
+          type: integer
+          exclusiveMinimum: 0.0
+          title: Ttl Hours
+          default: 72
+      type: object
+      required:
+      - entity_type
+      - operation_types
+      - entities_amount
+      title: V2CreditLockRequest
+    CreditServiceOperationType:
+      enum:
+      - consume_data
+      - business_match
+      - prospect_match
+      - business_enrich_level_1
+      - business_enrich_level_2
+      - business_enrich_level_3
+      - prospect_enrich_level_1
+      - prospect_enrich_level_2
+      - prospect_enrich_level_3
+      - prospect_enrich_bc_email
+      - prospect_enrich_bc_phone
+      - business_full_fetch
+      - business_partial_fetch
+      - prospect_full_fetch
+      - prospect_partial_fetch
+      - business_read_event
+      - prospect_read_event
+      - consume_signal
+      - business_enrich_free_first_visit
+      - prospect_enrich_free_first_visit
+      - business_full_fetch_premium
+      - prospect_full_fetch_premium
+      - business_enrich_level_1_sample
+      - business_enrich_level_2_sample
+      - business_enrich_level_3_sample
+      - business_enrich_free_first_visit_sample
+      - prospect_enrich_level_1_sample
+      - prospect_enrich_level_2_sample
+      - prospect_enrich_level_3_sample
+      - prospect_enrich_free_first_visit_sample
+      - business_full_fetch_sample
+      - prospect_full_fetch_sample
+      - business_full_fetch_premium_sample
+      - prospect_full_fetch_premium_sample
+      - business_stats
+      - prospect_stats
+      - autocomplete
+      - mcp_business_match_sample
+      - mcp_prospect_match_sample
+      - mcp_business_read_event_sample
+      - mcp_prospect_read_event_sample
+      - mcp_business_push_event_sample
+      - mcp_prospect_push_event_sample
+      - mcp_business_stats_sample
+      - mcp_prospect_stats_sample
+      - mcp_business_fixed_sample
+      - mcp_prospect_fixed_sample
+      - lock_credits
+      - settle_credit_lock
+      - release_credit_lock
+      - expire_credit_lock
+      title: CreditServiceOperationType
+      description: An enumeration.
     CreditAggregationRequest:
       properties:
         request_context:
           type: object
           title: Request Context
-          marked_for_null_replacement: true
           nullable: true
+          marked_for_null_replacement: true
         from_date:
           type: string
           title: From Date
@@ -152,40 +346,33 @@ components:
       - to_date
       - mode
       title: CreditAggregationRequest
-    ValidationError:
-      properties:
-        loc:
-          items:
-            anyOf:
-            - type: string
-            - type: integer
-          type: array
-          title: Location
-        msg:
-          type: string
-          title: Message
-        type:
-          type: string
-          title: Error Type
-      type: object
-      required:
-      - loc
-      - msg
-      - type
-      title: ValidationError
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    CreditAggregationResponse:
+    V2ActiveCreditSummaryWithAccountTypeResponse:
       properties:
         response_context:
-          $ref: '#/components/schemas/ResponseContext'
+          $ref: '#/components/schemas/V2ResponseContext'
+        allocated_credits:
+          type: integer
+          title: Allocated Credits
+          description: Number of allocated credits
+        remaining_credits:
+          type: integer
+          title: Remaining Credits
+          description: Number of remaining credits
+        account_type:
+          allOf:
+          - $ref: '#/components/schemas/AccountType'
+          description: Type of the last package assigned to the account. trial means no purchase was made; paid means the user purchased a package.
+      type: object
+      required:
+      - response_context
+      - allocated_credits
+      - remaining_credits
+      title: V2ActiveCreditSummaryWithAccountTypeResponse
+      description: This is base response model for all responses in partner service.
+    V2CreditAggregationResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
         from_date:
           type: string
           title: From Date
@@ -229,16 +416,17 @@ components:
       - timezone
       - total_credits
       - aggregations
-      title: CreditAggregationResponse
+      title: V2CreditAggregationResponse
       description: This is base response model for all responses in partner service.
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

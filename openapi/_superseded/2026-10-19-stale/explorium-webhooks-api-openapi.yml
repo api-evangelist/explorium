@@ -1,0 +1,394 @@
+openapi: 3.2.0
+info:
+  title: Partner Service Webhooks API
+  version: 0.3.19
+servers:
+- url: https://api.explorium.ai
+  description: AgentSource Server
+tags:
+- name: Webhooks
+paths:
+  /v1/webhooks:
+    post:
+      tags:
+      - Webhooks
+      summary: Add Webhook
+      description: Add a webhook for events enrollments.
+      operationId: add_webhook
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookAddRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookAddResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v1/webhooks/{partner_id}:
+    get:
+      tags:
+      - Webhooks
+      summary: Get Webhook
+      description: Get an events enrollments webhook by partner_id.
+      operationId: get_webhook
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Partner Id
+        name: partner_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookGetResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+    delete:
+      tags:
+      - Webhooks
+      summary: Delete Webhook
+      description: Delete an events enrollments webhook by partner_id.
+      operationId: delete_webhook
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Partner Id
+        name: partner_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookDeleteResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v1/webhooks/check_connectivity:
+    post:
+      tags:
+      - Webhooks
+      summary: Check Webhook Connectivity
+      operationId: check_webhook_connectivity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WebhookCheckConnectivityRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookCheckConnectivityResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
+    WebhookGetResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        last_modified_time:
+          type: string
+          format: date-time
+          title: Last Modified Time
+        webhook_url:
+          type: string
+          title: Webhook Url
+        webhook_secret:
+          type: string
+          title: Webhook Secret
+        headers:
+          items:
+            type: string
+          type: array
+          title: Headers
+        payload_format:
+          allOf:
+          - $ref: '#/components/schemas/PayloadFormat'
+          default: json
+      type: object
+      required:
+      - response_context
+      - created_at
+      - last_modified_time
+      - webhook_url
+      - webhook_secret
+      title: WebhookGetResponse
+      description: This is base response model for all responses in partner service.
+    WebhookAddResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+        created_at:
+          type: string
+          format: date-time
+          title: Created At
+        last_modified_time:
+          type: string
+          format: date-time
+          title: Last Modified Time
+        webhook_url:
+          type: string
+          title: Webhook Url
+        webhook_secret:
+          type: string
+          title: Webhook Secret
+        headers:
+          items:
+            type: string
+          type: array
+          title: Headers
+        payload_format:
+          allOf:
+          - $ref: '#/components/schemas/PayloadFormat'
+          default: json
+      type: object
+      required:
+      - response_context
+      - created_at
+      - last_modified_time
+      - webhook_url
+      - webhook_secret
+      title: WebhookAddResponse
+      description: This is base response model for all responses in partner service.
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    PayloadFormat:
+      type: string
+      enum:
+      - json
+      - stringified_json
+      title: PayloadFormat
+      description: An enumeration.
+    WebhookCheckConnectivityRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        partner_id:
+          type: string
+          title: Partner Id
+        simulation:
+          $ref: '#/components/schemas/WebhookSimulation'
+      additionalProperties: false
+      type: object
+      required:
+      - partner_id
+      title: WebhookCheckConnectivityRequest
+    WebhookAddRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          marked_for_null_replacement: true
+          nullable: true
+        partner_id:
+          type: string
+          title: Partner Id
+        webhook_url:
+          type: string
+          title: Webhook Url
+        headers:
+          items:
+            type: string
+          type: array
+          title: Headers
+        payload_format:
+          allOf:
+          - $ref: '#/components/schemas/PayloadFormat'
+          default: json
+      additionalProperties: false
+      type: object
+      required:
+      - partner_id
+      - webhook_url
+      title: WebhookAddRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+    WebhookSimulation:
+      properties:
+        event_name:
+          $ref: '#/components/schemas/WebhookSimulationEventType'
+        number_of_events:
+          type: integer
+          maximum: 10.0
+          minimum: 1.0
+          title: Number Of Events
+          description: Number of events to generate in simulation (between 1 and 10)
+        event_time:
+          type: string
+          format: date-time
+          title: Event Time
+      type: object
+      title: WebhookSimulation
+    WebhookSimulationEventType:
+      type: string
+      enum:
+      - award
+      - closing_office
+      - company_award
+      - cost_cutting
+      - decrease_in_all_departments
+      - decrease_in_customer_service_department
+      - decrease_in_engineering_department
+      - decrease_in_marketing_department
+      - decrease_in_operations_department
+      - decrease_in_sales_department
+      - employee_joined_company
+      - funding_round
+      - hiring_in_creative_department
+      - hiring_in_education_department
+      - hiring_in_engineering_department
+      - hiring_in_finance_department
+      - hiring_in_health_department
+      - hiring_in_human_resources_department
+      - hiring_in_legal_department
+      - hiring_in_marketing_department
+      - hiring_in_operations_department
+      - hiring_in_professional_service_department
+      - hiring_in_sales_department
+      - hiring_in_support_department
+      - hiring_in_trade_department
+      - hiring_in_unknown_department
+      - increase_in_all_departments
+      - increase_in_customer_service_department
+      - increase_in_engineering_department
+      - increase_in_marketing_department
+      - increase_in_operations_department
+      - increase_in_sales_department
+      - ipo_announcement
+      - lawsuits_and_legal_issues
+      - merger_and_acquisitions
+      - new_funding_round
+      - new_investment
+      - new_office
+      - new_partnership
+      - new_product
+      - outages_and_security_breaches
+      - prospect_changed_company
+      - prospect_changed_role
+      - prospect_job_start_anniversary
+      title: WebhookSimulationEventType
+      description: The `WebhookSimulationEventType` class is an enumeration that represents various types of events
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    WebhookCheckConnectivityResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+      type: object
+      required:
+      - response_context
+      title: WebhookCheckConnectivityResponse
+      description: This is base response model for all responses in partner service.
+    WebhookDeleteResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/ResponseContext'
+      type: object
+      required:
+      - response_context
+      title: WebhookDeleteResponse
+      description: This is base response model for all responses in partner service.
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: api_key

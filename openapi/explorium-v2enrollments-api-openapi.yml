@@ -1,0 +1,611 @@
+openapi: 3.2.0
+info:
+  title: Partner Service V2Enrollments API
+  version: 0.3.69
+servers:
+- url: https://api.explorium.ai
+  description: AgentSource Server
+tags:
+- name: V2Enrollments
+paths:
+  /v2/businesses/events/enrollments:
+    get:
+      tags:
+      - V2Enrollments
+      summary: List Business Enrollments
+      operationId: list_business_enrollments
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2BusinessEnrollmentListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+    post:
+      tags:
+      - V2Enrollments
+      summary: Create Business Enrollment
+      operationId: create_business_enrollment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2BusinessEnrollmentCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2EnrollmentResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/businesses/events/enrollments/{enrollment_id}:
+    delete:
+      tags:
+      - V2Enrollments
+      summary: Delete Business Enrollment
+      operationId: delete_business_enrollment
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Enrollment Id
+        name: enrollment_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2EnrollmentDeleteResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+    patch:
+      tags:
+      - V2Enrollments
+      summary: Patch Business Enrollment
+      operationId: patch_business_enrollment
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Enrollment Id
+        name: enrollment_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2BusinessEnrollmentPatchRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2EnrollmentResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/prospects/events/enrollments:
+    get:
+      tags:
+      - V2Enrollments
+      summary: List Prospect Enrollments
+      operationId: list_prospect_enrollments
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2ProspectEnrollmentListResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+    post:
+      tags:
+      - V2Enrollments
+      summary: Create Prospect Enrollment
+      operationId: create_prospect_enrollment
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2ProspectEnrollmentCreateRequest'
+        required: true
+      responses:
+        '201':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2EnrollmentResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+  /v2/prospects/events/enrollments/{enrollment_id}:
+    delete:
+      tags:
+      - V2Enrollments
+      summary: Delete Prospect Enrollment
+      operationId: delete_prospect_enrollment
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Enrollment Id
+        name: enrollment_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2EnrollmentDeleteResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+    patch:
+      tags:
+      - V2Enrollments
+      summary: Patch Prospect Enrollment
+      operationId: patch_prospect_enrollment
+      parameters:
+      - required: true
+        schema:
+          type: string
+          title: Enrollment Id
+        name: enrollment_id
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/V2ProspectEnrollmentPatchRequest'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V2EnrollmentResponse'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+      security:
+      - APIKeyHeader: []
+      - APIKeyHeader: []
+components:
+  schemas:
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    V2BusinessEnrollmentCreateRequest:
+      properties:
+        request_context:
+          type: 'null'
+          title: Request Context
+        enrollment_key:
+          type: string
+          minLength: 4
+          title: Enrollment Key
+        webhook_id:
+          type: string
+          title: Webhook Id
+        event_types:
+          items:
+            $ref: '#/components/schemas/EventTypeEnum'
+          type: array
+          maxItems: 1000
+          minItems: 1
+        business_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{32}$
+          type: array
+          maxItems: 1000
+          minItems: 1
+          title: Business Ids
+      additionalProperties: false
+      type: object
+      required:
+      - enrollment_key
+      - webhook_id
+      - event_types
+      - business_ids
+      title: V2BusinessEnrollmentCreateRequest
+    ValidationError:
+      properties:
+        loc:
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+          type: array
+          title: Location
+        msg:
+          type: string
+          title: Message
+        type:
+          type: string
+          title: Error Type
+      type: object
+      required:
+      - loc
+      - msg
+      - type
+      title: ValidationError
+    V2ResponseContext:
+      properties:
+        correlation_id:
+          type: string
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_taken_in_seconds:
+          type: number
+          title: Time Taken In Seconds
+      type: object
+      required:
+      - correlation_id
+      - request_status
+      - time_taken_in_seconds
+      title: V2ResponseContext
+    V2BusinessEnrollment:
+      properties:
+        enrollment_key:
+          type: string
+          minLength: 4
+          title: Enrollment Key
+        enrollment_id:
+          type: string
+          title: Enrollment Id
+        webhook_id:
+          type: string
+          title: Webhook Id
+        status:
+          $ref: '#/components/schemas/EnrollmentStatus'
+        event_types:
+          items:
+            $ref: '#/components/schemas/EventTypeEnum'
+          type: array
+        business_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{32}$
+          type: array
+          title: Business Ids
+      type: object
+      required:
+      - enrollment_key
+      - enrollment_id
+      - webhook_id
+      - status
+      - event_types
+      - business_ids
+      title: V2BusinessEnrollment
+    V2ProspectEnrollmentListResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
+        enrollments:
+          items:
+            $ref: '#/components/schemas/V2ProspectEnrollment'
+          type: array
+          title: Enrollments
+      type: object
+      required:
+      - response_context
+      - enrollments
+      title: V2ProspectEnrollmentListResponse
+      description: This is base response model for all responses in partner service.
+    V2ProspectEnrollmentPatchRequest:
+      properties:
+        request_context:
+          type: 'null'
+          title: Request Context
+        enrollment_key:
+          type: string
+          minLength: 4
+          title: Enrollment Key
+        webhook_id:
+          type: string
+          title: Webhook Id
+        event_types:
+          items:
+            $ref: '#/components/schemas/EventTypeEnum'
+          type: array
+          maxItems: 1000
+          minItems: 1
+        prospect_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{40}$
+          type: array
+          maxItems: 1000
+          minItems: 1
+          title: Prospect Ids
+      additionalProperties: false
+      type: object
+      title: V2ProspectEnrollmentPatchRequest
+    V2EnrollmentResponse:
+      properties:
+        enrollment_key:
+          type: string
+          minLength: 4
+          title: Enrollment Key
+        enrollment_id:
+          type: string
+          title: Enrollment Id
+        webhook_id:
+          type: string
+          title: Webhook Id
+        status:
+          $ref: '#/components/schemas/EnrollmentStatus'
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
+      type: object
+      required:
+      - enrollment_key
+      - enrollment_id
+      - webhook_id
+      - status
+      - response_context
+      title: V2EnrollmentResponse
+      description: This is base response model for all responses in partner service.
+    V2BusinessEnrollmentPatchRequest:
+      properties:
+        request_context:
+          type: 'null'
+          title: Request Context
+        enrollment_key:
+          type: string
+          minLength: 4
+          title: Enrollment Key
+        webhook_id:
+          type: string
+          title: Webhook Id
+        event_types:
+          items:
+            $ref: '#/components/schemas/EventTypeEnum'
+          type: array
+          maxItems: 1000
+          minItems: 1
+        business_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{32}$
+          type: array
+          maxItems: 1000
+          minItems: 1
+          title: Business Ids
+      additionalProperties: false
+      type: object
+      title: V2BusinessEnrollmentPatchRequest
+    V2BusinessEnrollmentListResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
+        enrollments:
+          items:
+            $ref: '#/components/schemas/V2BusinessEnrollment'
+          type: array
+          title: Enrollments
+      type: object
+      required:
+      - response_context
+      - enrollments
+      title: V2BusinessEnrollmentListResponse
+      description: This is base response model for all responses in partner service.
+    EnrollmentStatus:
+      type: string
+      enum:
+      - active
+      - paused
+      title: EnrollmentStatus
+      description: An enumeration.
+    V2ProspectEnrollmentCreateRequest:
+      properties:
+        request_context:
+          type: 'null'
+          title: Request Context
+        enrollment_key:
+          type: string
+          minLength: 4
+          title: Enrollment Key
+        webhook_id:
+          type: string
+          title: Webhook Id
+        event_types:
+          items:
+            $ref: '#/components/schemas/EventTypeEnum'
+          type: array
+          maxItems: 1000
+          minItems: 1
+        prospect_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{40}$
+          type: array
+          maxItems: 1000
+          minItems: 1
+          title: Prospect Ids
+      additionalProperties: false
+      type: object
+      required:
+      - enrollment_key
+      - webhook_id
+      - event_types
+      - prospect_ids
+      title: V2ProspectEnrollmentCreateRequest
+    EventTypeEnum:
+      type: string
+      enum:
+      - award
+      - closing_office
+      - company_award
+      - cost_cutting
+      - decrease_in_all_departments
+      - decrease_in_customer_service_department
+      - decrease_in_engineering_department
+      - decrease_in_marketing_department
+      - decrease_in_operations_department
+      - decrease_in_sales_department
+      - executive_joined_company
+      - funding_round
+      - hiring_in_creative_department
+      - hiring_in_education_department
+      - hiring_in_engineering_department
+      - hiring_in_finance_department
+      - hiring_in_health_department
+      - hiring_in_human_resources_department
+      - hiring_in_legal_department
+      - hiring_in_marketing_department
+      - hiring_in_operations_department
+      - hiring_in_professional_service_department
+      - hiring_in_sales_department
+      - hiring_in_support_department
+      - hiring_in_trade_department
+      - hiring_in_unknown_department
+      - increase_in_all_departments
+      - increase_in_customer_service_department
+      - increase_in_engineering_department
+      - increase_in_marketing_department
+      - increase_in_operations_department
+      - increase_in_sales_department
+      - ipo_announcement
+      - lawsuits_and_legal_issues
+      - merger_and_acquisitions
+      - new_funding_round
+      - new_investment
+      - new_office
+      - new_partnership
+      - new_product
+      - outages_and_security_breaches
+      - prospect_changed_company
+      - prospect_changed_role
+      - prospect_job_start_anniversary
+      title: EventTypeEnum
+      description: An enumeration.
+    V2ProspectEnrollment:
+      properties:
+        enrollment_key:
+          type: string
+          minLength: 4
+          title: Enrollment Key
+        enrollment_id:
+          type: string
+          title: Enrollment Id
+        webhook_id:
+          type: string
+          title: Webhook Id
+        status:
+          $ref: '#/components/schemas/EnrollmentStatus'
+        event_types:
+          items:
+            $ref: '#/components/schemas/EventTypeEnum'
+          type: array
+        prospect_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{40}$
+          type: array
+          title: Prospect Ids
+      type: object
+      required:
+      - enrollment_key
+      - enrollment_id
+      - webhook_id
+      - status
+      - event_types
+      - prospect_ids
+      title: V2ProspectEnrollment
+    V2EnrollmentDeleteResponse:
+      properties:
+        response_context:
+          $ref: '#/components/schemas/V2ResponseContext'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/RequestStatus'
+          default: success
+      type: object
+      required:
+      - response_context
+      title: V2EnrollmentDeleteResponse
+      description: This is base response model for all responses in partner service.
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: api_key

@@ -1,0 +1,30 @@
+openapi: 3.2.0
+info:
+  title: Partner Service Version API
+  version: 0.3.19
+servers:
+- url: https://api.explorium.ai
+  description: AgentSource Server
+tags:
+- name: Version
+paths:
+  /version/:
+    get:
+      tags:
+      - Version
+      summary: Version
+      operationId: version
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                type: string
+                title: Response Version
+components:
+  securitySchemes:
+    APIKeyHeader:
+      type: apiKey
+      in: header
+      name: api_key

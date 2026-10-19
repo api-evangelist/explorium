@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   title: Partner Service Entity ID Datasets API
-  version: 0.3.19
+  version: 0.3.69
 servers:
 - url: https://api.explorium.ai
   description: AgentSource Server
@@ -38,6 +38,35 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
+    Body_v2_entity_id_lists_upload:
+      properties:
+        file:
+          type: string
+          format: binary
+          title: File
+          description: CSV file with entity IDs
+        entity_type:
+          type: string
+          enum:
+          - business
+          - prospect
+          title: Entity Type
+          description: Entity type
+        name:
+          type: string
+          title: Name
+          description: Dataset name
+        description:
+          type: string
+          title: Description
+          description: Dataset description
+      type: object
+      required:
+      - file
+      - entity_type
+      - name
+      - description
+      title: Body_v2_entity_id_lists_upload
     V2EntityIdsUploadResponse:
       properties:
         list_id:
@@ -75,44 +104,6 @@ components:
       - tenantId
       - expiresAt
       title: V2EntityIdsUploadResponse
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
-    Body_v2_entity_id_lists_upload:
-      properties:
-        file:
-          type: string
-          format: binary
-          title: File
-          description: CSV file with entity IDs
-        entity_type:
-          type: string
-          enum:
-          - business
-          - prospect
-          title: Entity Type
-          description: Entity type
-        name:
-          type: string
-          title: Name
-          description: Dataset name
-        description:
-          type: string
-          title: Description
-          description: Dataset description
-      type: object
-      required:
-      - file
-      - entity_type
-      - name
-      - description
-      title: Body_v2_entity_id_lists_upload
     ValidationError:
       properties:
         loc:
@@ -134,6 +125,15 @@ components:
       - msg
       - type
       title: ValidationError
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
   securitySchemes:
     APIKeyHeader:
       type: apiKey

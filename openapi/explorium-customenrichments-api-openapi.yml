@@ -1,7 +1,7 @@
 openapi: 3.2.0
 info:
   title: Partner Service Custom Enrichments API
-  version: 0.3.19
+  version: 0.3.69
 servers:
 - url: https://api.explorium.ai
   description: AgentSource Server
@@ -86,22 +86,14 @@ paths:
       - APIKeyHeader: []
 components:
   schemas:
-    ResponseContext:
-      properties:
-        correlation_id:
-          type: string
-          title: Correlation Id
-        request_status:
-          $ref: '#/components/schemas/RequestStatus'
-        time_took_in_seconds:
-          type: number
-          title: Time Took In Seconds
-      type: object
-      required:
-      - correlation_id
-      - request_status
-      - time_took_in_seconds
-      title: ResponseContext
+    RequestStatus:
+      type: string
+      enum:
+      - success
+      - miss
+      - failure
+      title: RequestStatus
+      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
     ValidationError:
       properties:
         loc:
@@ -123,59 +115,22 @@ components:
       - msg
       - type
       title: ValidationError
-    BusinessesBulkEnrichRequest:
+    ResponseContext:
       properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        parameters:
-          type: object
-          title: Parameters
-          nullable: true
-        business_ids:
-          items:
-            type: string
-            pattern: ^[a-f0-9]{32}$
-          type: array
-          maxItems: 50
-          minItems: 1
-          title: Business Ids
-      additionalProperties: false
-      type: object
-      required:
-      - business_ids
-      title: BusinessesBulkEnrichRequest
-    BusinessesEnrichRequest:
-      properties:
-        request_context:
-          type: object
-          title: Request Context
-          marked_for_null_replacement: true
-          nullable: true
-        parameters:
-          type: object
-          title: Parameters
-          nullable: true
-        business_id:
+        correlation_id:
           type: string
-          pattern: ^[a-f0-9]{32}$
-          title: Business Id
-      additionalProperties: false
+          title: Correlation Id
+        request_status:
+          $ref: '#/components/schemas/RequestStatus'
+        time_took_in_seconds:
+          type: number
+          title: Time Took In Seconds
       type: object
       required:
-      - business_id
-      title: BusinessesEnrichRequest
-    HTTPValidationError:
-      properties:
-        detail:
-          items:
-            $ref: '#/components/schemas/ValidationError'
-          type: array
-          title: Detail
-      type: object
-      title: HTTPValidationError
+      - correlation_id
+      - request_status
+      - time_took_in_seconds
+      title: ResponseContext
     CustomEnrichmentEnrichResponse:
       properties:
         response_context:
@@ -195,14 +150,59 @@ components:
       - total_results
       title: CustomEnrichmentEnrichResponse
       description: Response model for enriched data from a custom enrichment.
-    RequestStatus:
-      type: string
-      enum:
-      - success
-      - miss
-      - failure
-      title: RequestStatus
-      description: "The `RequestStatus` class is an enumeration that defines the possible statuses of a request.\n\nThis enum is used to indicate whether a request was successful, missed, or failed. It ensures\nconsistent handling of request statuses across the application.\n\nAttributes:\n    SUCCESS: Indicates that the request was successfully processed.\n    MISS: Indicates that the request did not find any matching data.\n    FAILURE: Indicates that the request encountered an error or failure."
+    BusinessesEnrichRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          nullable: true
+          marked_for_null_replacement: true
+        parameters:
+          type: object
+          title: Parameters
+          nullable: true
+        business_id:
+          type: string
+          pattern: ^[a-f0-9]{32}$
+          title: Business Id
+      additionalProperties: false
+      type: object
+      required:
+      - business_id
+      title: BusinessesEnrichRequest
+    BusinessesBulkEnrichRequest:
+      properties:
+        request_context:
+          type: object
+          title: Request Context
+          nullable: true
+          marked_for_null_replacement: true
+        parameters:
+          type: object
+          title: Parameters
+          nullable: true
+        business_ids:
+          items:
+            type: string
+            pattern: ^[a-f0-9]{32}$
+          type: array
+          maxItems: 50
+          minItems: 1
+          title: Business Ids
+      additionalProperties: false
+      type: object
+      required:
+      - business_ids
+      title: BusinessesBulkEnrichRequest
+    HTTPValidationError:
+      properties:
+        detail:
+          items:
+            $ref: '#/components/schemas/ValidationError'
+          type: array
+          title: Detail
+      type: object
+      title: HTTPValidationError
     CustomEnrichmentResponseRow:
       properties:
         business_id:
