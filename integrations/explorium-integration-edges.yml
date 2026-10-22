@@ -211,6 +211,26 @@ edges:
   detected: '2026-10-21'
   detected_by: mirror-platform-listings.py
   category: salesIntelligence
+- partner_name: Artifact Hub (artifact-hub)
+  partner: artifact-hub
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: artifact-hub
+  evidence: https://artifacthub.io/packages/search?repo=crossplane-iam-pod-role
+  mirror_of: artifact-hub/integrations/artifact-hub-integration-edges.yml
+  apps:
+  - crossplane-iam-pod-role
+  - kube-auto-puller
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Artifact Hub listing (Helm chart)
+  badges:
+  - 'Verified publisher (Artifact Hub verified publisher: repository ownership proven)'
 generated: '2026-10-14'
 method: searched
 checked:
@@ -228,5 +248,6 @@ checked:
 - https://developer.salesforce.com/docs/atlas.en-us.packagingGuide.meta/packagingGuide/security_review_overview.htm
 - https://slack.com/marketplace
 - salesforce/integrations/salesforce-integration-edges.yml
+- artifact-hub/integrations/artifact-hub-integration-edges.yml
 source:
 - https://a2aregistry.org/api/agents
