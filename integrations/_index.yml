@@ -198,3 +198,16 @@
   relationship: platform-app
   status: not-a-workflow
   arazzo: null
+- slug: explorium-bubble-own
+  label: Bubble (own)
+  partner: bubble
+  partner_name: Bubble (own)
+  category: Api
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://bubble.io/plugin/explorium-api-1746610246342x947883748803215400
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null

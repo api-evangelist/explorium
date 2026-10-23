@@ -231,6 +231,23 @@ edges:
   category: Artifact Hub listing (Helm chart)
   badges:
   - 'Verified publisher (Artifact Hub verified publisher: repository ownership proven)'
+- partner_name: Bubble (own)
+  partner: bubble
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://bubble.io/plugin/explorium-api-1746610246342x947883748803215400
+  mirror_of: bubble/integrations/bubble-integration-edges.yml
+  apps:
+  - explorium-api
+  listing_count: 1
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Api
 generated: '2026-10-14'
 method: searched
 checked:
@@ -249,5 +266,6 @@ checked:
 - https://slack.com/marketplace
 - salesforce/integrations/salesforce-integration-edges.yml
 - artifact-hub/integrations/artifact-hub-integration-edges.yml
+- bubble/integrations/bubble-integration-edges.yml
 source:
 - https://a2aregistry.org/api/agents
